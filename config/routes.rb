@@ -1,4 +1,6 @@
 Pfm::Application.routes.draw do
+  resources :accounts
+
   resources :currencies
 
   # The priority is based upon order of creation:
