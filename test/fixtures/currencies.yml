@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  symbol: MyString
+  value_in_eur: 9.99
+
+two:
+  name: MyString
+  symbol: MyString
+  value_in_eur: 9.99
