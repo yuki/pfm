@@ -44,7 +44,7 @@ class MtypesController < ApplicationController
 
     respond_to do |format|
       if @mtype.save
-        format.html { redirect_to @mtype, notice: 'Mtype was successfully created.' }
+        format.html { redirect_to mtypes_path, notice: 'Mtype was successfully created.' }
         format.json { render json: @mtype, status: :created, location: @mtype }
       else
         format.html { render action: "new" }
@@ -60,7 +60,7 @@ class MtypesController < ApplicationController
 
     respond_to do |format|
       if @mtype.update_attributes(params[:mtype])
-        format.html { redirect_to @mtype, notice: 'Mtype was successfully updated.' }
+        format.html { redirect_to mtypes_path, notice: 'Mtype was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
