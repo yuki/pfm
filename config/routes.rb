@@ -1,4 +1,6 @@
 Pfm::Application.routes.draw do
+  resources :mtypes
+
   resources :accounts
 
   resources :currencies
