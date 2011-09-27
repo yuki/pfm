@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110927183439) do
+ActiveRecord::Schema.define(:version => 20110927192325) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -27,6 +27,18 @@ ActiveRecord::Schema.define(:version => 20110927183439) do
     t.string   "name"
     t.string   "symbol"
     t.decimal  "value_in_eur"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "movements", :force => true do |t|
+    t.integer  "account_id"
+    t.integer  "mtype_id"
+    t.string   "name"
+    t.text     "description"
+    t.decimal  "amount"
+    t.datetime "mdate"
+    t.date     "vdate"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

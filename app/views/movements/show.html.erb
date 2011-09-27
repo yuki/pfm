@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Account:</b>
+  <%= @movement.account_id %>
+</p>
+
+<p>
+  <b>Mtype:</b>
+  <%= @movement.mtype_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @movement.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @movement.description %>
+</p>
+
+<p>
+  <b>Amount:</b>
+  <%= @movement.amount %>
+</p>
+
+<p>
+  <b>Mdate:</b>
+  <%= @movement.mdate %>
+</p>
+
+<p>
+  <b>Vdate:</b>
+  <%= @movement.vdate %>
+</p>
+
+
+<%= link_to 'Edit', edit_movement_path(@movement) %> |
+<%= link_to 'Back', movements_path %>
