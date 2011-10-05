@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110927192325) do
+ActiveRecord::Schema.define(:version => 20111005212715) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(:version => 20110927192325) do
   create_table "currencies", :force => true do |t|
     t.string   "name"
     t.string   "symbol"
-    t.decimal  "value_in_eur"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
