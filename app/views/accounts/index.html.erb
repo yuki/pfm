@@ -17,8 +17,8 @@
     <td><%= account.name %></td>
     <td><%= Currency.find(account.currency_id).name %> </td>
     <td><%= account.description %></td>
-    <td><%= account.value_init %><%= Currency.find(account.currency_id).symbol %></td>
-    <td><%= account.value_last %><%= Currency.find(account.currency_id).symbol %></td>
+    <td><%= account.value_init %><%= account.currency.symbol %></td>
+    <td><%= account.value_last %><%= account.currency.symbol %></td>
     <td><%= link_to 'Show', account %></td>
     <td><%= link_to 'Edit', edit_account_path(account) %></td>
     <td><%= link_to 'Destroy', account, confirm: 'Are you sure?', method: :delete %></td>
