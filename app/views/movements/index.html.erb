@@ -16,8 +16,8 @@
 
 <% @movements.each do |movement| %>
   <tr>
-    <td><%= movement.account_id %></td>
-    <td><%= movement.mtype_id %></td>
+    <td><%= movement.account.name %></td>
+    <td><%= movement.mtype.name %></td>
     <td><%= movement.name %></td>
     <td><%= movement.description %></td>
     <td><%= movement.amount %></td>

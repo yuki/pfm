@@ -17,7 +17,10 @@
   </div>
   <div class="field">
     <%= f.label :currency_id %><br />
-    <%= f.number_field :currency_id %>
+    <%= select("account", "currency_id", 
+        Currency.find(:all, :order=>"name ASC").collect {|p| [ p.name, p.id ] }, 
+        {:include_blank => 'Choose currency'}) %> 
+    <%#= f.number_field :currency_id %>
   </div>
   <div class="field">
     <%= f.label :description %><br />
