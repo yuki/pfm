@@ -1,6 +1,7 @@
 <h1>Listing accounts</h1>
 
 <table>
+  <thead>
   <tr>
     <th>Name</th>
     <th>Currency</th>
@@ -11,11 +12,13 @@
     <th></th>
     <th></th>
   </tr>
+  </thead>
+
 
 <% @accounts.each do |account| %>
   <tr>
     <td><%= account.name %></td>
-    <td><%= Currency.find(account.currency_id).name %> </td>
+    <td><%= account.currency.name %> </td>
     <td><%= account.description %></td>
     <td><%= account.value_init %><%= account.currency.symbol %></td>
     <td><%= account.value_last %><%= account.currency.symbol %></td>
@@ -24,6 +27,20 @@
     <td><%= link_to 'Destroy', account, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
+
+  <tfoot>
+  <tr>
+    <th>Total</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th><%= get_accounts_total() %> </th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  </tfoot>
+
 </table>
 
 <br />

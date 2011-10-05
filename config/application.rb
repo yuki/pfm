@@ -1,6 +1,12 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'money'
+require 'money/bank/google_currency'
+require 'json'
+MultiJson.engine = :json_gem
+# set default bank to instance of GoogleCurrency
+Money.default_bank = Money::Bank::GoogleCurrency.new
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
