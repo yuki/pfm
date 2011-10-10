@@ -44,12 +44,10 @@ class MovementsController < ApplicationController
 
     respond_to do |format|
       if @movement.save
-        @movement.account.amount += @movement.amount
-        @movement.account_amount = @movement.account.amount
-        @movement.account.save!
-        @movement.save!
+        make_movement(@movement)
+        make_transfer(@movement) if @movement.is_transfer?
 
-        format.html { redirect_to @movement, notice: 'Movement was successfully created.' }
+        format.html { redirect_to movements_path, notice: 'Movement was successfully created.' }
         format.json { render json: @movement, status: :created, location: @movement }
       else
         format.html { render action: "new" }
@@ -85,4 +83,30 @@ class MovementsController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  def make_movement(movement)
+    movement.account.amount += movement.amount
+    movement.account_amount = movement.account.amount
+    movement.account.save!
+    movement.save!
+  end
+
+  def make_transfer(movement)
+    m = Movement.new()
+    m.mtype_id = movement.mtype_id
+    m.account_id = movement.movement_id
+    m.name = movement.name
+    m.description = movement.description
+    m.amount = movement.amount.abs
+    m.is_transfer = movement.is_transfer
+    m.movement_id = m.id
+    m.account = Account.find(movement.movement_id)
+    m.account.amount += m.amount
+    m.account_amount = m.account.amount
+    m.account.save!
+    m.save!
+    movement.movement_id = m.id
+    movement.save!
+  end
+
 end

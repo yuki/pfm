@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111010133634) do
+ActiveRecord::Schema.define(:version => 20111010141551) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -40,6 +40,8 @@ ActiveRecord::Schema.define(:version => 20111010133634) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "account_amount"
+    t.boolean  "is_transfer"
+    t.integer  "movement_id"
   end
 
   create_table "mtypes", :force => true do |t|

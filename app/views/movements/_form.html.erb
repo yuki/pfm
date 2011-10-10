@@ -36,6 +36,17 @@
     <%= f.text_field :amount %>
   </div>
   <div class="field">
+    <%= f.label :is_transfer %><br />
+    <%= f.check_box :is_transfer %>
+  </div>
+  <div class="field">
+    <%= f.label :movement_id %><br />
+    <%= select("movement", "movement_id",
+        Account.find(:all, :order=>"name ASC").collect {|p| [ p.name, p.id ] },
+        {:include_blank => 'Choose account'}) %>
+  </div>
+
+  <div class="field">
     <%= f.label :mdate %><br />
     <%= f.datetime_select :mdate %>
   </div>

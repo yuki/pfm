@@ -10,6 +10,7 @@ gem 'jquery-rails'
 gem 'therubyracer'
 gem 'google_currency'
 gem 'money'
+gem 'ruby-debug19'
 
 # Gems used only for assets and not required
 # in production environments by default.
