@@ -44,6 +44,11 @@ class MovementsController < ApplicationController
 
     respond_to do |format|
       if @movement.save
+        @movement.account.amount += @movement.amount
+        @movement.account_amount = @movement.account.amount
+        @movement.account.save!
+        @movement.save!
+
         format.html { redirect_to @movement, notice: 'Movement was successfully created.' }
         format.json { render json: @movement, status: :created, location: @movement }
       else

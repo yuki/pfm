@@ -11,7 +11,7 @@
     <th>Vdate</th>
     <th></th>
     <th></th>
-    <th></th>
+    <th>Account amount</th>
   </tr>
 
 <% @movements.each do |movement| %>
@@ -23,6 +23,9 @@
     <td><%= movement.amount %></td>
     <td><%= movement.mdate %></td>
     <td><%= movement.vdate %></td>
+    <td></td>
+    <td></td>
+    <td><%= movement.account_amount %></td>
     <td><%= link_to 'Show', movement %></td>
     <td><%= link_to 'Edit', edit_movement_path(movement) %></td>
     <td><%= link_to 'Destroy', movement, confirm: 'Are you sure?', method: :delete %></td>

@@ -6,8 +6,7 @@
     <th>Name</th>
     <th>Currency</th>
     <th>Description</th>
-    <th>Value init</th>
-    <th>Value last</th>
+    <th>Amount</th>
     <th></th>
     <th></th>
     <th></th>
@@ -20,8 +19,7 @@
     <td><%= account.name %></td>
     <td><%= account.currency.name %> </td>
     <td><%= account.description %></td>
-    <td><%= account.value_init %><%= account.currency.symbol %></td>
-    <td><%= account.value_last %><%= account.currency.symbol %></td>
+    <td><%= account.amount %><%= account.currency.symbol %></td>
     <td><%= link_to 'Show', account %></td>
     <td><%= link_to 'Edit', edit_account_path(account) %></td>
     <td><%= link_to 'Destroy', account, confirm: 'Are you sure?', method: :delete %></td>
@@ -31,7 +29,6 @@
   <tfoot>
   <tr>
     <th>Total</th>
-    <th></th>
     <th></th>
     <th></th>
     <th><%= get_accounts_total() %> </th>

@@ -4,6 +4,6 @@ class ModifyCurrencies < ActiveRecord::Migration
   end
 
   def down
-    add_columnt :currencies, :value_in_eur, :decimal
+    add_column :currencies, :value_in_eur, :decimal
   end
 end
