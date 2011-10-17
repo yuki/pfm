@@ -14,6 +14,7 @@ class AccountsController < ApplicationController
   # GET /accounts/1.json
   def show
     @account = Account.find(params[:id])
+    @movements = @account.movements.last(30)
 
     respond_to do |format|
       format.html # show.html.erb

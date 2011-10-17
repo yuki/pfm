@@ -1,37 +1,7 @@
 <h1>Listing movements</h1>
 
-<table>
-  <tr>
-    <th>Account</th>
-    <th>Mtype</th>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Amount</th>
-    <th>Mdate</th>
-    <th>Vdate</th>
-    <th></th>
-    <th></th>
-    <th>Account amount</th>
-  </tr>
 
-<% @movements.each do |movement| %>
-  <tr>
-    <td><%= movement.account.name %></td>
-    <td><%= movement.mtype.name %></td>
-    <td><%= movement.name %></td>
-    <td><%= movement.description %></td>
-    <td><%= movement.amount %></td>
-    <td><%= movement.mdate %></td>
-    <td><%= movement.vdate %></td>
-    <td></td>
-    <td></td>
-    <td><%= movement.account_amount %></td>
-    <td><%= link_to 'Show', movement %></td>
-    <td><%= link_to 'Edit', edit_movement_path(movement) %></td>
-    <td><%= link_to 'Destroy', movement, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
+<%= render 'mtable' %>
 
 <br />
 

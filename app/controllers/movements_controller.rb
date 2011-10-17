@@ -100,6 +100,8 @@ class MovementsController < ApplicationController
     m.amount = movement.amount.abs
     m.is_transfer = movement.is_transfer
     m.movement_id = m.id
+    m.mdate = movement.mdate
+    m.vdate = movement.vdate
     m.account = Account.find(movement.movement_id)
     m.account.amount += m.amount
     m.account_amount = m.account.amount

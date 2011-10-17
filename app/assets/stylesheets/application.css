@@ -5,3 +5,11 @@
  *= require_self
  *= require_tree . 
 */
+
+span.negative {
+  color: #F00;
+}
+
+span.positive {
+  color: #080
+}

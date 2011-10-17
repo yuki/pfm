@@ -1,13 +1,10 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @account.name %>
-</p>
+<h1><%= @account.name %></h1>
 
 <p>
   <b>Currency:</b>
-  <%= @account.currency_id %>
+  <%= @account.currency.symbol %>
 </p>
 
 <p>
@@ -15,16 +12,7 @@
   <%= @account.description %>
 </p>
 
-<p>
-  <b>Value init:</b>
-  <%= @account.value_init %>
-</p>
-
-<p>
-  <b>Value last:</b>
-  <%= @account.value_last %>
-</p>
-
+<%= render 'movements/mtable' %>
 
 <%= link_to 'Edit', edit_account_path(@account) %> |
 <%= link_to 'Back', accounts_path %>
