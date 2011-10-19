@@ -13,7 +13,7 @@
   </tr>
 
 <% @movements.each do |movement| %>
-  <tr>
+  <tr class="<%= movement.amount > 0 ? "positive":"negative" %>">
     <td><%= movement.account.name %></td>
     <td><%= movement.mtype.name %></td>
     <td><%= movement.name %></td>

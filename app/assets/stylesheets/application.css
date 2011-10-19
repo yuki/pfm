@@ -11,5 +11,15 @@ span.negative {
 }
 
 span.positive {
-  color: #080
+  color: #080;
 }
+
+/*
+tr.negative {
+  background-color: #F00;
+}
+
+tr.positive {
+  background-color: #0F0;
+}
+*/

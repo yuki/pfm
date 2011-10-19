@@ -43,9 +43,14 @@ class MovementsController < ApplicationController
     @movement = Movement.new(params[:movement])
 
     respond_to do |format|
+      debugger
+      if @movement.is_transfer? and @movement.account.id == @movement.movement_id
+        redirect_to movements_path, notice: "Cannot make transfer in the same account"
+        return
+      end
       if @movement.save
         make_movement(@movement)
-        make_transfer(@movement) if @movement.is_transfer?
+        make_transfer(@movement)
 
         format.html { redirect_to movements_path, notice: 'Movement was successfully created.' }
         format.json { render json: @movement, status: :created, location: @movement }
@@ -85,6 +90,10 @@ class MovementsController < ApplicationController
   end
 
   def make_movement(movement)
+    if movement.is_transfer and movement.amount > 0
+        #we get sure that the amount to transfer is negative in the origin
+        movement.amount = 0-movement.amount
+    end
     movement.account.amount += movement.amount
     movement.account_amount = movement.account.amount
     movement.account.save!
