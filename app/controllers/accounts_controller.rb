@@ -15,6 +15,7 @@ class AccountsController < ApplicationController
   def show
     @account = Account.find(params[:id])
     @movements = @account.movements.last(30)
+    @selected_month = (params[:year] and params[:month]) ? Time.new(params[:year],params[:month]) : Time.now()
 
     respond_to do |format|
       format.html # show.html.erb

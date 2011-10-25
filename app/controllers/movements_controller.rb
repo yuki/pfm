@@ -43,14 +43,14 @@ class MovementsController < ApplicationController
     @movement = Movement.new(params[:movement])
 
     respond_to do |format|
-      debugger
       if @movement.is_transfer? and @movement.account.id == @movement.movement_id
-        redirect_to movements_path, notice: "Cannot make transfer in the same account"
+        flash[:error] = "Cannot make transfer into the same account"
+        redirect_to movements_path
         return
       end
       if @movement.save
         make_movement(@movement)
-        make_transfer(@movement)
+        make_transfer(@movement) if @movement.is_transfer
 
         format.html { redirect_to movements_path, notice: 'Movement was successfully created.' }
         format.json { render json: @movement, status: :created, location: @movement }

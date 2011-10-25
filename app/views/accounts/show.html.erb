@@ -2,10 +2,14 @@
 
 <h1><%= @account.name %></h1>
 
+<%= date_select("article", "written_on", :end_year => Time.now.year,
+                                  :discard_day => true, :default => @selected_month) %>
+
 <p>
   <b>Currency:</b>
   <%= @account.currency.symbol %>
 </p>
+
 
 <p>
   <b>Description:</b>
