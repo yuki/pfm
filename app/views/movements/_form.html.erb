@@ -15,7 +15,7 @@
     <%= f.label :account_id %><br />
     <%= select("movement", "account_id", 
         Account.find(:all, :order=>"name ASC").collect {|p| [ p.name, p.id ] }, 
-        {:include_blank => 'Choose account'}) %>
+        {:include_blank => 'Choose account', :selected => params[:account_id]}) %>
   </div>
   <div class="field">
     <%= f.label :mtype_id %><br />

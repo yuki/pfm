@@ -3,7 +3,6 @@
     <th>Account</th>
     <th>Mtype</th>
     <th>Name</th>
-    <th>Description</th>
     <th>Amount</th>
     <th>Mdate</th>
     <th>Vdate</th>
@@ -13,11 +12,10 @@
   </tr>
 
 <% @movements.each do |movement| %>
-  <tr class="<%= movement.amount > 0 ? "positive":"negative" %>">
+  <tr class="<%= movement.amount > 0 ? "positive":"negative" %>" title="<%= movement.description %>">
     <td><%= movement.account.name %></td>
     <td><%= movement.mtype.name %></td>
     <td><%= movement.name %></td>
-    <td><%= movement.description %></td>
     <td><span class="<%= movement.amount > 0 ? "positive":"negative" %>"><%= movement.amount %><%= movement.account.currency.symbol %></span></td>
     <td><%= movement.mdate %></td>
     <td><%= movement.vdate %></td>

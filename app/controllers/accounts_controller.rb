@@ -14,8 +14,13 @@ class AccountsController < ApplicationController
   # GET /accounts/1.json
   def show
     @account = Account.find(params[:id])
-    @movements = @account.movements.last(30)
-    @selected_month = (params[:year] and params[:month]) ? Time.new(params[:year],params[:month]) : Time.now()
+    if params[:get_movements]
+        params[:year] = params[:get_movements]["date(1i)"]
+        params[:month] = params[:get_movements]["date(2i)"]
+    end
+    @selected_month = (params[:year] and params[:month]) ?
+        Time.new(params[:year],params[:month]) : Time.now.beginning_of_month
+    @movements = @account.movements.where("mdate > '#{@selected_month}'").last(30)
 
     respond_to do |format|
       format.html # show.html.erb

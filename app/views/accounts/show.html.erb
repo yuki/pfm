@@ -2,8 +2,17 @@
 
 <h1><%= @account.name %></h1>
 
-<%= date_select("article", "written_on", :end_year => Time.now.year,
-                                  :discard_day => true, :default => @selected_month) %>
+<%= form_for @account, :url => account_path(@account), :method => :get do |f| %>
+<%= date_select("get_movements", "date",
+                {:end_year => Time.now.year, :discard_day => true, :default => @selected_month,
+                    #FIXME: put the prompt ok
+                    #:prompt => { :month => 'Select month', :year => 'Select year'}
+                },
+                {:onchange => "this.form.submit();" }) %>
+<% end %>
+<p>
+  <b><%= link_to "create movement", new_movement_path(:account_id => @account) %></b>
+</p>
 
 <p>
   <b>Currency:</b>
