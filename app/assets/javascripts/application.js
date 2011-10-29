@@ -7,3 +7,4 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+//= chosen_rails

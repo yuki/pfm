@@ -1,4 +1,5 @@
 <table>
+  <thead>
   <tr>
     <th>Account</th>
     <th>Mtype</th>
@@ -9,24 +10,27 @@
     <th></th>
     <th></th>
     <th>Account amount</th>
+    <th></th>
+    <th></th>
+    <th></th>
   </tr>
-
-<% @movements.each do |movement| %>
-  <tr class="<%= movement.amount > 0 ? "positive":"negative" %>" title="<%= movement.description %>">
-    <td><%= movement.account.name %></td>
-    <td><%= movement.mtype.name %></td>
-    <td><%= movement.name %></td>
-    <td><span class="<%= movement.amount > 0 ? "positive":"negative" %>"><%= movement.amount %><%= movement.account.currency.symbol %></span></td>
-    <td><%= movement.mdate %></td>
-    <td><%= movement.vdate %></td>
-    <td></td>
-    <td></td>
-    <td><%= movement.account_amount %><%= movement.account.currency.symbol %></td>
-    <td><%= link_to 'Show', movement %></td>
-    <td><%= link_to 'Edit', edit_movement_path(movement) %></td>
-    <td><%= link_to 'Destroy', movement, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
+  </thead>
+  <tbody>
+  <% @movements.each do |movement| %>
+    <tr class="<%= movement.amount > 0 ? "positive":"negative" %> <%= cycle("even","odd") %>" title="<%= movement.description %>">
+      <td><%= movement.account.name %></td>
+      <td><%= movement.mtype.name %></td>
+      <td><%= movement.name %></td>
+      <td><span class="<%= movement.amount > 0 ? "positive":"negative" %>"><%= movement.amount %><%= movement.account.currency.symbol %></span></td>
+      <td><%= movement.mdate %></td>
+      <td><%= movement.vdate %></td>
+      <td></td>
+      <td></td>
+      <td><%= movement.account_amount %><%= movement.account.currency.symbol %></td>
+      <td><%= link_to 'Show', movement %></td>
+      <td><%= link_to 'Edit', edit_movement_path(movement) %></td>
+      <td><%= link_to 'Destroy', movement, confirm: 'Are you sure?', method: :delete %></td>
+    </tr>
+  <% end %>
+  </tbody>
 </table>
-
-

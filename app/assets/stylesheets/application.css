@@ -3,8 +3,18 @@
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *= require_self
- *= require_tree . 
+ *= require_tree .
+ *= require chosen
 */
+
+
+/*
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{background:transparent;border:0;font-size:100%;margin:0;outline:0;padding:0;vertical-align:baseline}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:none}:focus{outline:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+*/
+
+/*********************
+****     MY CSS
+**********************/
 
 span.negative {
   color: #F00;
@@ -14,6 +24,17 @@ span.positive {
   color: #080;
 }
 
+
+/*********
+* TABLES *
+*********/
+table td {
+  padding: 4px;
+}
+
+tr.odd{
+  background-color: #ccd8df;
+}
 /*
 tr.negative {
   background-color: #F00;
@@ -44,13 +65,21 @@ tr.positive {
   padding: 6px;
 }
 
+/* get http://www.blueprintcss.org/blueprint/src/forms.css */
+/* Success, info, notice and error/alert boxes
+-------------------------------------------------------------- */
+
 .error,
+.alert,
 .notice,
-.success    { padding: .8em; margin-bottom: 1em; border: 2px solid #ddd;
-              margin-top: 1em; }
+.success,
+.info           { padding: 0.8em; margin-bottom: 1em; border: 2px solid #ddd; }
 
-.error      { background: #FBE3E4; color: #8a1f11; border-color: #FBC2C4; }
-.notice     { background: #FFF6BF; color: #514721; border-color: #FFD324; }
-.success    { background: #E6EFC2; color: #264409; border-color: #C6D880; }
-
-
+.error, .alert { background: #fbe3e4; color: #8a1f11; border-color: #fbc2c4; }
+.notice     { background: #fff6bf; color: #514721; border-color: #ffd324; }
+.success    { background: #e6efc2; color: #264409; border-color: #c6d880; }
+.info           { background: #d5edf8; color: #205791; border-color: #92cae4; }
+.error a, .alert a { color: #8a1f11; }
+.notice a   { color: #514721; }
+.success a  { color: #264409; }
+.info a         { color: #205791; }

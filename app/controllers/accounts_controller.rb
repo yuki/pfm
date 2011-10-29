@@ -14,13 +14,20 @@ class AccountsController < ApplicationController
   # GET /accounts/1.json
   def show
     @account = Account.find(params[:id])
+    #FIXME: should be a better way to do this
     if params[:get_movements]
-        params[:year] = params[:get_movements]["date(1i)"]
-        params[:month] = params[:get_movements]["date(2i)"]
+        params[:from_date] = Date.new(params[:get_movements]["from(1i)"].to_i,params[:get_movements]["from(2i)"].to_i).to_s(:db)
+        params[:to_date] = Date.new(params[:get_movements]["to(1i)"].to_i,params[:get_movements]["to(2i)"].to_i).to_s(:db)
     end
-    @selected_month = (params[:year] and params[:month]) ?
-        Time.new(params[:year],params[:month]) : Time.now.beginning_of_month
-    @movements = @account.movements.where("mdate > '#{@selected_month}'").last(30)
+    @from_month = (params[:from_date]) ?
+        Date.new(params[:get_movements]["from(1i)"].to_i,params[:get_movements]["from(2i)"].to_i) :
+        Date.today.beginning_of_month
+    @to_month = (params[:to_date]) ?
+        Date.new(params[:get_movements]["to(1i)"].to_i,params[:get_movements]["to(2i)"].to_i).end_of_month :
+        Date.today.end_of_month
+
+
+    @movements = @account.movements.where("mdate >= '#{@from_month}' and mdate <= '#{@to_month}'").last(30)
 
     respond_to do |format|
       format.html # show.html.erb

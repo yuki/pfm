@@ -1,3 +1,5 @@
+<%= javascript_include_tag "chosen"%>
+
 <%= form_for(@movement) do |f| %>
   <% if @movement.errors.any? %>
     <div id="error_explanation">
@@ -37,9 +39,9 @@
   </div>
   <div class="field">
     <%= f.label :is_transfer %><br />
-    <%= f.check_box :is_transfer %>
+    <%= f.check_box :is_transfer, :onchange => "$('div#movement_id').toggle()" %>
   </div>
-  <div class="field">
+  <div class="field" id="movement_id" style="display:none;">
     <%= f.label :movement_id %><br />
     <%= select("movement", "movement_id",
         Account.find(:all, :order=>"name ASC").collect {|p| [ p.name, p.id ] },
@@ -58,3 +60,9 @@
     <%= f.submit %>
   </div>
 <% end %>
+
+<script  type="text/javascript">
+  $("#movement_mtype_id").chosen();
+  $("#movement_account_id").chosen();
+  $("#movement_movement_id").chosen();
+</script>

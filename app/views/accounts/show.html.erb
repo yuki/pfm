@@ -3,8 +3,14 @@
 <h1><%= @account.name %></h1>
 
 <%= form_for @account, :url => account_path(@account), :method => :get do |f| %>
-<%= date_select("get_movements", "date",
-                {:end_year => Time.now.year, :discard_day => true, :default => @selected_month,
+From: <%= date_select("get_movements", "from",
+                {:end_year => Time.now.year, :discard_day => true, :default => @from_month,
+                    #FIXME: put the prompt ok
+                    #:prompt => { :month => 'Select month', :year => 'Select year'}
+                },
+                {:onchange => "this.form.submit();" }) %>
+To: <%= date_select("get_movements", "to",
+                {:end_year => Time.now.year, :discard_day => true, :default => @to_month,
                     #FIXME: put the prompt ok
                     #:prompt => { :month => 'Select month', :year => 'Select year'}
                 },
@@ -18,7 +24,6 @@
   <b>Currency:</b>
   <%= @account.currency.symbol %>
 </p>
-
 
 <p>
   <b>Description:</b>

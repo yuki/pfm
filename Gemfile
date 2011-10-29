@@ -11,6 +11,7 @@ gem 'therubyracer'
 gem 'google_currency'
 gem 'money'
 gem 'ruby-debug19'
+gem 'chosen_rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
