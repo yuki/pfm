@@ -50,6 +50,8 @@ GEM
     google_currency (2.0.0)
       money (~> 3.5)
       multi_json (>= 1.0.0)
+    highcharts-rails (0.1.1)
+      railties (~> 3.1)
     hike (1.2.1)
     i18n (0.6.0)
     jquery-rails (1.0.14)
@@ -136,6 +138,7 @@ DEPENDENCIES
   chosen_rails
   coffee-rails (~> 3.1.0)
   google_currency
+  highcharts-rails
   jquery-rails
   money
   rails (= 3.1.0)

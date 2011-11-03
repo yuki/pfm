@@ -1,3 +1,4 @@
+<% total = 0 %>
 <table>
   <thead>
   <tr>
@@ -21,16 +22,116 @@
       <td><%= movement.account.name %></td>
       <td><%= movement.mtype.name %></td>
       <td><%= movement.name %></td>
-      <td><span class="<%= movement.amount > 0 ? "positive":"negative" %>"><%= movement.amount %><%= movement.account.currency.symbol %></span></td>
+      <td><span class="<%= movement.amount > 0 ? "positive":"negative" %>"><%= movement.amount.to_s + ' ' + @account.currency.symbol %></span></td>
       <td><%= movement.mdate %></td>
       <td><%= movement.vdate %></td>
       <td></td>
       <td></td>
-      <td><%= movement.account_amount %><%= movement.account.currency.symbol %></td>
+      <td><%= movement.account_amount.to_s + ' ' +  @account.currency.symbol %></td>
       <td><%= link_to 'Show', movement %></td>
       <td><%= link_to 'Edit', edit_movement_path(movement) %></td>
       <td><%= link_to 'Destroy', movement, confirm: 'Are you sure?', method: :delete %></td>
     </tr>
+    <% total += movement.amount %>
   <% end %>
   </tbody>
+  <tfoot>
+    <td>Total</td>
+    <td></td>
+    <td></td>
+    <td><span class="<%= total > 0 ? "positive":"negative" %>"><%= total.to_s + ' ' + @account.currency.symbol %></span></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tfoot>
 </table>
+
+<hr />
+
+<h2>Total amount per 'move type'</h2>
+<table id="datatable">
+  <thead>
+  <tr>
+    <th>Type</th>
+    <th>amount</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @movements.group_by(&:mtype).each do |movement| %>
+    <tr>
+      <th><%= movement[0].name %></th>
+      <td><%= movement[1].sum(&:amount).to_s + ' ' + @account.currency.symbol %></td>
+    </tr>
+  <% end %>
+  </tbody>
+
+  <tr>
+  </tr>
+</table>
+
+
+<div id="container" style="width: 460px; height: 300px;"></div>
+<script>
+
+Highcharts.visualize = function(table, options) {
+   // the categories
+   options.xAxis.categories = [];
+   $('tbody th', table).each( function(i) {
+      options.xAxis.categories.push(this.innerHTML);
+   });
+
+   // the data series
+   options.series = [];
+   $('tr', table).each( function(i) {
+      var tr = this;
+      $('th, td', tr).each( function(j) {
+         if (j > 0) { // skip first column
+            if (i == 0) { // get the name and init the series
+               options.series[j - 1] = {
+                  name: this.innerHTML,
+                  data: []
+               };
+            } else { // add values
+               options.series[j - 1].data.push(parseFloat(this.innerHTML));
+            }
+         }
+      });
+   });
+
+   var chart = new Highcharts.Chart(options);
+}
+
+// On document ready, call visualize on the datatable.
+$(document).ready(function() {
+   var table = document.getElementById('datatable'),
+   options = {
+         chart: {
+            renderTo: 'container',
+            defaultSeriesType: 'column'
+         },
+         title: {
+            text: 'Total amount per move type'
+         },
+         xAxis: {
+         },
+         yAxis: {
+            title: {
+               text: 'Amount <%= @account.currency.symbol%>'
+            }
+         },
+         tooltip: {
+            formatter: function() {
+               return '<b>'+ this.x.toLowerCase() +'</b><br/>'+
+                  this.y +' <%= @account.currency.symbol%>';
+            }
+         }
+      };
+
+   Highcharts.visualize(table, options);
+});
+</script>

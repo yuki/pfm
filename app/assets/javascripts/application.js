@@ -7,4 +7,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
-//= chosen_rails
+//= require chosen
+//= require highcharts
+//= require highcharts/themes/grid
+//= require highcharts/modules/exporting

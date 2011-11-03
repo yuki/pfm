@@ -52,7 +52,7 @@ class MovementsController < ApplicationController
         make_movement(@movement)
         make_transfer(@movement) if @movement.is_transfer
 
-        format.html { redirect_to movements_path, notice: 'Movement was successfully created.' }
+        format.html { redirect_to account_path(@movement.account.id), notice: 'Movement was successfully created.' }
         format.json { render json: @movement, status: :created, location: @movement }
       else
         format.html { render action: "new" }
