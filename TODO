@@ -1,0 +1,33 @@
+TODO list
+*********
+
+* Mejorar funcionamiento:
+  - Mejorar lo de _mtable cuando estas viendo todoso los movements y no solo un account
+  - Si creas un movimiento y lo borras, que deje bien la cuenta tal como estaba
+  - Si el momivimiento no es el último, tocará hacer muchas cosas...
+  - Si creas un movimiento, si te equivocas, al editar el movimiento hacer las cosas que cuadren
+
+* Añadir temas no financieros
+  - Para gasto de agua/electricidad, con gráfica
+  - Alguna idea mas?
+
+* mejorar avisos
+  - mejorar el aspecto de los "flash", que desaparezcan
+  - aprender a usar jquery con rails 3.1 como antes se hacía con prototype y script.aculo.us
+
+* crear CSS decente, y layout 
+  - en el lado izquierdo menú para currencies, accounts y demás
+  - al seleccionar una opción del menú izquierdo, tener un menú superior para crear y demás.
+  - las tablas que estén "cebradas" con un color más bonito que ahora XD
+
+* hacer graficas 
+  - al seleccionar un mes
+     - por cada día de los ingresos y gastos habidos
+     - un queso de los ingresos habidos, qué han sido
+     - un queso de los gastos, diferenciando qué han sido
+  - al seleccionar un año
+     - ingresos por meses
+     - gastos por meses
+     - balance de ingresos/gastos por meses
+  - al seleccionar todo
+     - parecido al de seleccionar un año
