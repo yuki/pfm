@@ -2,6 +2,7 @@ TODO list
 *********
 
 * Mejorar funcionamiento:
+  - Mejorar el get de _mtable, que la URL queda super fea, no, lo siguiente
   - Mejorar lo de _mtable cuando estas viendo todoso los movements y no solo un account
   - Si creas un movimiento y lo borras, que deje bien la cuenta tal como estaba
   - Si el momivimiento no es el último, tocará hacer muchas cosas...
