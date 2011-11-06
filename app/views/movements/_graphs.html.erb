@@ -1,0 +1,83 @@
+<hr />
+
+<h2>Total amount per 'move type'</h2>
+<table id="datatable">
+  <thead>
+  <tr>
+    <th>Type</th>
+    <th>amount</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @movements.group_by(&:mtype).each do |movement| %>
+    <tr>
+      <th><%= movement[0].name %></th>
+      <td><%= movement[1].sum(&:amount).to_s  %></td>
+    </tr>
+  <% end %>
+  </tbody>
+
+  <tr>
+  </tr>
+</table>
+
+<div id="container" style="width: 460px; height: 300px;"></div>
+<script>
+
+Highcharts.visualize = function(table, options) {
+   // the categories
+   options.xAxis.categories = [];
+   $('tbody th', table).each( function(i) {
+      options.xAxis.categories.push(this.innerHTML);
+   });
+
+   // the data series
+   options.series = [];
+   $('tr', table).each( function(i) {
+      var tr = this;
+      $('th, td', tr).each( function(j) {
+         if (j > 0) { // skip first column
+            if (i == 0) { // get the name and init the series
+               options.series[j - 1] = {
+                  name: this.innerHTML,
+                  data: []
+               };
+            } else { // add values
+               options.series[j - 1].data.push(parseFloat(this.innerHTML));
+            }
+         }
+      });
+   });
+
+   var chart = new Highcharts.Chart(options);
+}
+
+// On document ready, call visualize on the datatable.
+$(document).ready(function() {
+   var table = document.getElementById('datatable'),
+   options = {
+         chart: {
+            renderTo: 'container',
+            defaultSeriesType: 'column'
+         },
+         title: {
+            text: 'Total amount per move type'
+         },
+         xAxis: {
+         },
+         yAxis: {
+            title: {
+               text: 'Amount €'
+            }
+         },
+         tooltip: {
+            formatter: function() {
+               return '<b>'+ this.x.toLowerCase() +'</b><br/>'+
+                  this.y +' €';
+            }
+         }
+      };
+
+   Highcharts.visualize(table, options);
+});
+</script>
