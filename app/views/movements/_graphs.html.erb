@@ -1,83 +1,139 @@
-<hr />
+<% total = movements.sum(&:amount) %>
+<% chart_data = [] %>
+<% pie_chart_data = [] %>
 
-<h2>Total amount per 'move type'</h2>
-<table id="datatable">
+<h2><%= title %></h2>
+<table id="datatable_<%=title%>">
   <thead>
   <tr>
-    <th>Type</th>
-    <th>amount</th>
+    <th></th>
+    <% movements.group_by(&:mtype).each do |movement| %>
+      <th><%= movement[0].name %></th>
+    <% end %>
   </tr>
   </thead>
   <tbody>
-  <% @movements.group_by(&:mtype).each do |movement| %>
-    <tr>
-      <th><%= movement[0].name %></th>
-      <td><%= movement[1].sum(&:amount).to_s  %></td>
-    </tr>
-  <% end %>
-  </tbody>
-
   <tr>
+    <th>Amount</th>
+    <% movements.group_by(&:mtype).each do |movement| %>
+      <td><%= movement[1].sum(&:amount).to_s %></td>
+      <% chart_data += [{:name => movement[0].name, :data => [movement[1].sum(&:amount).to_f] }] %>
+      <% pie_chart_data += [[movement[0].name,(movement[1].sum(&:amount)*100.00/total).to_f.round(2)]] %>
+    <% end %>
   </tr>
+  </tbody>
 </table>
 
-<div id="container" style="width: 460px; height: 300px;"></div>
+<div id="<%=title%>_1" class="span-10"></div>
+<div id="<%=title%>_2" class="span-10"></div>
+<div id="<%=title%>_3" class="span-10"></div>
+
 <script>
-
-Highcharts.visualize = function(table, options) {
-   // the categories
-   options.xAxis.categories = [];
-   $('tbody th', table).each( function(i) {
-      options.xAxis.categories.push(this.innerHTML);
-   });
-
-   // the data series
-   options.series = [];
-   $('tr', table).each( function(i) {
-      var tr = this;
-      $('th, td', tr).each( function(j) {
-         if (j > 0) { // skip first column
-            if (i == 0) { // get the name and init the series
-               options.series[j - 1] = {
-                  name: this.innerHTML,
-                  data: []
-               };
-            } else { // add values
-               options.series[j - 1].data.push(parseFloat(this.innerHTML));
-            }
-         }
-      });
-   });
-
-   var chart = new Highcharts.Chart(options);
-}
-
-// On document ready, call visualize on the datatable.
+var chart;
 $(document).ready(function() {
-   var table = document.getElementById('datatable'),
-   options = {
-         chart: {
-            renderTo: 'container',
-            defaultSeriesType: 'column'
-         },
-         title: {
-            text: 'Total amount per move type'
-         },
-         xAxis: {
-         },
-         yAxis: {
-            title: {
-               text: 'Amount €'
-            }
-         },
-         tooltip: {
-            formatter: function() {
-               return '<b>'+ this.x.toLowerCase() +'</b><br/>'+
-                  this.y +' €';
+   chart = new Highcharts.Chart({
+      chart: {
+         renderTo: '<%=title%>_1',
+         plotBackgroundColor: null,
+         plotBorderWidth: null,
+         plotShadow: false
+      },
+      title: {
+         text: '<%= title %> %'
+      },
+      tooltip: {
+         formatter: function() {
+            return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
+         }
+      },
+      plotOptions: {
+         pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+               enabled: true,
+               color: Highcharts.theme.textColor,
+               connectorColor: Highcharts.theme.textColor,
+               formatter: function() {
+                  return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
+               }
             }
          }
-      };
+      },
+       series: [{
+         type: 'pie',
+         name: 'Pie chart',
+         data: <%= pie_chart_data.to_s.html_safe %>
+      }]
+   });
+});
+</script>
 
-   Highcharts.visualize(table, options);
+<script>
+var chart;
+$(document).ready(function() {
+   chart = new Highcharts.Chart({
+      chart: {
+         renderTo: '<%=title%>_2',
+         defaultSeriesType: 'column'
+      },
+      title: {
+         text: '<%=title%> per movement type'
+      },
+      xAxis: {
+         categories: ['Moves types']
+      },
+      yAxis: {
+          title: {
+              text: 'Amount'
+          }
+      },
+      tooltip: {
+         formatter: function() {
+            return ''+
+                '<b>'+this.series.name +'</b>: '+ this.y +'';
+         }
+      },
+      credits: {
+         enabled: false
+      },
+      series: <%= chart_data.to_json.html_safe %>
+   });
+});
+</script>
+
+
+<script>
+var chart;
+jQuery(document).ready(function() {
+    chart = new Highcharts.Chart({
+        chart: {
+            renderTo: '<%=title%>_3',
+            defaultSeriesType: 'column'
+        },
+        title: {
+            text: 'Stacked <%=title%> %'
+        },
+        xAxis: {
+            categories: ['Total Amount']
+        },
+        yAxis: {
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            formatter: function() {
+                return ''+
+                     this.series.name +': '+ this.y +' ('+ Math.round(this.percentage) +'%)';
+            }
+        },
+        plotOptions: {
+            column: {
+                stacking: 'percent'
+            }
+        },
+        series: <%= chart_data.to_json.html_safe %>
+    });
 });
 </script>

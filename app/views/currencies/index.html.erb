@@ -1,6 +1,7 @@
 <h1>Listing currencies</h1>
 
 <table>
+  <thead>
   <tr>
     <th>Name</th>
     <th>Symbol</th>
@@ -8,16 +9,18 @@
     <th></th>
     <th></th>
   </tr>
-
-<% @currencies.each do |currency| %>
-  <tr>
-    <td><%= currency.name %></td>
-    <td><%= currency.symbol %></td>
-    <td><%= link_to 'Show', currency %></td>
-    <td><%= link_to 'Edit', edit_currency_path(currency) %></td>
-    <td><%= link_to 'Destroy', currency, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
+  </thead>
+  <tbody>
+  <% @currencies.each do |currency| %>
+    <tr>
+      <td><%= currency.name %></td>
+      <td><%= currency.symbol %></td>
+      <td><%= link_to 'Show', currency %></td>
+      <td><%= link_to 'Edit', edit_currency_path(currency) %></td>
+      <td><%= link_to 'Destroy', currency, confirm: 'Are you sure?', method: :delete %></td>
+    </tr>
+  <% end %>
+  </tbody>
 </table>
 
 <br />

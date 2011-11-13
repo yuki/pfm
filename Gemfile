@@ -13,6 +13,9 @@ gem 'money'
 gem 'ruby-debug19'
 gem 'chosen_rails'
 gem 'highcharts-rails'
+gem 'blueprint-rails'
+#gem 'jquery-ui-form'
+#gem 'rails960gs'
 
 # Gems used only for assets and not required
 # in production environments by default.

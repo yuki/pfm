@@ -1,10 +1,29 @@
 <p id="notice"><%= notice %></p>
 
+<h1><%= @mtype.name %></h1>
+
+<%= form_for @mtype, :url => mtype_path(@mtype), :method => :get do |f| %>
+From: <%= date_select("get_movements", "from",
+                {:end_year => Time.now.year, :discard_day => true, :default => @from_month,
+                    #FIXME: put the prompt ok
+                    #:prompt => { :month => 'Select month', :year => 'Select year'}
+                },
+                {:onchange => "this.form.submit();" }) %>
+To: <%= date_select("get_movements", "to",
+                {:end_year => Time.now.year, :discard_day => true, :default => @to_month,
+                    #FIXME: put the prompt ok
+                    #:prompt => { :month => 'Select month', :year => 'Select year'}
+                },
+                {:onchange => "this.form.submit();" }) %>
+<% end %>
+
 <p>
   <b>Name:</b>
   <%= @mtype.name %>
 </p>
 
+<%= render :partial => 'movements/mtable', :locals => { :movements => @mtype.movements } %>
+<%= render :partial => 'movements/graphs', :locals => { :movements => movements } if params[:controller] == 'accounts'%>
 
 <%= link_to 'Edit', edit_mtype_path(@mtype) %> |
 <%= link_to 'Back', mtypes_path %>

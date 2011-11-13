@@ -1,21 +1,24 @@
 <h1>Listing mtypes</h1>
 
 <table>
+  <thead>
   <tr>
     <th>Name</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
-
-<% @mtypes.each do |mtype| %>
-  <tr>
-    <td><%= mtype.name %></td>
-    <td><%= link_to 'Show', mtype %></td>
-    <td><%= link_to 'Edit', edit_mtype_path(mtype) %></td>
-    <td><%= link_to 'Destroy', mtype, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
+  </thead>
+  <tbody>
+  <% @mtypes.each do |mtype| %>
+    <tr>
+      <td><%= mtype.name %></td>
+      <td><%= link_to 'Show', mtype %></td>
+      <td><%= link_to 'Edit', edit_mtype_path(mtype) %></td>
+      <td><%= link_to 'Destroy', mtype, confirm: 'Are you sure?', method: :delete %></td>
+    </tr>
+  <% end %>
+  </tbody>
 </table>
 
 <br />

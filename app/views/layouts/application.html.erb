@@ -7,28 +7,28 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<div class="container">
+    <div id="menu_izquierdo" class="span-4">
+        <ul>
+            <li><%= link_to 'Currencies', currencies_path %></li>
+            <li><%= link_to 'Accounts', accounts_path %></li>
+            <li><%= link_to 'Moves Types', mtypes_path %></li>
+            <li><%= link_to 'Movements', movements_path %></li>
+        </ul>
+    </div>
 
-<div id="menu_izquierdo">
-<%= link_to 'Currencies', currencies_path %>
-<%= link_to 'Accounts', accounts_path %>
-<%= link_to 'Moves Types', mtypes_path %>
-<%= link_to 'Movements', movements_path %>
-</div>
-
-<div id="centro">
-<% flash.each do |key, msg| %>
-    <%= content_tag :p, msg, :class => "flash #{key}" %>
-<% end %>
-<% flash.each do |key, msg| %>
-    <%= content_tag :div, msg, :class => [key, " message"], :id => "notice_ #{key}" %>
-    <%= content_tag :script, :type => "text/javascript" do -%>
-        setTimeout("new Effect.Fade('notice_<%= key %>');", 15000);
+    <div id="centro" class="span-20 last">
+    <% flash.each do |key, msg| %>
+        <%= content_tag :p, msg, :class => "flash #{key}" %>
     <% end %>
-<% end %>
-
-
-<%= yield %>
+    <% flash.each do |key, msg| %>
+        <%= content_tag :div, msg, :class => [key, " message"], :id => "notice_ #{key}" %>
+        <%= content_tag :script, :type => "text/javascript" do -%>
+            setTimeout("new Effect.Fade('notice_<%= key %>');", 15000);
+        <% end %>
+    <% end %>
+    <%= yield %>
+    </div>
 </div>
-
 </body>
 </html>

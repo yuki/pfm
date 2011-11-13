@@ -5,6 +5,7 @@
  *= require_self
  *= require_tree .
  *= require chosen
+ *= require blueprint
 */
 
 
@@ -15,7 +16,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 /*********************
 ****     MY CSS
 **********************/
-
+/*
 span.negative {
   color: #F00;
 }
@@ -23,63 +24,12 @@ span.negative {
 span.positive {
   color: #080;
 }
-
+*/
 
 /*********
 * TABLES *
 *********/
+/*
 table td {
   padding: 4px;
 }
-
-tr.odd{
-  background-color: #ccd8df;
-}
-/*
-tr.negative {
-  background-color: #F00;
-}
-
-tr.positive {
-  background-color: #0F0;
-}
-*/
-
-/* Alerts and notifications */
-.success {
-  border: 1px solid #FFCC66;
-  background-color: #FFFFCC;
-  font-size: 12px;
-  padding: 6px;
-}
-.notice {
-  border: 1px solid #FFCC66;
-  background-color: #FFFFCC;
-  font-size: 12px;
-  padding: 6px;
-}
-.error {
-  border: 1px solid #FFCC66;
-  background-color: #FFFFCC;
-  font-size: 12px;
-  padding: 6px;
-}
-
-/* get http://www.blueprintcss.org/blueprint/src/forms.css */
-/* Success, info, notice and error/alert boxes
--------------------------------------------------------------- */
-
-.error,
-.alert,
-.notice,
-.success,
-.info           { padding: 0.8em; margin-bottom: 1em; border: 2px solid #ddd; }
-
-.error, .alert { background: #fbe3e4; color: #8a1f11; border-color: #fbc2c4; }
-.notice     { background: #fff6bf; color: #514721; border-color: #ffd324; }
-.success    { background: #e6efc2; color: #264409; border-color: #c6d880; }
-.info           { background: #d5edf8; color: #205791; border-color: #92cae4; }
-.error a, .alert a { color: #8a1f11; }
-.notice a   { color: #514721; }
-.success a  { color: #264409; }
-.info a         { color: #205791; }

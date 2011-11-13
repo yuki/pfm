@@ -30,7 +30,20 @@ To: <%= date_select("get_movements", "to",
   <%= @account.description %>
 </p>
 
-<%= render 'movements/mtable' %>
+<%= render :partial => 'movements/mtable', :locals => {:movements => @movements} %>
+
+<% movements_loss = @movements.find_all{|i| i.amount < 0 and !i.is_transfer?} %>
+<% movements_profit = @movements.find_all{|i| i.amount > 0 and !i.is_transfer?} %>
+
+<div class="span-10">
+<%= render :partial => 'movements/graphs',
+    :locals => { :movements => movements_loss, :title => "Loss"  } %>
+</div>
+<div class="span-10 last">
+<%= render :partial => 'movements/graphs',
+    :locals => { :movements => movements_profit, :title => "Profit"  } %>
+</div>
+<br />
 
 <%= link_to 'Edit', edit_account_path(@account) %> |
 <%= link_to 'Back', accounts_path %>
