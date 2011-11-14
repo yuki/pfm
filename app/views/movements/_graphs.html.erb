@@ -1,32 +1,13 @@
-<% total = movements.sum(&:amount) %>
 <% chart_data = [] %>
-<% pie_chart_data = [] %>
+<% total = movements.sum(&:amount) %>
 
-<h2><%= title %></h2>
-<table id="datatable_<%=title%>">
-  <thead>
-  <tr>
-    <th></th>
-    <% movements.group_by(&:mtype).each do |movement| %>
-      <th><%= movement[0].name %></th>
-    <% end %>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <th>Amount</th>
-    <% movements.group_by(&:mtype).each do |movement| %>
-      <td><%= movement[1].sum(&:amount).to_s %></td>
-      <% chart_data += [{:name => movement[0].name, :data => [movement[1].sum(&:amount).to_f] }] %>
-      <% pie_chart_data += [[movement[0].name,(movement[1].sum(&:amount)*100.00/total).to_f.round(2)]] %>
-    <% end %>
-  </tr>
-  </tbody>
-</table>
+<% movements.group_by(&:mtype).each do |movement| %>
+    <% chart_data += [{:name => movement[0].name, :data => [movement[1].sum(&:amount).to_f] }] %>
+<% end %>
 
-<div id="<%=title%>_1" class="span-10"></div>
-<div id="<%=title%>_2" class="span-10"></div>
-<div id="<%=title%>_3" class="span-10"></div>
+
+<div id="<%=title%>_1"></div>
+<div id="<%=title%>_2"></div>
 
 <script>
 var chart;
@@ -34,47 +15,6 @@ $(document).ready(function() {
    chart = new Highcharts.Chart({
       chart: {
          renderTo: '<%=title%>_1',
-         plotBackgroundColor: null,
-         plotBorderWidth: null,
-         plotShadow: false
-      },
-      title: {
-         text: '<%= title %> %'
-      },
-      tooltip: {
-         formatter: function() {
-            return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
-         }
-      },
-      plotOptions: {
-         pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-               enabled: true,
-               color: Highcharts.theme.textColor,
-               connectorColor: Highcharts.theme.textColor,
-               formatter: function() {
-                  return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
-               }
-            }
-         }
-      },
-       series: [{
-         type: 'pie',
-         name: 'Pie chart',
-         data: <%= pie_chart_data.to_s.html_safe %>
-      }]
-   });
-});
-</script>
-
-<script>
-var chart;
-$(document).ready(function() {
-   chart = new Highcharts.Chart({
-      chart: {
-         renderTo: '<%=title%>_2',
          defaultSeriesType: 'column'
       },
       title: {
@@ -108,7 +48,7 @@ var chart;
 jQuery(document).ready(function() {
     chart = new Highcharts.Chart({
         chart: {
-            renderTo: '<%=title%>_3',
+            renderTo: '<%=title%>_2',
             defaultSeriesType: 'column'
         },
         title: {

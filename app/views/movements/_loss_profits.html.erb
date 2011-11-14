@@ -1,0 +1,22 @@
+<% movements_loss = movements.find_all{|i| i.amount < 0 and !i.is_transfer?} %>
+<% movements_profit = movements.find_all{|i| i.amount > 0 and !i.is_transfer?} %>
+
+<div class="span-20 last">
+  <div class="span-10">
+    <%= render :partial => 'movements/loss_profits_table',
+        :locals => { :movements => movements_loss, :title => "Loss", :total => movements_loss.sum(&:amount) } %>
+  </div>
+  <div class="span-10 last">
+    <%= render :partial => 'movements/loss_profits_table',
+        :locals => { :movements => movements_profit, :title => "Profit", :total => movements_profit.sum(&:amount)  } %>
+  </div>
+</div>
+
+<div class="span-10">
+    <%= render :partial => 'movements/graphs',
+        :locals => { :movements => movements_loss, :title => "Loss"  } %>
+</div>
+<div class="span-10 last">
+    <%= render :partial => 'movements/graphs',
+        :locals => { :movements => movements_profit, :title => "Profit"  } %>
+</div>
