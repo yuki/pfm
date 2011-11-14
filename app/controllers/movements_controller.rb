@@ -51,6 +51,7 @@ class MovementsController < ApplicationController
       if @movement.save
         make_movement(@movement)
         make_transfer(@movement) if @movement.is_transfer
+        consolidate_account(@movement)
 
         format.html { redirect_to account_path(@movement.account.id), notice: 'Movement was successfully created.' }
         format.json { render json: @movement, status: :created, location: @movement }
@@ -118,6 +119,33 @@ class MovementsController < ApplicationController
     m.save!
     movement.movement_id = m.id
     movement.save!
+  end
+
+  def consolidate_account(movement)
+    #if the movement is not the last one, the account must be consolidate
+    a = Account.find(movement.account)
+    unless a.movements.last == movement and a.movements.length > 1
+      index = a.movements.index(movement)
+      if index.zero?
+        movement.account_amount = a.movements[index+1].account_amount - a.movements[index+1].amount
+        movement.save!
+        a.movements[index+2..-1].each do |m|
+          idx = a.movements.index(m) - 1
+          m.account_amount = a.movements[idx].account_amount + m.amount
+          m.save! unless idx == -1
+        end
+      else
+        movement.account_amount = a.movements[index-1].account_amount + movement.amount
+        movement.save!
+        a.movements[index..-1].each do |m|
+          idx = a.movements.index(m)
+          m.account_amount = a.movements[idx-1].account_amount + m.amount
+          m.save! unless idx == -1
+        end
+      end
+      a.amount = a.movements.last.account_amount
+      a.save!
+    end
   end
 
 end
