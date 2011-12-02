@@ -19,12 +19,11 @@ To: <%= date_select("get_movements", "to",
 <p>
   <b><%= link_to "create movement", new_movement_path(:account_id => @account) %></b>
 </p>
-
 <p>
-  <b>Currency:</b>
-  <%= @account.currency.symbol %>
+  <b><%= link_to "Show entire year", show_year_account_path(@account) %></b>
 </p>
 
+<h2>Amount: <%= @account.amount %><%= @account.currency.symbol %></h2>
 <p>
   <b>Description:</b>
   <%= @account.description %>

@@ -27,7 +27,7 @@ class AccountsController < ApplicationController
         Date.today.end_of_month
 
 
-    @movements = @account.movements.where("mdate >= '#{@from_month}' and mdate <= '#{@to_month}'").last(30)
+    @movements = @account.movements.where("mdate >= '#{@from_month}' and mdate <= '#{@to_month}'")
 
     respond_to do |format|
       format.html # show.html.erb
@@ -93,5 +93,58 @@ class AccountsController < ApplicationController
       format.html { redirect_to accounts_url }
       format.json { head :ok }
     end
+  end
+
+  def show_year
+    @account = Account.find(params[:id])
+    @chart_data = {:profits => [], :loss => []}
+    @chart_data2 = {:profits => "", :loss => ""}
+    @account.movements.group_by(&:mtype).each do |mtype|
+      months = [Array.new(12,0.0),Array.new(12,0.0)]
+      mtype[1].each do |movement|
+        i = movement.amount > 0 ? 0 : 1
+        months[i][movement.vdate.month-1] += movement.amount.to_f
+      end
+      @chart_data[:profits] += [{:name => mtype[0].name, :data => months[0] }]
+      @chart_data[:loss] += [{:name => mtype[0].name, :data => months[1] }]
+    end
+
+    #grafic 2
+    @months = Array.new(12,0.0)
+    @mtypes = {}
+    @account.movements.each do |movement|
+      if movement.amount > 0
+        @months[movement.vdate.month-1] += movement.amount.to_f
+        #@mtypes[movement.vdate.month-1] += [movement.mtype.name, movement.amount.to_f]
+        #FIXME: this should be done better, it's crap
+        if @mtypes.has_key?(movement.vdate.month-1)
+          if @mtypes[movement.vdate.month-1].has_key?(movement.mtype.name)
+            @mtypes[movement.vdate.month-1][movement.mtype.name] += movement.amount.to_f
+          else
+            @mtypes[movement.vdate.month-1].merge!(Hash[movement.mtype.name,movement.amount.to_f])
+          end
+        else
+          @mtypes.merge!(Hash[movement.vdate.month-1,{}])
+          @mtypes[movement.vdate.month-1].merge!(Hash[movement.mtype.name,movement.amount.to_f])
+        end
+      end
+    end
+    @months.each do |month|
+      if month == 0.0
+        @chart_data2[:profits] += "{y: 0},"
+      else
+        @chart_data2[:profits] +=
+          "{y: #{month}, color: colors[#{@months.index(month)}], drilldown: { name: 'blabla', categories: #{@mtypes[@months.index(month)].keys}, data: #{@mtypes[@months.index(month)].values}, color: colors[#{@months.index(month)}]}},"
+#          Hash["y",month],
+#          Hash["drilldown",
+#              Hash["name","enero"]
+#          ]
+      end
+    end
+
+    respond_to do |format|
+      format.html
+    end
+
   end
 end

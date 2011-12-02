@@ -3,7 +3,12 @@ Pfm::Application.routes.draw do
 
   resources :mtypes
 
-  resources :accounts
+  resources :accounts do
+    member do
+      get 'list_by_month'
+      get 'show_year'
+    end
+  end
 
   resources :currencies
 

@@ -4,8 +4,8 @@ TODO list
   - Mejorar el get de _mtable, que la URL queda super fea no, lo siguiente
   - Mejorar lo de _mtable cuando estas viendo todoso los movements y no solo un account
   - Si creas un movimiento y lo borras, que deje bien la cuenta tal como estaba
-  - Si el momivimiento no es el último, tocará hacer muchas cosas...
-  - Si creas un movimiento, si te equivocas, al editar el movimiento hacer las cosas que cuadren
+  - Al borrar un movimiento que deje bien la cuenta tal como estaba
+  - Al editar el movimiento hacer las cosas que cuadren
 
 * Añadir temas no financieros
   - Para gasto de agua/electricidad, con gráfica
@@ -18,7 +18,6 @@ TODO list
 * crear CSS decente, y layout 
   - en el lado izquierdo menú para currencies, accounts y demás
   - al seleccionar una opción del menú izquierdo, tener un menú superior para crear y demás.
-  - las tablas que estén "cebradas" con un color más bonito que ahora XD
 
 * hacer graficas 
   - Graficas posibles para usar:

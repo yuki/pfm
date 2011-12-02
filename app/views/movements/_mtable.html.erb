@@ -10,7 +10,7 @@
       <th>Vdate</th>
       <th></th>
       <th></th>
-      <th>Account amount</th>
+      <% if params[:controller] != 'movements' %><th>Account amount</th><% end %>
       <th></th>
       <th></th>
       <th></th>
@@ -27,7 +27,7 @@
         <td><%= movement.vdate %></td>
         <td></td>
         <td></td>
-        <td><%= movement.account_amount.to_s + ' ' +  movement.account.currency.symbol %></td>
+        <% if params[:controller] != 'movements' %><td><%= movement.account_amount.to_s + ' ' +  movement.account.currency.symbol %></td><% end %>
         <td><%= link_to 'Show', movement %></td>
         <td><%= link_to 'Edit', edit_movement_path(movement) %></td>
         <td><%= link_to 'Destroy', movement, confirm: 'Are you sure?', method: :delete %></td>
