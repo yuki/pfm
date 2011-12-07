@@ -81,8 +81,8 @@ class MovementsController < ApplicationController
   def destroy
     @movement = Movement.find(params[:id])
     account = @movement.account
-    #@movement.destroy
-    #account.consolidate
+    @movement.destroy
+    account.consolidate
 
     respond_to do |format|
       format.html { redirect_to account_path(@movement.account) }

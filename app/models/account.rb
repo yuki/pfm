@@ -17,7 +17,11 @@ class Account < ActiveRecord::Base
         movement.save!
         a.movements[index..-1].each do |m|
           idx = a.movements.index(m)
-          m.account_amount = a.movements[idx-1].account_amount + m.amount
+          if m.destroyed?
+            m.account_amount = a.movements[idx-1].account_amount
+          else
+            m.account_amount = a.movements[idx-1].account_amount + m.amount
+          end
           m.save! unless idx == -1
         end
       end
