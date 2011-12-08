@@ -49,7 +49,6 @@ class MovementsController < ApplicationController
         return
       end
       if @movement.save
-        @movement.consolidate
         format.html { redirect_to account_path(@movement.account), notice: 'Movement was successfully created.' }
         format.json { render json: @movement, status: :created, location: @movement }
       else
@@ -86,9 +85,7 @@ class MovementsController < ApplicationController
   # DELETE /movements/1.json
   def destroy
     @movement = Movement.find(params[:id])
-    account = @movement.account
     @movement.destroy
-    account.consolidate
 
     respond_to do |format|
       format.html { redirect_to account_path(@movement.account) }
