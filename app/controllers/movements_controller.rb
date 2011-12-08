@@ -65,8 +65,14 @@ class MovementsController < ApplicationController
     @movement = Movement.find(params[:id])
 
     respond_to do |format|
+      old_account_id = @movement.account_id
       if @movement.update_attributes(params[:movement])
-        @movement.account.consolidate
+        #if movement is updated to other account, it must be consolidated
+        if old_account_id != params[:movement]["account_id"]
+          a = Account.find(old_account_id)
+          a.consolidate
+        end
+       @movement.account.consolidate
         format.html { redirect_to account_path(@movement.account), notice: 'Movement was successfully updated.' }
         format.json { head :ok }
       else
