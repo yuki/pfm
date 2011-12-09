@@ -21,10 +21,10 @@
     <td><%= account.currency.name %> </td>
     <td><%= account.description %></td>
     <td><%= account.amount %><%= account.currency.symbol %></td>
-    <td><%= link_to 'Show', account %></td>
-    <td><%= link_to 'Edit', edit_account_path(account) %></td>
-    <td><%= link_to 'Destroy', account, confirm: 'Are you sure?', method: :delete %></td>
-    <td><%= link_to 'Create movement', new_movement_path(:account_id => account) %></td>
+    <td><%= draw_button("show","S",account,"Show account") %></td>
+    <td><%= draw_button("edit","E",edit_account_path(account),"Edit account") %></td>
+    <td><span class="destroy"><%= link_to 'X', account, confirm: 'Are you sure?', method: :delete %></span></td>
+    <td><%= draw_button("create","C",new_movement_path(:account_id => account),"Create movement") %></td>
   </tr>
 <% end %>
 

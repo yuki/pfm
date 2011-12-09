@@ -90,7 +90,7 @@ class MovementsController < ApplicationController
     @movement.destroy
 
     respond_to do |format|
-      format.html { redirect_to account_path(@movement.account) }
+      format.html { redirect_to account_path(@movement.account), notice: 'Movement deleted.' }
       format.json { head :ok }
     end
   end

@@ -7,7 +7,6 @@
     <th>Symbol</th>
     <th></th>
     <th></th>
-    <th></th>
   </tr>
   </thead>
   <tbody>
@@ -15,9 +14,8 @@
     <tr>
       <td><%= currency.name %></td>
       <td><%= currency.symbol %></td>
-      <td><%= link_to 'Show', currency %></td>
-      <td><%= link_to 'Edit', edit_currency_path(currency) %></td>
-      <td><%= link_to 'Destroy', currency, confirm: 'Are you sure?', method: :delete %></td>
+      <td><%= draw_button('edit',"E", edit_currency_path(currency),"Edit currency") %></td>
+      <td><span class="destroy"><%= link_to 'X', currency, confirm: 'Are you sure?', method: :delete %></span></td>
     </tr>
   <% end %>
   </tbody>

@@ -19,16 +19,17 @@
 
     <div id="centro" class="span-20 last">
     <% flash.each do |key, msg| %>
-        <%= content_tag :p, msg, :class => "flash #{key}" %>
+        <%= content_tag :div, msg, :class => [key, " message"], :id => "notice" %>
     <% end %>
-    <% flash.each do |key, msg| %>
-        <%= content_tag :div, msg, :class => [key, " message"], :id => "notice_ #{key}" %>
-        <%= content_tag :script, :type => "text/javascript" do -%>
-            setTimeout("new Effect.Fade('notice_<%= key %>');", 15000);
-        <% end %>
-    <% end %>
+
     <%= yield %>
     </div>
 </div>
+<script>
+  $(function() {
+      $("#notice").delay(1000).fadeOut(3000);
+  });
+
+</script>
 </body>
 </html>
