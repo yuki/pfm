@@ -2,7 +2,7 @@ class Movement < ActiveRecord::Base
   belongs_to  :account
   belongs_to  :mtype
   validates_presence_of :mtype_id, :account_id, :amount
-  after_create :consolidate
+#  after_create :consolidate
   after_destroy :consolidate_after_destroy
 
   def consolidate_after_destroy

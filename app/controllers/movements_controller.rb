@@ -49,6 +49,8 @@ class MovementsController < ApplicationController
         return
       end
       if @movement.save
+        #FIXME: it should be in the model, with "after_create"
+        @movement.consolidate
         format.html { redirect_to account_path(@movement.account), notice: 'Movement was successfully created.' }
         format.json { render json: @movement, status: :created, location: @movement }
       else
