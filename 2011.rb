@@ -5,7 +5,7 @@
 #a.amount = 1000
 #a.currency = Currency.find(1)
 #a.save!
-a = Account.find(11)
+a = Account.find(1)
 
 File.open("2011.csv").each { |line|
     unless line =~ /^$/
@@ -29,6 +29,7 @@ File.open("2011.csv").each { |line|
             m.mdate = d
             m.vdate = d
             m.save!
+            m.consolidate
             puts m.inspect
         end
     end
