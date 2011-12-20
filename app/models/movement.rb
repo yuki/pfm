@@ -2,11 +2,22 @@ class Movement < ActiveRecord::Base
   belongs_to  :account
   belongs_to  :mtype
   validates_presence_of :mtype_id, :account_id, :amount
-#  after_create :consolidate
   after_destroy :consolidate_after_destroy
 
   def consolidate_after_destroy
-    self.account.consolidate
+    if self.is_transfer
+      m = Movement.find(self.movement_id)
+      m.is_transfer = false
+      m.movement_id = nil
+      m.save!
+      m.destroy
+    end
+    if self.account.movements.length == 0
+      self.account.amount = self.account.amount - self.amount
+      self.account.save!
+    else
+      self.account.consolidate
+    end
   end
 
   def consolidate
@@ -32,7 +43,7 @@ class Movement < ActiveRecord::Base
     m.description = movement.description
     m.amount = movement.amount.abs
     m.is_transfer = movement.is_transfer
-    m.movement_id = m.id
+    m.movement_id = movement.id
     m.mdate = movement.mdate
     m.vdate = movement.vdate
     m.account = Account.find(movement.movement_id)

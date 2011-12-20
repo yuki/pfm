@@ -6,12 +6,14 @@
     <th>Name</th>
     <th></th>
     <th></th>
+    <th></th>
   </tr>
   </thead>
   <tbody>
   <% @mtypes.each do |mtype| %>
     <tr>
       <td><%= mtype.name %></td>
+      <td><%= draw_button('show', 'S', mtype, "Show movement type") %></td>
       <td><%= draw_button('edit', 'E', edit_mtype_path(mtype),"Edit movement type") %></td>
       <td><span class="destroy"><%= link_to 'X', mtype, confirm: 'Are you sure?', method: :delete %></span></td>
     </tr>

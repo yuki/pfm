@@ -36,10 +36,14 @@
     <%= f.label :amount %><br />
     <%= f.text_field :amount %>
   </div>
-  <div class="field">
-    <%= f.label :is_transfer %><br />
-    <%= f.check_box :is_transfer, :onchange => "$('div#movement_id').toggle()" %>
-  </div>
+
+  <% unless params[:action] == "edit" %>
+    <div class="field">
+      <%= f.label :is_transfer %><br />
+      <%= f.check_box :is_transfer, :onchange => "$('div#movement_id').toggle()" %>
+    </div>
+  <% end %>
+
   <div class="field" id="movement_id" style="display:none;">
     <%= f.label :movement_id %><br />
     <%= select("movement", "movement_id",
