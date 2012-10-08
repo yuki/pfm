@@ -1,5 +1,8 @@
 <h1>Listing accounts</h1>
 
+<%= link_to 'New Account', new_account_path %>
+<br /> <br />
+
 <table>
   <thead>
   <tr>
@@ -14,13 +17,12 @@
   </tr>
   </thead>
 
-
 <% @accounts.each do |account| %>
   <tr>
-    <td><%= account.name %></td>
+    <td><%= link_to account.name, account  %></td>
     <td><%= account.currency.name %> </td>
     <td><%= account.description %></td>
-    <td><%= account.amount %><%= account.currency.symbol %></td>
+    <td class="amount"><%= number_with_precision(account.amount,  :precision => 2) %><%= account.currency.symbol %></td>
     <td><%= draw_button("show","S",account,"Show account") %></td>
     <td><%= draw_button("edit","E",edit_account_path(account),"Edit account") %></td>
     <td><span class="destroy"><%= link_to 'X', account, confirm: 'Are you sure?', method: :delete %></span></td>
@@ -33,7 +35,7 @@
     <th>Total</th>
     <th></th>
     <th></th>
-    <th><%= get_accounts_total() %> </th>
+    <th class="amount"><%= get_accounts_total() %> </th>
     <th></th>
     <th></th>
     <th></th>
@@ -42,6 +44,3 @@
 
 </table>
 
-<br />
-
-<%= link_to 'New Account', new_account_path %>

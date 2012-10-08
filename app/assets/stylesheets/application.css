@@ -59,6 +59,10 @@ span.destroy a{
   text-decoration: none;
 }
 
+th.amount, td.amount {
+  text-align: right;
+}
+
 
 /*********
 * TABLES *
