@@ -15,7 +15,7 @@ l.each do |mt|
     puts mov.inspect
 end
 
-accoun = ["cash","bbk","account"]
+accoun = ["cash", "bla", "bla2"]
 
 accoun.each { |ac|
     a = Account.new
@@ -26,7 +26,7 @@ accoun.each { |ac|
 
     (1..12).each { |i|
         [1,10,21,28].each {|m|
-            d = "2011-#{i}-#{m}".to_datetime
+            d = "2012-#{i}-#{m}".to_datetime
             mt = Mtype.find(rand(7)+1)
             m = Movement.new
             m.mtype = mt

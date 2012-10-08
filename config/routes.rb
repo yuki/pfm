@@ -7,6 +7,11 @@ Pfm::Application.routes.draw do
     member do
       get 'list_by_month'
       get 'show_year'
+      post 'show_year'
+      post 'show'
+    end
+    collection do
+      get 'anual_graph'
     end
   end
 

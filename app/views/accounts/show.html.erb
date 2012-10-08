@@ -1,24 +1,14 @@
 <h1><%= @account.name %></h1>
 
-<%= form_for @account, :url => account_path(@account), :method => :get do |f| %>
-From: <%= date_select("get_movements", "from",
-                {:end_year => Time.now.year, :discard_day => true, :default => @from_month,
-                    #FIXME: put the prompt ok
-                    #:prompt => { :month => 'Select month', :year => 'Select year'}
-                },
-                {:onchange => "this.form.submit();" }) %>
-To: <%= date_select("get_movements", "to",
-                {:end_year => Time.now.year, :discard_day => true, :default => @to_month,
-                    #FIXME: put the prompt ok
-                    #:prompt => { :month => 'Select month', :year => 'Select year'}
-                },
-                {:onchange => "this.form.submit();" }) %>
+<%= form_for @account, :url => account_path(@account), :method => :post do |f| %>
+  <%= get_from_date_select(false) %>
+  <%= get_to_date_select(false) %>
 <% end %>
 <p>
   <b><%= link_to "create movement", new_movement_path(:account_id => @account) %></b>
 </p>
 <p>
-  <b><%= link_to "Show entire year", show_year_account_path(@account) %></b>
+    <b><%= link_to "Show graphs", show_year_account_path(@account) %></b>
 </p>
 
 <h2>Amount: <%= @account.amount %><%= @account.currency.symbol %></h2>
@@ -27,11 +17,7 @@ To: <%= date_select("get_movements", "to",
   <%= @account.description %>
 </p>
 
-<%= render :partial => 'movements/mtable', :locals => {:movements => @movements} %>
+<%= render :partial => 'movements/mtable', :locals => {:movements => @movements} unless @movements.empty?  %>
 
-<%= render :partial => 'movements/loss_profits', :locals => { :movements => @movements } %>
+<%= render :partial => 'movements/loss_profits', :locals => { :movements => @movements } unless @movements.empty? %>
 
-<br />
-
-<%= link_to 'Edit', edit_account_path(@account) %> |
-<%= link_to 'Back', accounts_path %>

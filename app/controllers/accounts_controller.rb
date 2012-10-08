@@ -14,19 +14,8 @@ class AccountsController < ApplicationController
   # GET /accounts/1.json
   def show
     @account = Account.find(params[:id])
-    #FIXME: should be a better way to do this
-    if params[:get_movements]
-        params[:from_date] = Date.new(params[:get_movements]["from(1i)"].to_i,params[:get_movements]["from(2i)"].to_i).to_s(:db)
-        params[:to_date] = Date.new(params[:get_movements]["to(1i)"].to_i,params[:get_movements]["to(2i)"].to_i).to_s(:db)
-    end
-    @from_month = (params[:from_date]) ?
-        Date.new(params[:get_movements]["from(1i)"].to_i,params[:get_movements]["from(2i)"].to_i) :
-        Date.today.beginning_of_month
-    @to_month = (params[:to_date]) ?
-        Date.new(params[:get_movements]["to(1i)"].to_i,params[:get_movements]["to(2i)"].to_i).end_of_month :
-        Date.today.end_of_month
-
-
+    
+    @from_month, @to_month = get_dates()
     @movements = @account.movements.where("mdate >= '#{@from_month}' and mdate <= '#{@to_month}'")
 
     respond_to do |format|
@@ -95,56 +84,86 @@ class AccountsController < ApplicationController
     end
   end
 
-  def show_year
+  def monthly_report
     @account = Account.find(params[:id])
-    @chart_data = {:profits => [], :loss => []}
-    @chart_data2 = {:profits => "", :loss => ""}
-    @account.movements.group_by(&:mtype).each do |mtype|
+    
+  end
+
+  def get_chart_data(movements)
+    chart_data = {:profits => [], :loss => []}
+    movements.group_by(&:mtype).each do |mtype|
       months = [Array.new(12,0.0),Array.new(12,0.0)]
       mtype[1].each do |movement|
         i = movement.amount > 0 ? 0 : 1
         months[i][movement.vdate.month-1] += movement.amount.to_f
       end
-      @chart_data[:profits] += [{:name => mtype[0].name, :data => months[0] }]
-      @chart_data[:loss] += [{:name => mtype[0].name, :data => months[1] }]
+      chart_data[:profits] += [{:name => mtype[0].name, :data => months[0] }]
+      chart_data[:loss] += [{:name => mtype[0].name, :data => months[1] }]
     end
+    return chart_data
+  end
+
+  def month_chart_data(profit_loss,months,mtypes)
+    text = ""
+    months[profit_loss].each do |month|
+      if month == 0.0
+        text += "{y: 0},"
+      else
+        text +=
+          "{y: #{month}, color: colors[#{months[profit_loss].index(month)}], drilldown: { name: 'blabla', categories: #{mtypes[profit_loss][months[profit_loss].index(month)].keys}, data: #{mtypes[profit_loss][months[profit_loss].index(month)].values}, color: colors[#{months[profit_loss].index(month)}]}},"
+      end
+    end
+    return text
+  end
+
+  def show_year
+    @account = Account.find(params[:id])
+    from_month, to_month = get_dates()
+    @from_month, @to_month = from_month, to_month
+    @chart_data2 = {:profits => "", :loss => ""}
+    if params.has_key?("mtype")
+      @params_mtypes = params[:mtype].select{|k,v| v == "1"}.keys
+      @movements = @account.movements.find(:all, :conditions => ["mdate >= ? and mdate <= ? and is_transfer = ? and mtype_id in (?)", from_month, to_month, false, @params_mtypes ])
+    else
+      @params_mtypes = Mtype.all
+      @movements = @account.movements.find(:all, :conditions => ["mdate >= ? and is_transfer = ?", Time.now.beginning_of_year, false])
+    end 
+
+    #grafic 1
+    @chart_data = get_chart_data(@movements)
 
     #grafic 2
-    @months = Array.new(12,0.0)
-    @mtypes = {}
-    @account.movements.each do |movement|
-      if movement.amount > 0
-        @months[movement.vdate.month-1] += movement.amount.to_f
+    @months = [Array.new(12,0.0),Array.new(12,0.0)]
+    #[profits,loss]
+    @mtypes = [{},{}]
+    @movements.each do |movement|
+      i = movement.amount > 0 ? 0 : 1
+ 
+      #if movement.amount > 0
+        @months[i][movement.vdate.month-1] += movement.amount.to_f
         #@mtypes[movement.vdate.month-1] += [movement.mtype.name, movement.amount.to_f]
         #FIXME: this should be done better, it's crap
-        if @mtypes.has_key?(movement.vdate.month-1)
-          if @mtypes[movement.vdate.month-1].has_key?(movement.mtype.name)
-            @mtypes[movement.vdate.month-1][movement.mtype.name] += movement.amount.to_f
+        if @mtypes[i].has_key?(movement.vdate.month-1)
+          if @mtypes[i][movement.vdate.month-1].has_key?(movement.mtype.name)
+            @mtypes[i][movement.vdate.month-1][movement.mtype.name] += movement.amount.to_f
           else
-            @mtypes[movement.vdate.month-1].merge!(Hash[movement.mtype.name,movement.amount.to_f])
+            @mtypes[i][movement.vdate.month-1].merge!(Hash[movement.mtype.name,movement.amount.to_f])
           end
         else
-          @mtypes.merge!(Hash[movement.vdate.month-1,{}])
-          @mtypes[movement.vdate.month-1].merge!(Hash[movement.mtype.name,movement.amount.to_f])
+          @mtypes[i].merge!(Hash[movement.vdate.month-1,{}])
+          @mtypes[i][movement.vdate.month-1].merge!(Hash[movement.mtype.name,movement.amount.to_f])
         end
-      end
+      #end
     end
-    @months.each do |month|
-      if month == 0.0
-        @chart_data2[:profits] += "{y: 0},"
-      else
-        @chart_data2[:profits] +=
-          "{y: #{month}, color: colors[#{@months.index(month)}], drilldown: { name: 'blabla', categories: #{@mtypes[@months.index(month)].keys}, data: #{@mtypes[@months.index(month)].values}, color: colors[#{@months.index(month)}]}},"
-#          Hash["y",month],
-#          Hash["drilldown",
-#              Hash["name","enero"]
-#          ]
-      end
-    end
+
+    @chart_data2[:profits] = month_chart_data(0,@months,@mtypes)
+    @chart_data2[:loss] = month_chart_data(1,@months,@mtypes)
 
     respond_to do |format|
       format.html
     end
 
   end
+
+
 end
