@@ -16,7 +16,7 @@
     <%= f.label :account_id %><br />
     <%= select("movement", "account_id", 
         Account.find(:all, :order=>"name ASC").collect {|p| [ p.name, p.id ] }, 
-        {:include_blank => 'Choose account', :selected => params[:account_id]}) %>
+        {:include_blank => 'Choose account', @movement.account || :selected => params[:account_id]}) %>
   </div>
   <div class="field">
     <%= f.label :mtype_id %><br />
@@ -30,26 +30,59 @@
   </div>
   <div class="field">
     <%= f.label :description %><br />
-    <%= f.text_area :description %>
+    <%= f.text_area :description, :rows => 2%>
   </div>
-  <div class="field">
+  <div class="field amount">
     <%= f.label :amount %><br />
     <%= f.text_field :amount %>
   </div>
 
   <% unless params[:action] == "edit" %>
     <div class="field">
-      <%= f.label :is_transfer %><br />
-      <%= f.check_box :is_transfer, :onchange => "$('div#movement_id').toggle()" %>
+      <%= f.label "Kind of movement" %><br />
+      <%= radio_button_tag :what_is, :normal, true, 
+            :onclick => "$('div.hidded').hide();$('div.amount').show();" %>
+      <label for="what_is_normal" class="small_label">Normal</label>
+      <%= radio_button_tag :what_is, :is_transfer, false, 
+            :onclick => "$('div.hidded').hide();$('div.transfer').show();$('div.amount').show();" %>
+      <label for="what_is_is_transfer" class="small_label">Transfer</label>
+      <%= radio_button_tag :what_is, :is_group, false, 
+            :onclick => "$('div.hidded').hide();$('div.group').show();$('div.amount').hide();" %>
+      <label for="what_is_is_group" class="small_label">Group</label>
     </div>
   <% end %>
 
-  <div class="field" id="movement_id" style="display:none;">
-    <%= f.label :movement_id %><br />
-    <%= select("movement", "movement_id",
-        Account.find(:all, :order=>"name ASC").collect {|p| [ p.name, p.id ] },
-        {:include_blank => 'Choose account'}) %>
-  </div>
+  <!--transfer movement -->
+    <div class="field hidded transfer" id="movement_id" 
+      style="<%= "display:none;" unless params[:action] == "edit" and @movement.is_transfer %>"">
+      <%= f.label :movement_id %><br />
+      <%= select("movement", "movement_id",
+          Account.find(:all, :order=>"name ASC").collect {|p| [ p.name, p.id ] },
+          {:include_blank => 'Choose account', #FIXME: that should be better done
+	       :selected => @movement.movements[0] ? @movement.movements[0].account_id : 1}) %>
+    </div>
+  <!-- /transfer movement -->
+
+  <!-- group movement -->
+    <div class="field hidded group" id="group_id" 
+      #FIXME: that should be better done
+      style="<%= "display:none;" unless params[:action] == "edit" and @movement.movements.size > 0 and
+             @movement.movements[0].is_group %>">
+      <table>
+        <tr>
+          <th>Movement type</th>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Movement date</th>
+          <th></th>
+        </tr>
+        <%= f.fields_for :movements do |builder| %>
+            <%= render "new_group_movement", :number => 1, :gid => 1, :f => builder %>
+        <% end %>
+        <tr><td><%= link_to_add_fields "Add", f, :movements %></td></tr>
+      </table>
+    </div>
+  <!-- /group movement -->
 
   <div class="field">
     <%= f.label :mdate %><br />
@@ -65,6 +98,12 @@
 <% end %>
 
 <script  type="text/javascript">
+  group_amount = 1;
+//  increase(group_amount);
+  function increase(amount){
+    group_amount = amount+1;
+    alert(group_amount);
+  };
 //  $("#movement_mtype_id").chosen();
 //  $("#movement_account_id").chosen();
 //  $("#movement_movement_id").chosen();

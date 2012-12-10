@@ -14,9 +14,10 @@ class AccountsController < ApplicationController
   # GET /accounts/1.json
   def show
     @account = Account.find(params[:id])
-    
+
     @from_month, @to_month = get_dates()
-    @movements = @account.movements.where("mdate >= '#{@from_month}' and mdate <= '#{@to_month}'")
+    @days = (@to_month.to_date - @from_month.to_date).to_i
+    @movements = @account.movements.where("mdate >= '#{@from_month}' and mdate <= '#{@to_month}' and is_group is not ?",true)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -117,25 +118,30 @@ class AccountsController < ApplicationController
   end
 
   def show_year
-    @account = Account.find(params[:id])
+    @account = params[:id] ? Account.find(params[:id]) : Account.all
     from_month, to_month = get_dates()
-    @from_month, @to_month = from_month, to_month
+    @from_month = from_month.beginning_of_year
+    @to_month = @from_month.year == Time.now.year ? Time.now : @from_month.end_of_year
+    @days = (@to_month.to_date - @from_month.to_date).to_i
     @chart_data2 = {:profits => "", :loss => ""}
+    @params_mtypes = []
     if params.has_key?("mtype")
       @params_mtypes = params[:mtype].select{|k,v| v == "1"}.keys
-      @movements = @account.movements.find(:all, :conditions => ["mdate >= ? and mdate <= ? and is_transfer = ? and mtype_id in (?)", from_month, to_month, false, @params_mtypes ])
+    end
+    @params_mtypes = Mtype.all if @params_mtypes.length == 0
+    if params[:id]
+      @movements = @account.movements.find(:all, :conditions => ["mdate >= ? and mdate <= ? and is_transfer = ? and mtype_id in (?)", @from_month, @to_month, false, @params_mtypes ])
     else
-      @params_mtypes = Mtype.all
-      @movements = @account.movements.find(:all, :conditions => ["mdate >= ? and is_transfer = ?", Time.now.beginning_of_year, false])
-    end 
+      @movements = Movement.find(:all, :conditions => ["mdate >= ? and mdate <= ? and is_transfer = ? and mtype_id in (?)", @from_month, @to_month, false, @params_mtypes ])
+    end
 
     #grafic 1
     @chart_data = get_chart_data(@movements)
 
-    #grafic 2
-    @months = [Array.new(12,0.0),Array.new(12,0.0)]
-    #[profits,loss]
-    @mtypes = [{},{}]
+   #grafic 2
+   @months = [Array.new(12,0.0),Array.new(12,0.0)]
+   #[profits,loss]
+   @mtypes = [{},{}]
     @movements.each do |movement|
       i = movement.amount > 0 ? 0 : 1
  

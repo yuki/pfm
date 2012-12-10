@@ -11,7 +11,8 @@ Pfm::Application.routes.draw do
       post 'show'
     end
     collection do
-      get 'anual_graph'
+      post 'show_year'
+      get 'show_year'
     end
   end
 

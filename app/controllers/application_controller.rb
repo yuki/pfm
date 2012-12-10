@@ -5,7 +5,9 @@ class ApplicationController < ActionController::Base
       #FIXME: should be a better way to do this
       if params[:get_movements]
           params[:from_date] = Date.new(params[:get_movements]["from(1i)"].to_i,params[:get_movements]["from(2i)"].to_i).to_s(:db)
-          params[:to_date] = Date.new(params[:get_movements]["to(1i)"].to_i,params[:get_movements]["to(2i)"].to_i).to_s(:db)
+          if params[:action] != "show_year"
+            params[:to_date] = Date.new(params[:get_movements]["to(1i)"].to_i,params[:get_movements]["to(2i)"].to_i).to_s(:db)
+          end
       end
       from_month = (params[:from_date]) ?
           Date.new(params[:get_movements]["from(1i)"].to_i,params[:get_movements]["from(2i)"].to_i) :

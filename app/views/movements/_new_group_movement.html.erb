@@ -1,0 +1,14 @@
+  <tr class="fields">
+    <td>
+      <%= f.select("mtype_id",
+            Mtype.find(:all, :order=>"name ASC").collect {|p| [ p.name, p.id ] },
+            {:include_blank => 'Movement type'}) %>
+    </td>
+    <%= f.hidden_field :account_id, :value => params[:account_id] %>
+    <%= f.hidden_field :is_group, :value => true %>
+    <td><%= f.text_field :name, :size => 20  %></td>
+    <td><%= f.text_field :amount, :size => 10 %></td>
+    <td><%= f.date_select :mdate, :use_short_month => true %></td>
+    <td><%= f.check_box "_destroy" %></td>
+    <td><%= link_to_function "remove", "remove_fields(this)" %></td>
+  </tr>

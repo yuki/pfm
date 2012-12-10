@@ -1,8 +1,10 @@
 class Movement < ActiveRecord::Base
   belongs_to  :account
   belongs_to  :mtype
-  validates_presence_of :mtype_id, :account_id, :amount
-  after_destroy :consolidate_after_destroy
+  #validates_presence_of :mtype_id, :account_id, :amount
+  #after_destroy :consolidate_after_destroy
+  has_many :movements, :dependent => :destroy
+  accepts_nested_attributes_for :movements, :allow_destroy => true
 
   def consolidate_after_destroy
     if self.is_transfer
@@ -23,12 +25,18 @@ class Movement < ActiveRecord::Base
   def consolidate
     make_movement(self)
     make_transfer(self) if self.is_transfer
+    #FIXME: cuando es un grupo habrá que cuidar el amount!!!
+#    if self.is_group
+#      m = Movement.find(self.movement_id)
+#      m.amount += self.amount
+#      m.save!
+#    end
     self.account.consolidate
   end
 
 
   def make_movement(movement)
-    if movement.is_transfer and movement.amount > 0
+    if movement.is_transfer and movement.amount > 0 and !movement.is_group
       #we get sure that the amount to transfer is negative in the origin
       movement.amount = 0-movement.amount
     end
@@ -36,6 +44,7 @@ class Movement < ActiveRecord::Base
   end
   
   def make_transfer(movement)
+  #FIXME: this should be done better with "movement.movements"
     m = Movement.new()
     m.mtype_id = movement.mtype_id
     m.account_id = movement.movement_id

@@ -37,11 +37,9 @@ module ApplicationHelper
     def get_from_date_select(is_month)
       discard_month = false
       discard_month = true if is_month
-      return ("From: " + date_select("get_movements", "from",
-                {:end_year => Time.now.year, :discard_day => true, :discard_month => discard_month, :default => @from_month,
-                    #FIXME: put the prompt ok
-                    #:prompt => { :month => 'Select month', :year => 'Select year'}
-                },
+      text = params[:action] == 'show_year' ? "Year: " : "From: "
+      return (text + date_select("get_movements", "from",
+                {:end_year => Time.now.year, :discard_day => true, :discard_month => discard_month, :default => @from_month},
                 {:onchange => "this.form.submit();" }) ).html_safe
     end
 
@@ -51,12 +49,20 @@ module ApplicationHelper
         discard_month = true
       end
       return ("To: " + date_select("get_movements", "to",
-                {:end_year => Time.now.year, :discard_day => true, :discard_month => discard_month, :default => @to_month,
-                    #FIXME: put the prompt ok
-                    #:prompt => { :month => 'Select month', :year => 'Select year'}
-                },
+                {:end_year => Time.now.year, :discard_day => true, :discard_month => discard_month, :default => @to_month},
                 {:onchange => "this.form.submit();" }) ).html_safe
     end
 
+    def link_to_add_fields(name, f, association)
+      new_object = f.object.class.reflect_on_association(association).klass.new
+      fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
+        render("new_group_movement", :f => builder)
+      end
+      link_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")".html_safe)
+    end
+
+    def link_to_show_graphic(name, container)
+      link_to_function(name,"show_graphic(\"#{container}\")")
+    end
 
 end

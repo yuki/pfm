@@ -49,6 +49,16 @@ span.transfer a, span.create a{
   text-decoration: none;
 }
 
+span.grouped a{
+  border-radius: 1em;
+  padding:0.3em 0.5em;
+  background-color: white;
+  border: 2px solid gray;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+
 span.destroy a{
   border-radius: 1em;
   padding:0.3em 0.5em;
@@ -61,6 +71,10 @@ span.destroy a{
 
 th.amount, td.amount {
   text-align: right;
+}
+
+div.graphic {
+  padding-bottom: 1em;
 }
 
 

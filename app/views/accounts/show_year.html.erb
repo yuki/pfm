@@ -1,29 +1,25 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Graphs for "<%= link_to @account.name, @account %>"</h1>
-<%= params %> || <%= @from_month %> || <%= @to_month %>
-<form method="post">
+<h1>Graphs for "<%= params[:id] ? (link_to @account.name, @account) : "All" %>"</h1>
+<%= link_to "asd", params[:id] ? show_year_account_path : show_year_accounts_path %>
+<%= form_tag(params[:id] ? show_year_account_path : show_year_accounts_path , :method=>"post") do %>
   <%= get_from_date_select(true) %>
-  <%= get_to_date_select(true) %>
-  <%= array_to_table(5,Mtype.all(:order => 'lower(name)')) %>
+  <%= array_to_table(6,Mtype.all(:order => 'lower(name)')) %>
   <%= button_tag "Show" %>
-</form>
+<% end %>
+
+<p><span id="amount_total"></span> amount per <%= "#{@days} days" %> = <span id="amount_day"></span> </p>
 
 <ul>
-  <li>Total graphic</li>
-  <li>Only Profits</li>
-  <li>Only Loss</li>
+  <li><%= link_to_show_graphic "Only Profits", "container2" %></li>
+  <li><%= link_to_show_graphic "Only Loss", "container4" %></li>
 </ul>
 
 
-<div id="container0"></div>
-<br />
-<div id="container2"></div>
-<br />
-<div id="container3"></div>
-<br />
-<div id="container4"></div>
-<br />
+<div id="container2" class="graphic"></div>
+<div id="container4" class="graphic"></div>
+<div id="container0" class="graphic"></div>
+<div id="container3" class="graphic"></div>
 
 <%= render :partial => 'movements/mtable', :locals => {:movements => @movements} %>
 <script>
@@ -238,7 +234,6 @@
 
 
 
-<!--
 <script type="text/javascript">
   var chart;
   jQuery(document).ready(function() {
@@ -288,11 +283,9 @@
     });
   });
 </script>
--->
 
 
 
-<!--
 <script type="text/javascript">
   var chart;
   jQuery(document).ready(function() {
@@ -342,4 +335,3 @@
     });
   });
 </script>
--->

@@ -5,8 +5,9 @@ module MovementsHelper
   end
 
   def get_movement_amount(movement)
-    type = movement.amount > 0 ? "positive":"negative"
-    return "<span class='#{type}'>#{number_with_precision(movement.amount, :precision => 2).to_s + ' ' + movement.account.currency.symbol}</span>".html_safe
+    type = movement.amount >= 0 ? "positive":"negative"
+    amount = number_with_precision(movement.amount, :precision => 2).to_s + ' ' + movement.account.currency.symbol
+    return "<span class='#{type}'>#{amount}</span>".html_safe
   end
 
   def show_total_amount(total)

@@ -7,7 +7,7 @@
       <th>Amount</th>
       <th>Mdate</th>
       <th>Vdate</th>
-      <% if params[:controller] != 'movements' %><th>Account amount</th><% end %>
+      <% if params[:action] != 'show_year' %><th>Account amount</th><% end %>
       <th></th>
       <th></th>
     </tr>
@@ -16,25 +16,24 @@
     <% movements.each do |movement| %>
       <% classes = (movement.amount > 0 ? "positive":"negative") %>
       <% classes += " transfer" if movement.is_transfer %>
-      <% movement_title = movement.name  + ' || ' + movement.description %>
+      <% classes += " grouped" if movement.movements.size > 0 and !movement.is_transfer %>
 
-      <tr class="<%= classes %>" title="<%= movement_title unless (movement_title == 4 ) %>">
-        <td><%= movement.account.name %></td>
-        <td><%= movement.mtype.name %></td>
-        <td class="amount"><%= get_movement_amount(movement) %></td>
-        <td><%= movement.mdate.to_date %></td>
-        <td><%= movement.vdate %></td>
-        <% if params[:controller] != 'movements' %><td class="amount"><%= movement.account_amount.to_s + ' ' +  movement.account.currency.symbol %></td><% end %>
-        <td><%=draw_button(classes,"E",edit_movement_path(movement),"Edit movement") %></td>
-        <td><span class="destroy"><%= link_to 'X', movement, confirm: 'Are you sure?', method: :delete, :title => "Delete movement"  %></span></td>
-      </tr>
+      <%= render :partial => 'movements/movement_row',
+            :locals => {:classes => classes, :movement => movement, :grouped => false } %>
+	  <% unless movement.is_transfer %>
+	    <% for groupm in movement.movements %>
+	      <%= render :partial => 'movements/movement_row',
+	              :locals => {:classes => classes, :movement => groupm, :grouped => true } %>
+	    <% end %>
+	  <% end %>
+
     <% end %>
     </tbody>
     </thead>
     <tfoot>
       <th>Total</th>
       <th></th>
-      <% total = get_total_amount(movements) %>
+      <%  total = get_total_amount(movements) %>
       <% #FIXME: FALLARA CUANDO HAYA MULTI-currency!! %>
       <th class="amount"><%= show_total_amount(total) %></th>
       <th></th>
@@ -45,3 +44,8 @@
     </tfoot>
   </table>
 <% end %>
+
+<script>
+  $("span#amount_day").html(<%= (total/@days).round(2) %>);
+  $("span#amount_total").html(<%= (total).round(2) %>);
+</script>

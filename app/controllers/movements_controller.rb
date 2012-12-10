@@ -25,6 +25,7 @@ class MovementsController < ApplicationController
   # GET /movements/new.json
   def new
     @movement = Movement.new
+    1.times { movements = @movement.movements.build }
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,6 +42,10 @@ class MovementsController < ApplicationController
   # POST /movements.json
   def create
     @movement = Movement.new(params[:movement])
+    @movement.movements = [] if params[:what_is] == "normal"
+    @movement.is_transfer = true if params[:what_is] == "is_transfer"
+    @movement.movements = [] if params[:what_is] == "is_transfer"
+    @movement.amount = 0 if params[:what_is] == "is_group"
 
     respond_to do |format|
       if @movement.is_transfer? and @movement.account.id == @movement.movement_id
@@ -87,6 +92,13 @@ class MovementsController < ApplicationController
   # DELETE /movements/1.json
   def destroy
     @movement = Movement.find(params[:id])
+    if @movement.is_transfer
+      #FIXME: this should be done in better way
+      transfer = @movement.movements[0]
+      @movement.movement_id = 0
+      @movement.save!
+      transfer.destroy
+    end
     @movement.destroy
 
     respond_to do |format|

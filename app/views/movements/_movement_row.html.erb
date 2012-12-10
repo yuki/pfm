@@ -1,0 +1,15 @@
+<% movement_title = movement.name.to_s  + ' ' + movement.description.to_s %>
+
+<tr class="<%= classes %>" title="<%= movement_title unless (movement_title == 4 ) %>">
+  <td><%= movement.account.name unless grouped %></td>
+  <td><%= movement.mtype.name %></td>
+  <td class="amount"><%= get_movement_amount(movement) %></td>
+  <td><%= movement.mdate.to_date  %></td>
+  <td><%= movement.vdate %></td>
+  <% if params[:action] != 'show_year' %>
+    <td class="amount"><%= movement.account_amount.to_s + ' ' +  movement.account.currency.symbol unless grouped %></td>
+  <% end %>
+
+  <td><%=draw_button(classes,"E",edit_movement_path(movement),"Edit movement") unless grouped %></td>
+  <td><span class="destroy"><%= link_to 'X', movement, confirm: 'Are you sure?', method: :delete, :title => "Delete movement"  unless grouped %></span></td>
+</tr>

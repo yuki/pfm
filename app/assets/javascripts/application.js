@@ -11,3 +11,19 @@
 //= require highcharts
 //= require highcharts/themes/grid
 //= require highcharts/modules/exporting
+
+function remove_fields (link) {
+    $(link).parent().prev().children("input[type=checkbox]").attr("checked",true);
+    $(link).closest(".fields").hide();
+}
+
+function add_fields(link, association, content) {
+    var new_id = new Date().getTime();
+    var regexp = new RegExp("new_" + association, "g");
+    $(link).parent().parent().before(content.replace(regexp, new_id));
+}
+
+function show_graphic(container) {
+    $(".graphic").hide();
+    $("#"+container).toggle();
+}

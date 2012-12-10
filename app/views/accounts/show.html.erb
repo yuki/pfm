@@ -4,6 +4,7 @@
   <%= get_from_date_select(false) %>
   <%= get_to_date_select(false) %>
 <% end %>
+
 <p>
   <b><%= link_to "create movement", new_movement_path(:account_id => @account) %></b>
 </p>
@@ -11,7 +12,8 @@
     <b><%= link_to "Show graphs", show_year_account_path(@account) %></b>
 </p>
 
-<h2>Amount: <%= @account.amount %><%= @account.currency.symbol %></h2>
+<h2>Amount: <%= @account.amount.to_f %><%= @account.currency.symbol %></h2>
+<p><span id="amount_total"></span> amount per <%= "#{@days} days" %> = <span id="amount_day"></span> </p>
 <p>
   <b>Description:</b>
   <%= @account.description %>
