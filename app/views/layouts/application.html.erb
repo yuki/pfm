@@ -2,33 +2,13 @@
 <html>
 <head>
   <title>Pfm</title>
-  <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-<div class="container">
-    <div id="menu_izquierdo" class="span-4">
-        <ul>
-            <li><%= link_to 'Currencies', currencies_path %></li>
-            <li><%= link_to 'Accounts', accounts_path %></li>
-            <li><%= link_to 'Moves Types', mtypes_path %></li>
-        </ul>
-    </div>
 
-    <div id="centro" class="span-20 last">
-    <% flash.each do |key, msg| %>
-        <%= content_tag :div, msg, :class => [key, " message"], :id => "notice" %>
-    <% end %>
+<%= yield %>
 
-    <%= yield %>
-    </div>
-</div>
-<script>
-  $(function() {
-      $("#notice").delay(1000).fadeOut(3000);
-  });
-
-</script>
 </body>
 </html>
