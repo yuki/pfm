@@ -1,4 +1,6 @@
 Pfm::Application.routes.draw do
+  resources :movements
+
   resources :mtypes
 
   resources :accounts
