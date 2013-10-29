@@ -11,3 +11,19 @@
  *= require_self
  *= require_tree .
  */
+div.jumbotron{
+    padding-top:0px;
+}
+
+a.btn span{
+    color:white;
+}
+
+div#footer div.container{
+    margin-top: 2em;
+    padding-top: 1em;
+    border-top: 1px solid grey;
+}
+div#footer div.container p {
+    padding-left: 2em;
+}
