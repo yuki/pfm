@@ -28,8 +28,8 @@ class MtypesController < ApplicationController
 
     respond_to do |format|
       if @mtype.save
-        format.html { redirect_to @mtype, notice: 'Mtype was successfully created.' }
-        format.json { render :show, status: :created, location: @mtype }
+        format.html { redirect_to mtypes_url, notice: 'Mtype was successfully created.' }
+        #format.json { render :show, status: :created, location: @mtype }
       else
         format.html { render :new }
         format.json { render json: @mtype.errors, status: :unprocessable_entity }
@@ -42,8 +42,8 @@ class MtypesController < ApplicationController
   def update
     respond_to do |format|
       if @mtype.update(mtype_params)
-        format.html { redirect_to @mtype, notice: 'Mtype was successfully updated.' }
-        format.json { render :show, status: :ok, location: @mtype }
+        format.html { redirect_to mtypes_url, notice: 'Mtype was successfully updated.' }
+        #format.json { render :show, status: :ok, location: @mtype }
       else
         format.html { render :edit }
         format.json { render json: @mtype.errors, status: :unprocessable_entity }

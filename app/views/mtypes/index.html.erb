@@ -1,6 +1,6 @@
 <h1>Listing mtypes</h1>
 
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Name</th>
@@ -12,7 +12,6 @@
     <% @mtypes.each do |mtype| %>
       <tr>
         <td><%= mtype.name %></td>
-        <td><%= link_to 'Show', mtype %></td>
         <td><%= link_to 'Edit', edit_mtype_path(mtype) %></td>
         <td><%= link_to 'Destroy', mtype, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
@@ -22,4 +21,4 @@
 
 <br>
 
-<%= link_to 'New Mtype', new_mtype_path %>
+<%= link_to 'New Mtype', new_mtype_path, :class=>"btn btn-success btn-sm" %>
