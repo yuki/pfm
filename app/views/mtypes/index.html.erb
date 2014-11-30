@@ -12,8 +12,9 @@
     <% @mtypes.each do |mtype| %>
       <tr>
         <td><%= mtype.name %></td>
-        <td><%= link_to 'Edit', edit_mtype_path(mtype) %></td>
-        <td><%= link_to 'Destroy', mtype, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= draw_button('show',  mtype) %></td>
+        <td><%= draw_button('edit',  edit_mtype_path(mtype)) %></td>
+        <td><%= draw_button('destroy',  mtype) %></td>
       </tr>
     <% end %>
   </tbody>
