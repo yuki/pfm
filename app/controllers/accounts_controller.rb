@@ -25,6 +25,7 @@ class AccountsController < ApplicationController
 
 
     @movements = @account.movements.where("mdate >= '#{@from_month}' and mdate <= '#{@to_month}'")
+    @movements = @account.movements
 
     respond_to do |format|
       format.html

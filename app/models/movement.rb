@@ -3,6 +3,8 @@ class Movement < ActiveRecord::Base
   belongs_to :mtype
   validates_presence_of :name, :amount, :account_id, :mtype_id
   validates_numericality_of :amount
+
+  after_create :consolidate
   after_destroy :consolidate_after_destroy
 
   def consolidate_after_destroy
@@ -22,18 +24,15 @@ class Movement < ActiveRecord::Base
   end
 
   def consolidate
-    make_movement(self)
-    make_transfer(self) if self.is_transfer
-    self.account.consolidate
-  end
-
-
-  def make_movement(movement)
+    movement = self
     if movement.is_transfer and movement.amount > 0
       #we get sure that the amount to transfer is negative in the origin
       movement.amount = 0-movement.amount
     end
     movement.save!
+
+    make_transfer(movement) if self.is_transfer
+    movement.account.consolidate2(movement)
   end
 
   def make_transfer(movement)

@@ -21,11 +21,11 @@
       <tr class="<%= classes %>" title="<%= movement.description %>">
         <td><%= movement.mtype.name %></td>
         <td><%= movement.name %></td>
-        <td><span class="<%= movement.amount > 0 ? "positive":"negative" %>"><%= movement.amount.to_s  %></span></td>
+        <td><span class="<%= movement.amount > 0 ? "positive":"negative" %>"><%= print_amount(movement.amount,movement.account.currency)  %></span></td>
         <td><%= movement.mdate.to_date %></td>
         <td></td>
         <td></td>
-        <%# if params[:controller] != 'movements' %><td><%#= movement.account_amount.to_s + ' ' +  movement.account.currency.symbol %></td><%# end %>
+        <% if params[:controller] != 'movements' %><td><%= print_amount(movement.account_amount,movement.account.currency) %></td><% end %>
         <td><%=draw_button("edit",edit_movement_path(movement)) %></td>
         <td><span class="destroy"><%= draw_button("destroy", movement)  %></span></td>
       </tr>

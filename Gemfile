@@ -29,6 +29,7 @@ gem 'spring',        group: :development
 # custom
 gem 'bootstrap-sass', '~> 3.3.0'
 gem 'money-rails', '~> 1.0.0'
+gem 'byebug', group: :development
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

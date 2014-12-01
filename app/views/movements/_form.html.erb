@@ -16,7 +16,7 @@
     <div class="col-sm-3">
       <%= select("movement", "account_id",
             Account.all.order('lower(name)').collect {|p| [ p.name, p.id ] },
-                {:include_blank => 'Choose account', :selected => params[:account_id]},{:class=>"form-control"})
+                {:include_blank => 'Choose account', :selected => params[:account_id] || @movement.account_id},{:class=>"form-control"})
         %>
     </div>
   </div>
@@ -86,7 +86,7 @@
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <%= f.submit :class=>"btn btn-default" %>
+      <%= f.submit :class=>"btn btn-info" %>
     </div>
   </div>
 
