@@ -27,12 +27,17 @@ class MovementsController < ApplicationController
     @movement = Movement.new(movement_params)
 
     respond_to do |format|
+      if @movement.is_transfer? and @movement.account.id == @movement.movement_id
+        flash[:error] = "Cannot make transfer into the same account"
+        redirect_to account_path(@movement.account)
+        return
+      end
       if @movement.save
-        format.html { redirect_to @movement, notice: 'Movement was successfully created.' }
-        format.json { render :show, status: :created, location: @movement }
+        #FIXME: it should be in the model, with "after_create"
+        @movement.consolidate
+        format.html { redirect_to account_path(@movement.account), notice: 'Movement was successfully created.' }
       else
         format.html { render :new }
-        format.json { render json: @movement.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -42,11 +47,9 @@ class MovementsController < ApplicationController
   def update
     respond_to do |format|
       if @movement.update(movement_params)
-        format.html { redirect_to @movement, notice: 'Movement was successfully updated.' }
-        format.json { render :show, status: :ok, location: @movement }
+        format.html { redirect_to account_path(@movement.account), notice: 'Movement was successfully updated.' }
       else
         format.html { render :edit }
-        format.json { render json: @movement.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -56,8 +59,7 @@ class MovementsController < ApplicationController
   def destroy
     @movement.destroy
     respond_to do |format|
-      format.html { redirect_to movements_url, notice: 'Movement was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_to account_path(@movement.account), notice: 'Movement was successfully destroyed.' }
     end
   end
 

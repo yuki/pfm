@@ -7,7 +7,6 @@
       <th>Description</th>
       <th>Amount</th>
       <th>Currency</th>
-      <th>Is disabled</th>
       <th></th>
     </tr>
   </thead>
@@ -19,9 +18,8 @@
         <td><%= account.description %></td>
         <td><%= print_amount(account.amount,account.currency) %></td>
         <td><%= account.currency %></td>
-        <td><%= account.is_disabled %>
         <td><%= draw_button('show', account) %>
-            <%= draw_button('create', new_movement_path(:account_id => account)) %>
+            <%= draw_button('create', new_movement_path(:account_id => account)) unless account.is_disabled %>
             <%= draw_button('edit', edit_account_path(account)) %>
             <%= draw_button('destroy', account) %>
         </td>

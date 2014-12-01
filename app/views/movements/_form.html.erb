@@ -66,16 +66,10 @@
     </div>
   </div>
 
-  <div class="form-group">
-    <%= f.label :account_amount, :class=>"col-sm-2 control-label" %>
-    <div class="col-sm-2">
-      <%= f.text_field :account_amount, :class=>"form-control" %>
-    </div>
-  </div>
 
   <div class="form-group">
     <%= f.label :is_transfer, :class=>"col-sm-2 control-label" %>
-    <div class="col-sm-2">
+    <div class="col-sm-1">
       <%= f.check_box :is_transfer, :class=>"form-control" %>
     </div>
   </div>
@@ -83,7 +77,10 @@
   <div class="form-group">
     <%= f.label :movement_id, :class=>"col-sm-2 control-label" %>
     <div class="col-sm-2">
-      <%= f.number_field :movement_id, :class=>"form-control" %>
+      <%= select("movement", "movement_id",
+            Account.where("id != ?",params[:account_id]).order('lower(name)').collect {|p| [ p.name, p.id ] },
+                {:include_blank => 'Choose account'},{:class=>"form-control"})
+        %>
     </div>
   </div>
 

@@ -23,6 +23,7 @@ class AccountsController < ApplicationController
         Date.new(params[:get_movements]["to(1i)"].to_i,params[:get_movements]["to(2i)"].to_i).end_of_month :
         Date.today.end_of_month
 
+
     @movements = @account.movements.where("mdate >= '#{@from_month}' and mdate <= '#{@to_month}'")
 
     respond_to do |format|
@@ -47,10 +48,8 @@ class AccountsController < ApplicationController
     respond_to do |format|
       if @account.save
         format.html { redirect_to accounts_path, notice: 'Account was successfully created.' }
-        format.json { render :show, status: :created, location: @account }
       else
         format.html { render :new }
-        format.json { render json: @account.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -61,10 +60,8 @@ class AccountsController < ApplicationController
     respond_to do |format|
       if @account.update(account_params)
         format.html { redirect_to accounts_path, notice: 'Account was successfully updated.' }
-        format.json { render :show, status: :ok, location: @account }
       else
         format.html { render :edit }
-        format.json { render json: @account.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -75,7 +72,6 @@ class AccountsController < ApplicationController
     @account.destroy
     respond_to do |format|
       format.html { redirect_to accounts_url, notice: 'Account was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
