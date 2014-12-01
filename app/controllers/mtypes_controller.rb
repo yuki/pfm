@@ -4,7 +4,7 @@ class MtypesController < ApplicationController
   # GET /mtypes
   # GET /mtypes.json
   def index
-    @mtypes = Mtype.all
+    @mtypes = Mtype.all.order("lower(name)")
   end
 
   # GET /mtypes/1

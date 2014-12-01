@@ -4,12 +4,30 @@ class AccountsController < ApplicationController
   # GET /accounts
   # GET /accounts.json
   def index
-    @accounts = Account.all
+    @accounts = Account.all.order("lower(name)")
   end
 
   # GET /accounts/1
   # GET /accounts/1.json
   def show
+    @account = Account.find(params[:id])
+    #FIXME: should be a better way to do this
+    if params[:get_movements]
+        params[:from_date] = Date.new(params[:get_movements]["from(1i)"].to_i,params[:get_movements]["from(2i)"].to_i).to_s(:db)
+        params[:to_date] = Date.new(params[:get_movements]["to(1i)"].to_i,params[:get_movements]["to(2i)"].to_i).to_s(:db)
+    end
+    @from_month = (params[:from_date]) ?
+        Date.new(params[:get_movements]["from(1i)"].to_i,params[:get_movements]["from(2i)"].to_i) :
+        Date.today.beginning_of_month
+    @to_month = (params[:to_date]) ?
+        Date.new(params[:get_movements]["to(1i)"].to_i,params[:get_movements]["to(2i)"].to_i).end_of_month :
+        Date.today.end_of_month
+
+    @movements = @account.movements.where("mdate >= '#{@from_month}' and mdate <= '#{@to_month}'")
+
+    respond_to do |format|
+      format.html
+    end
   end
 
   # GET /accounts/new

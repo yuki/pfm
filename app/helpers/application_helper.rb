@@ -9,6 +9,9 @@ module ApplicationHelper
             when "edit"
                 title = "Edit"
                 class_type += "btn-warning glyphicon glyphicon-edit"
+            when "create"
+                title = "Create movement"
+                class_type += "btn-info glyphicon glyphicon-plus"
             when "destroy"
                 class_type += "btn-danger glyphicon glyphicon-remove"
                 return link_to "", path, method: :delete, data: { confirm: 'Are you sure?' }, :title =>"Destroy", :class=>class_type
