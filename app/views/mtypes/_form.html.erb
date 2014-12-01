@@ -1,7 +1,7 @@
 <%= form_for(@mtype, :html=>{:class=>"form-horizontal"}) do |f|%>
   <% if @mtype.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@mtype.errors.count, "error") %> prohibited this mtype from being saved:</h2>
+      <div class="alert alert-danger"><%= pluralize(@mtype.errors.count, "error") %> prohibited this mtype from being saved:</div>
 
       <ul>
       <% @mtype.errors.full_messages.each do |message| %>

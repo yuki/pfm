@@ -1,7 +1,7 @@
 <%= form_for(@account, :html=>{:class=>"form-horizontal"}) do |f| %>
   <% if @account.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@account.errors.count, "error") %> prohibited this account from being saved:</h2>
+      <div class="alert alert-danger"><%= pluralize(@account.errors.count, "error") %> prohibited this account from being saved:</div>
 
       <ul>
       <% @account.errors.full_messages.each do |message| %>
@@ -29,33 +29,23 @@
     <%= f.label :amount, :class=>"col-sm-2 control-label" %>
     <div class="col-sm-2">
       <%= f.text_field :amount, :class=>"form-control" %>
-      <%#= select("account", "currency",
-              Money::Currency.table.collect{|m| ([m[1][:symbol]+" (#{m[1][:iso_code]})",m[1][:iso_code]] if m[1][:priority] <= 10)}.compact) %>
-
+      <%= select("account", "currency",
+              Money::Currency.table.collect{|m| ([m[1][:symbol]+" (#{m[1][:iso_code]})",m[1][:iso_code]] if m[1][:priority] <= 10)}.compact, {}, :class=> "form-control"
+          ) %>
     </div>
   </div>
-
-  <div class="form-group">
-    <%= f.label :currency, :class=>"col-sm-2 control-label" %>
-    <div class="col-sm-2">
-      <%= f.text_field :currency, :class=>"form-control" %>
-    </div>
-  </div>
-
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <div class="checkbox">
-        <label>
-          <%= f.check_box :is_disabled %> Disabled?
-        </label>
+        <label><%= f.check_box :is_disabled %> Disabled?</label>
       </div>
     </div>
   </div>
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-    <%= f.submit :class=>"btn btn-default" %>
+      <%= f.submit :class=>"btn btn-default" %>
     </div>
   </div>
 <% end %>
