@@ -4,35 +4,37 @@ class Movement < ActiveRecord::Base
   validates_presence_of :name, :amount, :account_id, :mtype_id
   validates_numericality_of :amount
 
+  # see http://api.rubyonrails.org/classes/ActiveRecord/Callbacks.html
   after_create :consolidate
-  after_destroy :consolidate_after_destroy
+  before_destroy :consolidate_destroy
 
-  def consolidate_after_destroy
-    if self.is_transfer
-      m = Movement.find(self.movement_id)
-      m.is_transfer = false
-      m.movement_id = nil
-      m.save!
-      m.destroy
-    end
-    if self.account.movements.length == 0
-      self.account.amount = self.account.amount - self.amount
-      self.account.save!
+  def consolidate_destroy
+    movement = self
+    a = movement.account
+    if movement == movement.account.movements.last
+      a.amount = a.amount - movement.amount
     else
-      self.account.consolidate
+      #must update all the movements from the one we destroy
+      idx = a.movements.index(movement)
+      a.movements[idx+1..-1].each do |m|
+        m.account_amount = m.account_amount - movement.amount
+        m.save!
+      end
+      a.amount = a.amount - movement.amount
     end
+    a.save!
   end
 
   def consolidate
     movement = self
-    if movement.is_transfer and movement.amount > 0
-      #we get sure that the amount to transfer is negative in the origin
-      movement.amount = 0-movement.amount
-    end
-    movement.save!
+    #if movement.is_transfer and movement.amount > 0
+    #  #we get sure that the amount to transfer is negative in the origin
+    #  movement.amount = 0-movement.amount
+    #end
+    #movement.save!
 
-    make_transfer(movement) if self.is_transfer
-    movement.account.consolidate2(movement)
+    #make_transfer(movement) if self.is_transfer
+    movement.account.consolidate(movement)
   end
 
   def make_transfer(movement)
