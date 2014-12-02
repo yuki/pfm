@@ -5,7 +5,6 @@ class Movement < ActiveRecord::Base
   validates_numericality_of :amount
 
   # see http://api.rubyonrails.org/classes/ActiveRecord/Callbacks.html
-  after_create :consolidate
   before_destroy :consolidate_destroy
 
   def consolidate_destroy
@@ -27,33 +26,33 @@ class Movement < ActiveRecord::Base
 
   def consolidate
     movement = self
-    #if movement.is_transfer and movement.amount > 0
-    #  #we get sure that the amount to transfer is negative in the origin
-    #  movement.amount = 0-movement.amount
-    #end
-    #movement.save!
-
-    #make_transfer(movement) if self.is_transfer
+    if movement.is_transfer and movement.amount > 0
+      #we get sure that the amount to transfer is negative in the origin
+      movement.amount = 0-movement.amount
+    end
+    movement.save!
     movement.account.consolidate(movement)
+
+    make_transfer(movement) if self.is_transfer
   end
 
   def make_transfer(movement)
     m = Movement.new()
     m.mtype_id = movement.mtype_id
-    m.account_id = movement.movement_id
     m.name = movement.name
     m.description = movement.description
     m.amount = movement.amount.abs
     m.is_transfer = movement.is_transfer
-    m.movement_id = movement.id
     m.mdate = movement.mdate
     m.vdate = movement.vdate
+
+    #the account_id is first saved in movement_id
     m.account = Account.find(movement.movement_id)
-    m.account.amount += m.amount
-    m.account_amount = m.account.amount
-    m.account.save!
+    m.movement_id = movement.id
     m.save!
-    m.account.consolidate
+
+    m.account.consolidate(m)
+
     movement.movement_id = m.id
     movement.save!
   end

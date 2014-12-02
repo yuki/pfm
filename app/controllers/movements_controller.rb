@@ -28,12 +28,8 @@ class MovementsController < ApplicationController
     @movement.mdate = @movement.vdate
 
     respond_to do |format|
-      if @movement.is_transfer? and @movement.account.id == @movement.movement_id
-        flash[:error] = "Cannot make transfer into the same account"
-        redirect_to account_path(@movement.account)
-        return
-      end
       if @movement.save
+        @movement.consolidate
         format.html { redirect_to account_path(@movement.account), notice: 'Movement was successfully created.' }
       else
         format.html { render :new }
