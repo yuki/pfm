@@ -13,7 +13,7 @@ class Account < ActiveRecord::Base
         movement.save!
       elsif movement == a.movements.first
         #only update the first movement we have added
-        movement.account_amount = a.movements.second.account_amount + a.movements.second.amount
+        movement.account_amount = a.movements.second.account_amount - a.movements.second.amount
         movement.save!
         return
       else
