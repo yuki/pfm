@@ -26,7 +26,10 @@
         <td></td>
         <td></td>
         <% if params[:controller] != 'movements' %><td><%= print_amount(movement.account_amount,movement.account.currency) %></td><% end %>
-        <td><%=draw_button("edit",edit_movement_path(movement)) %></td>
+        <% status = "" %>
+        <% status = "success" if movement.amount > 0 %>
+        <% status = "info" if movement.is_transfer %>
+        <td><%=draw_button("edit",edit_movement_path(movement),status) %></td>
         <td><span class="destroy"><%= draw_button("destroy", movement)  %></span></td>
       </tr>
     <% end %>

@@ -22,6 +22,14 @@ class Movement < ActiveRecord::Base
       a.amount = a.amount - movement.amount
     end
     a.save!
+
+    if self.is_transfer
+      m = Movement.find(self.movement_id)
+      m.is_transfer = false
+      m.movement_id = nil
+      m.save!
+      m.destroy
+    end
   end
 
   def consolidate

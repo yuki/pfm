@@ -1,5 +1,5 @@
 module ApplicationHelper
-    def draw_button(type,path)
+    def draw_button(type,path,status="")
         title = ""
         class_type = "btn btn-sm "
         text = ""
@@ -17,7 +17,13 @@ module ApplicationHelper
                 class_type += "btn-success"
             when "edit"
                 title = "Edit"
-                class_type += "btn-warning glyphicon glyphicon-edit"
+                if status != ""
+                  status = "btn-"+status
+                else
+                  status = "btn-warning"
+                end
+                class_type += status
+                class_type += " glyphicon glyphicon-edit"
             when "create"
                 title = "Create movement"
                 class_type += "btn-info glyphicon glyphicon-plus"
