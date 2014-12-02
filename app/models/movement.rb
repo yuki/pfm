@@ -1,7 +1,7 @@
 class Movement < ActiveRecord::Base
   belongs_to :account
   belongs_to :mtype
-  validates_presence_of :name, :amount, :account_id, :mtype_id
+  validates_presence_of :name, :amount, :account_id, :mtype_id, :vdate
   validates_numericality_of :amount
 
   # see http://api.rubyonrails.org/classes/ActiveRecord/Callbacks.html

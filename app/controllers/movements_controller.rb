@@ -25,6 +25,7 @@ class MovementsController < ApplicationController
   # POST /movements.json
   def create
     @movement = Movement.new(movement_params)
+    @movement.mdate = @movement.vdate
 
     respond_to do |format|
       if @movement.is_transfer? and @movement.account.id == @movement.movement_id

@@ -30,6 +30,8 @@ gem 'spring',        group: :development
 gem 'bootstrap-sass', '~> 3.3.0'
 gem 'money-rails', '~> 1.0.0'
 gem 'byebug', group: :development
+gem 'momentjs-rails', '>= 2.8.1'
+gem 'bootstrap3-datetimepicker-rails', '~> 3.1.3'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

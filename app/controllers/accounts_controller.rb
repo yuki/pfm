@@ -11,21 +11,20 @@ class AccountsController < ApplicationController
   # GET /accounts/1.json
   def show
     @account = Account.find(params[:id])
-    #FIXME: should be a better way to do this
+    from = DateTime.now.beginning_of_month
+    to = DateTime.now.end_of_month
+
     if params[:get_movements]
-        params[:from_date] = Date.new(params[:get_movements]["from(1i)"].to_i,params[:get_movements]["from(2i)"].to_i).to_s(:db)
-        params[:to_date] = Date.new(params[:get_movements]["to(1i)"].to_i,params[:get_movements]["to(2i)"].to_i).to_s(:db)
+      if not params[:get_movements][:from].empty?
+        from = DateTime.parse(params[:get_movements][:from])
+      end
+
+      if not params[:get_movements][:to].empty?
+        to = DateTime.parse(params[:get_movements][:to])
+      end
     end
-    @from_month = (params[:from_date]) ?
-        Date.new(params[:get_movements]["from(1i)"].to_i,params[:get_movements]["from(2i)"].to_i) :
-        Date.today.beginning_of_month
-    @to_month = (params[:to_date]) ?
-        Date.new(params[:get_movements]["to(1i)"].to_i,params[:get_movements]["to(2i)"].to_i).end_of_month :
-        Date.today.end_of_month
 
-
-    @movements = @account.movements.where("mdate >= '#{@from_month}' and mdate <= '#{@to_month}'")
-    @movements = @account.movements
+    @movements = @account.movements.where("vdate >= ? and vdate <= ?",from,to)
 
     respond_to do |format|
       format.html
