@@ -1,0 +1,79 @@
+<% chart_data = [] %>
+<% total = movements.sum(&:amount) %>
+
+<% movements.group_by(&:mtype).each do |movement| %>
+    <% chart_data += [{:name => movement[0].name, :data => [movement[1].sum(&:amount).to_f] }] %>
+<% end %>
+
+
+<div id="<%=title%>_1"></div>
+<div id="<%=title%>_2"></div>
+
+<script>
+var chart;
+$(document).ready(function() {
+   chart = new Highcharts.Chart({
+      chart: {
+         renderTo: '<%=title%>_1',
+         defaultSeriesType: 'column'
+      },
+      title: {
+         text: '<%=title%> per movement type'
+      },
+      xAxis: {
+         categories: ['Moves types']
+      },
+      yAxis: {
+          title: {
+              text: 'Amount'
+          }
+      },
+      tooltip: {
+         formatter: function() {
+            return ''+
+                '<b>'+this.series.name +'</b>: '+ this.y +'';
+         }
+      },
+      credits: {
+         enabled: false
+      },
+      series: <%= chart_data.to_json.html_safe %>
+   });
+});
+</script>
+
+
+<script>
+var chart;
+jQuery(document).ready(function() {
+    chart = new Highcharts.Chart({
+        chart: {
+            renderTo: '<%=title%>_2',
+            defaultSeriesType: 'column'
+        },
+        title: {
+            text: 'Stacked <%=title%> %'
+        },
+        xAxis: {
+            categories: ['Total Amount']
+        },
+        yAxis: {
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            formatter: function() {
+                return ''+
+                     this.series.name +': '+ this.y +' ('+ Math.round(this.percentage) +'%)';
+            }
+        },
+        plotOptions: {
+            column: {
+                stacking: 'percent'
+            }
+        },
+        series: <%= chart_data.to_json.html_safe %>
+    });
+});
+</script>

@@ -17,4 +17,5 @@
 //= require moment
 //= require moment/es
 //= require bootstrap-datetimepicker
+//= require highcharts
 //= require_tree .
