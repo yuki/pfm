@@ -1,7 +1,10 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import 'bootstrap-datetimepicker';
-
+html {
+  position: relative;
+  min-height: 100%;
+}
 body {
   padding-top: 50px;
 }
@@ -31,4 +34,20 @@ body {
   .form-control {
     color: $state-danger-text;
   }
+}
+
+div#principal{
+  margin-bottom:50px;
+  padding-bottom: 50px;
+}
+
+#footer {
+  margin-top:50px;
+  padding-top:20px;
+  width: 100%;
+  height: 60px;
+  border-top: 2px solid #ddd;
+  background-color: #f9f9f9;
+  bottom: 0;
+  position: absolute;
 }
