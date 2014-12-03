@@ -1,28 +1,20 @@
 class MovementsController < ApplicationController
   before_action :set_movement, only: [:show, :edit, :update, :destroy]
 
-  # GET /movements
-  # GET /movements.json
   def index
     @movements = Movement.all
   end
 
-  # GET /movements/1
-  # GET /movements/1.json
   def show
   end
 
-  # GET /movements/new
   def new
     @movement = Movement.new
   end
 
-  # GET /movements/1/edit
   def edit
   end
 
-  # POST /movements
-  # POST /movements.json
   def create
     @movement = Movement.new(movement_params)
     @movement.mdate = @movement.vdate
@@ -37,8 +29,6 @@ class MovementsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /movements/1
-  # PATCH/PUT /movements/1.json
   def update
     respond_to do |format|
       if @movement.update(movement_params)
@@ -49,8 +39,6 @@ class MovementsController < ApplicationController
     end
   end
 
-  # DELETE /movements/1
-  # DELETE /movements/1.json
   def destroy
     @movement.destroy
     respond_to do |format|
