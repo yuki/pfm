@@ -19,3 +19,73 @@
 //= require bootstrap-datetimepicker
 //= require highcharts
 //= require_tree .
+
+
+function column_graph (where, title, data_json) {
+    var chart;
+    $(document).ready(function() {
+       chart = new Highcharts.Chart({
+          chart: {
+             renderTo: where,
+             defaultSeriesType: 'column'
+          },
+          title: {
+             text: title + ' per movement type'
+          },
+          xAxis: {
+             categories: ['Moves types']
+          },
+          yAxis: {
+              title: {
+                  text: 'Amount'
+              }
+          },
+          tooltip: {
+             formatter: function() {
+                return ''+
+                    '<b>'+this.series.name +'</b>: '+ this.y +'';
+             }
+          },
+          credits: {
+             enabled: false
+          },
+          series: data_json
+       });
+    });
+}
+
+
+function stack_graph (where,title,data_json) {
+    var char;
+    jQuery(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: where,
+                defaultSeriesType: 'column'
+            },
+            title: {
+                text: 'Stacked ' + title + ' %'
+            },
+            xAxis: {
+                categories: ['Total Amount']
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                    return ''+
+                         this.series.name +': '+ this.y +' ('+ Math.round(this.percentage) +'%)';
+                }
+            },
+            plotOptions: {
+                column: {
+                    stacking: 'percent'
+                }
+            },
+            series: data_json
+        });
+    });
+}

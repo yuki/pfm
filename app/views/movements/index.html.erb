@@ -1,43 +1,10 @@
 <h1>Listing movements</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Account</th>
-      <th>Mtype</th>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Amount</th>
-      <th>Mdate</th>
-      <th>Vdate</th>
-      <th>Account amount</th>
-      <th>Is transfer</th>
-      <th>Movement</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<%= link_to "create movement", new_movement_path, :class=>"btn btn btn-info" %>
 
-  <tbody>
-    <% @movements.each do |movement| %>
-      <tr>
-        <td><%= movement.account.name %></td>
-        <td><%= movement.mtype.name %></td>
-        <td><%= movement.name %></td>
-        <td><%= movement.description %></td>
-        <td><%= movement.amount %></td>
-        <td><%= movement.mdate %></td>
-        <td><%= movement.vdate %></td>
-        <td><%= movement.account_amount %></td>
-        <td><%= movement.is_transfer %></td>
-        <td><%= movement.movement_id %></td>
-        <td><%= link_to 'Show', movement %></td>
-        <td><%= link_to 'Edit', edit_movement_path(movement) %></td>
-        <td><%= link_to 'Destroy', movement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render :partial => 'mtable', :locals => { :movements => @movements } %>
 
-<br>
+<%= render :partial => 'loss_profits', :locals => { :movements => @movements } %>
 
-<%= link_to 'New Movement', new_movement_path %>
+<br />
+
