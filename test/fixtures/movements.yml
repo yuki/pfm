@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  account_id: 
+  mtype_id: 
+  name: MyString
+  description: MyText
+  amount: 9.99
+  mdate: 2014-12-01 16:23:32
+  vdate: 2014-12-01 16:23:32
+  account_amount: 9.99
+  is_transfer: false
+  movement_id: 1
+
+two:
+  account_id: 
+  mtype_id: 
+  name: MyString
+  description: MyText
+  amount: 9.99
+  mdate: 2014-12-01 16:23:32
+  vdate: 2014-12-01 16:23:32
+  account_amount: 9.99
+  is_transfer: false
+  movement_id: 1

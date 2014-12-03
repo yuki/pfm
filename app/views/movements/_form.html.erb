@@ -1,0 +1,95 @@
+<%= form_for(@movement, :html=>{:class=>"form-horizontal"}) do |f| %>
+  <% if @movement.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-danger"><%= pluralize(@movement.errors.count, "error") %> prohibited this movement from being saved:</div>
+
+      <ul>
+      <% @movement.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :account_id, :class=>"col-sm-2 control-label"%>
+    <div class="col-sm-3">
+      <%= select("movement", "account_id",
+            Account.all.order('lower(name)').collect {|p| [ p.name, p.id ] },
+                {:include_blank => 'Choose account', :selected => params[:account_id] || @movement.account_id},{:class=>"form-control"})
+        %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :mtype_id, :class=>"col-sm-2 control-label" %>
+    <div class="col-sm-3">
+      <%= select("movement", "mtype_id",
+            Mtype.all.order('lower(name)').collect {|p| [ p.name, p.id ] },
+                {:include_blank => 'Choose movement type'},{:class=>"form-control"})
+        %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :name, :class=>"col-sm-2 control-label" %>
+    <div class="col-sm-3">
+      <%= f.text_field :name, :class=>"form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :description, :class=>"col-sm-2 control-label" %>
+    <div class="col-sm-3">
+      <%= f.text_area :description, :class=>"form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :amount, :class=>"col-sm-2 control-label" %>
+    <div class="col-sm-2">
+      <%= f.text_field :amount, :class=>"form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :vdate, :class=>"col-sm-2 control-label" %>
+    <div class='col-sm-3'>
+      <div class='input-group date' id='datetimepickervdate'>
+        <%= f.text_field :vdate, :class=>"form-control" %>
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+      $(function () {
+          $('#datetimepickervdate').datetimepicker({language: 'es'});
+      });
+  </script>
+
+  <div class="form-group">
+    <%= f.label :is_transfer, :class=>"col-sm-2 control-label" %>
+    <div class="col-sm-1">
+      <%= f.check_box :is_transfer, :class=>"form-control", :onchange => "$('div#movement_id').toggle()" %>
+    </div>
+  </div>
+
+  <div class="form-group" id="movement_id" style="display:none;">
+    <%= f.label :movement_id, :class=>"col-sm-2 control-label" %>
+    <div class="col-sm-2">
+      <%= select("movement", "movement_id",
+            Account.where("id != ?",params[:account_id]).order('lower(name)').collect {|p| [ p.name, p.id ] },
+                {:include_blank => 'Choose account'},{:class=>"form-control"})
+        %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.submit :class=>"btn btn-info" %>
+    </div>
+  </div>
+
+<% end %>

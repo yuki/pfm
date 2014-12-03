@@ -1,0 +1,52 @@
+<% if defined? movements %>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Mtype</th>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Mdate</th>
+      <th></th>
+      <th></th>
+      <% if params[:controller] != 'movements' %><th>Account amount</th><% end %>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% movements.each do |movement| %>
+      <% classes = (movement.amount > 0 ? "positive":"negative") %>
+      <% classes += " transfer" if movement.is_transfer %>
+
+      <tr class="<%= classes %>" title="<%= movement.description %>">
+        <td><%= movement.mtype.name %></td>
+        <td><%= movement.name %></td>
+        <td><span class="<%= movement.amount > 0 ? "positive":"negative" %>"><%= print_amount(movement.amount,movement.account.currency)  %></span></td>
+        <td><%= movement.mdate.to_date %></td>
+        <td></td>
+        <td></td>
+        <% if params[:controller] != 'movements' %><td><%= print_amount(movement.account_amount,movement.account.currency) %></td><% end %>
+        <% status = "" %>
+        <% status = "success" if movement.amount > 0 %>
+        <% status = "info" if movement.is_transfer %>
+        <td><%=draw_button("edit",edit_movement_path(movement),status) %></td>
+        <td><span class="destroy"><%= draw_button("destroy", movement)  %></span></td>
+      </tr>
+    <% end %>
+    </tbody>
+    </thead>
+    <tfoot>
+      <th>Total</th>
+      <th></th>
+      <% total = movements.find_all.sum(&:amount) %>
+      <th><span class="<%= total > 0 ? "positive":"negative" %>"><%= total  %></span></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tfoot>
+  </table>
+<% end %>

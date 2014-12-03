@@ -1,0 +1,18 @@
+== Personal Finance Manager
+
+This is my personal finance manager (PFM). It works for me, and it's an upgrade
+of what I did three years ago (you can see the log of the project).
+
+It's made with Ruby on Rails. As I said, it has the functionality I need, so
+probably it's not for you. If you think you can improve it or make changes,
+fork it and make a pull request :D
+
+== Install:
+If you  want to try it, make sure you have the Ruby and Rails correct versions.
+See Gemfile, and you probably want to use 'rvm' to make the installation easier:
+
+  $ git clone https://github.com/yuki/pfm.git
+  $ cd pfm
+  $ bundle install
+  $ rake db:migrate
+  $ rails s

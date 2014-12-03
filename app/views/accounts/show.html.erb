@@ -1,0 +1,21 @@
+<h1><%= @account.name %></h1>
+
+<%= render :partial => 'movements/date_select' %>
+
+<h3>Amount: <%= @account.amount %><%#= @account.currency.symbol %></h3>
+<p>
+  <b>Description:</b>
+  <%= @account.description %>
+</p>
+
+<p>
+  <b><%#= FIXME link_to "Show entire year", show_year_account_path(@account) %></b>
+</p>
+
+
+
+
+<%= render :partial => 'movements/mtable', :locals => {:movements => @movements} %>
+
+<%= render :partial => 'movements/loss_profits', :locals => { :movements => @movements } %>
+

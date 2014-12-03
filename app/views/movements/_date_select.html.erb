@@ -1,0 +1,43 @@
+<div class="container">
+
+<%= form_for @account, :url => account_path(@account), :method => :get  do |f| %>
+<%# FIXME: make it better, more rails %>
+  <div class="form-group">
+    <div class="col-sm-2">
+      <div class="input-group date" id="datetimepickerFrom">
+        <span class="input-group-addon">From: </span>
+        <%= text_field :get_movements,:from, :class=>"form-control",
+              :value => (defined? params[:get_movements]).nil?     ?  "" :  ((defined? params[:get_movements][:from]).nil?   ? "" : params[:get_movements][:from]) %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class='col-sm-2'>
+      <div class='input-group date' id='datetimepickerTo'>
+        <span class="input-group-addon">To: </span>
+        <%= text_field :get_movements,:to, :class=>"form-control",
+            :value => (defined? params[:get_movements]).nil?    ?  "" : ((defined? params[:get_movements][:to]).nil?   ? "" : params[:get_movements][:to]) %>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-default">Submit</button>
+
+  <%= link_to "create movement", new_movement_path(:account_id => @account), :class=>"btn btn btn-info col-sm-offset-4" %>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepickerFrom').datetimepicker({pickTime: false, language: 'es'});
+            $('#datetimepickerTo').datetimepicker({pickTime: false, language: 'es'});
+            $("#datetimepickerFrom").on("dp.change",function (e) {
+               $('#datetimepickerTo').data("DateTimePicker").setMinDate(e.date);
+            });
+            $("#datetimepickerTo").on("dp.change",function (e) {
+               $('#datetimepickerFrom').data("DateTimePicker").setMaxDate(e.date);
+            });
+        });
+    </script>
+<% end %>
+
+</div>
