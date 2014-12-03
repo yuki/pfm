@@ -1,28 +1,18 @@
-== README
+== Personal Finance Manager
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is my personal finance manager (PFM). It works for me, and it's an upgrade
+of what I did three years ago (you can see the log of the project).
 
-Things you may want to cover:
+It's made with Ruby on Rails. As I said, it has the functionality I need, so
+probably it's not for you. If you think you can improve it or make changes,
+fork it and make a pull request :D
 
-* Ruby version
+== Install:
+If you  want to try it, make sure you have the Ruby and Rails correct versions.
+See Gemfile, and you probably want to use 'rvm' to make the installation easier:
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+  $ git clone https://github.com/yuki/pfm.git
+  $ cd pfm
+  $ bundle install
+  $ rake db:migrate
+  $ rails s
