@@ -15,4 +15,5 @@ See Gemfile, and you probably want to use 'rvm' to make the installation easier:
   $ cd pfm
   $ bundle install
   $ rake db:migrate
+  $ rake db:seed
   $ rails s

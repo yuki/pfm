@@ -16,11 +16,11 @@ ActiveRecord::Schema.define(version: 20141201152332) do
   create_table "accounts", force: true do |t|
     t.string   "name"
     t.text     "description"
+    t.decimal  "amount"
     t.string   "currency"
     t.boolean  "is_disabled"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "amount"
   end
 
   create_table "movements", force: true do |t|

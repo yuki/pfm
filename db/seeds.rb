@@ -1,7 +1,6 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+Account.create(name: "Account1", description: "My bank account", amount: 10000, currency: "EUR")
+Account.create(name: "Cash", description: "Cash money", amount: 140, currency: "EUR")
+Mtype.create(name: "Salary")
+Mtype.create(name: "Party")
+Movement.create(name: "Month salary", account_id: 1, mtype_id: 1, amount: 1000, vdate: "2014-12-04",mdate:"2014-12-04", account_amount:10000)
+Movement.create(name: "Party night", account_id: 2, mtype_id: 2, amount: -50, vdate: "2014-12-06",mdate:"2014-12-06", account_amount:140)
