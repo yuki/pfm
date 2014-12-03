@@ -2,22 +2,27 @@
 <% movements_profit = movements.find_all{|i| i.amount > 0 and !i.is_transfer?} %>
 
 
-<div class="col-md-5 col-md-offset-1">
-    <%= render :partial => 'movements/loss_profits_table',
-        :locals => { :movements => movements_loss, :title => "Loss", :total => movements_loss.sum(&:amount) } %>
-</div>
-<div class="col-md-5">
-    <%= render :partial => 'movements/loss_profits_table',
-        :locals => { :movements => movements_profit, :title => "Profit", :total => movements_profit.sum(&:amount)  } %>
-</div>
+<div class="col-md-10 col-md-offset-1" role="tabpanel">
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#table" id="table-tab" role="tab" data-toggle="tab" aria-controls="table" aria-expanded="true">Tables</a></li>
+    <li role="presentation"><a href="#graphs" role="tab" id="graphs-tab" data-toggle="tab" aria-controls="graphs">Graphs</a></li>
+  </ul>
 
+  <div id="" class="tab-content">
 
+    <div role="tabpanel" class="tab-pane fade in active" id="table" aria-labelledBy="table-tab">
+          <%= render :partial => 'movements/loss_profits_table',
+              :locals => { :movements => movements_loss, :title => "Loss", :total => movements_loss.sum(&:amount) } %>
+          <%= render :partial => 'movements/loss_profits_table',
+              :locals => { :movements => movements_profit, :title => "Profit", :total => movements_profit.sum(&:amount)  } %>
+    </div>
 
-<div class="col-md-5 col-md-offset-1">
-    <%= render :partial => 'movements/graphs',
-        :locals => { :movements => movements_loss, :title => "Loss"  } %>
-</div>
-<div class="col-md-5">
-    <%= render :partial => 'movements/graphs',
-        :locals => { :movements => movements_profit, :title => "Profit"  } %>
+    <div role="tabpanel" class="tab-pane fade" id="graphs" aria-labelledBy="graphs-tab">
+          <%= render :partial => 'movements/graphs',
+              :locals => { :movements => movements_loss, :title => "Loss"  } %>
+          <%= render :partial => 'movements/graphs',
+              :locals => { :movements => movements_profit, :title => "Profit"  } %>
+    </div>
+
+  </div>
 </div>
