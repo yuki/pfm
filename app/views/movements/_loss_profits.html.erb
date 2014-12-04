@@ -22,10 +22,14 @@
   <div id="" class="tab-content">
 
     <div role="tabpanel" class="tab-pane fade in active" id="table" aria-labelledBy="table-tab">
+        <div class="col-md-4 col-md-offset-1">
           <%= render :partial => 'movements/loss_profits_table',
               :locals => { :movements => movements_loss, :title => "Loss", :total => movements_loss.sum(&:amount) } %>
+        </div>
+        <div class="col-md-4 col-md-offset-2">
           <%= render :partial => 'movements/loss_profits_table',
               :locals => { :movements => movements_profit, :title => "Profit", :total => movements_profit.sum(&:amount)  } %>
+        </div>
     </div>
 
     <div role="tabpanel" class="tab-pane fade" id="graphs1" aria-labelledBy="graphs-tab">

@@ -2,7 +2,21 @@ class MovementsController < ApplicationController
   before_action :set_movement, only: [:show, :edit, :update, :destroy]
 
   def index
-    @movements = Movement.all
+    from = DateTime.now.beginning_of_month
+    to = DateTime.now.end_of_month
+
+    if params[:get_movements]
+      if not params[:get_movements][:from].empty?
+        from = DateTime.parse(params[:get_movements][:from])
+      end
+
+      if not params[:get_movements][:to].empty?
+        to = DateTime.parse(params[:get_movements][:to])
+      end
+    end
+
+    @movements = Movement.where("mdate >= ? and mdate <= ?",from,to)
+
   end
 
   def show

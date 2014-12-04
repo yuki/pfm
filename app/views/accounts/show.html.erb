@@ -1,12 +1,11 @@
 <h1><%= @account.name %></h1>
 
-<%= render :partial => 'movements/date_select' %>
-
-<h3>Amount: <%= @account.amount %><%#= @account.currency.symbol %></h3>
-<p>
-  <b>Description:</b>
-  <%= @account.description %>
-</p>
+<blockquote>
+  <p>
+    <b>Amount:</b> <%= print_amount(@account.amount,@account.currency) %> <br />
+    <b>Description:</b> <%= @account.description %>
+  </p>
+</blockquote>
 
 <p>
   <b><%#= FIXME link_to "Show entire year", show_year_account_path(@account) %></b>
@@ -14,6 +13,8 @@
 
 
 
+<%= render :partial => 'movements/date_select', :locals => { :form => @account, :path => account_path(@account) } %>
+<br><br>
 
 <%= render :partial => 'movements/mtable', :locals => {:movements => @movements} %>
 

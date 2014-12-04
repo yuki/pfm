@@ -1,7 +1,7 @@
 module ApplicationHelper
     def draw_button(type,path,status="")
         title = ""
-        class_type = "btn btn-sm "
+        class_type = "btn btn-xs "
         text = ""
         case type
             when "back"
