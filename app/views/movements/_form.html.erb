@@ -53,10 +53,10 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :vdate, :class=>"col-sm-2 control-label" %>
+    <%= f.label :mdate, :class=>"col-sm-2 control-label" %>
     <div class='col-sm-3'>
-      <div class='input-group date' id='datetimepickervdate'>
-        <%= f.text_field :vdate, :class=>"form-control" %>
+      <div class='input-group date' id='datetimepickermdate'>
+        <%= f.text_field :mdate, :class=>"form-control" %>
         <span class="input-group-addon">
           <span class="glyphicon glyphicon-calendar"></span>
         </span>
@@ -65,7 +65,7 @@
   </div>
   <script type="text/javascript">
       $(function () {
-          $('#datetimepickervdate').datetimepicker({language: 'es'});
+          $('#datetimepickermdate').datetimepicker({language: 'es'});
       });
   </script>
 

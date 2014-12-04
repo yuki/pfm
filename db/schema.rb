@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141201152332) do
+ActiveRecord::Schema.define(version: 20141204191311) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -28,9 +28,8 @@ ActiveRecord::Schema.define(version: 20141201152332) do
     t.integer  "mtype_id"
     t.string   "name"
     t.text     "description"
-    t.decimal  "amount"
+    t.decimal  "amount",         default: 0.0
     t.datetime "mdate"
-    t.datetime "vdate"
     t.decimal  "account_amount"
     t.boolean  "is_transfer"
     t.integer  "movement_id"

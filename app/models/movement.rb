@@ -1,7 +1,7 @@
 class Movement < ActiveRecord::Base
   belongs_to :account
   belongs_to :mtype
-  validates_presence_of :name, :amount, :account_id, :mtype_id, :vdate
+  validates_presence_of :name, :amount, :account_id, :mtype_id, :mdate
   validates_numericality_of :amount
 
   # see http://api.rubyonrails.org/classes/ActiveRecord/Callbacks.html
@@ -52,7 +52,6 @@ class Movement < ActiveRecord::Base
     m.amount = movement.amount.abs
     m.is_transfer = movement.is_transfer
     m.mdate = movement.mdate
-    m.vdate = movement.vdate
 
     #the account_id is first saved in movement_id
     m.account = Account.find(movement.movement_id)

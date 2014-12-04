@@ -20,7 +20,7 @@ class AccountsController < ApplicationController
       end
     end
 
-    @movements = @account.movements.where("vdate >= ? and vdate <= ?",from,to)
+    @movements = @account.movements.where("mdate >= ? and mdate <= ?",from,to)
 
     respond_to do |format|
       format.html

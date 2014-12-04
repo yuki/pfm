@@ -17,7 +17,6 @@ class MovementsController < ApplicationController
 
   def create
     @movement = Movement.new(movement_params)
-    @movement.mdate = @movement.vdate
 
     respond_to do |format|
       if @movement.save
@@ -54,6 +53,6 @@ class MovementsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def movement_params
-      params.require(:movement).permit(:account_id, :mtype_id, :name, :description, :amount, :mdate, :vdate, :account_amount, :is_transfer, :movement_id)
+      params.require(:movement).permit(:account_id, :mtype_id, :name, :description, :amount, :mdate, :account_amount, :is_transfer, :movement_id)
     end
 end
