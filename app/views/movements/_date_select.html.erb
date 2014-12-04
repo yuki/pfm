@@ -1,7 +1,6 @@
-<div class="container col-md-offset-2">
-
+<div class="">
+<%# FIXME: make it better, more rails and a bug in location of datetime%>
 <%= form_for form, :url => path, :method => :get  do |f| %>
-<%# FIXME: make it better, more rails %>
   <div class="form-group">
     <div class="col-sm-2">
       <div class="input-group date" id="datetimepickerFrom">
@@ -13,8 +12,8 @@
   </div>
 
   <div class="form-group">
-    <div class='col-sm-2'>
-      <div class='input-group date' id='datetimepickerTo'>
+    <div class="col-sm-2">
+      <div class="input-group date" id="datetimepickerTo">
         <span class="input-group-addon">To: </span>
         <%= text_field :get_movements,:to, :class=>"form-control",
             :value => (defined? params[:get_movements]).nil?    ?  "" : ((defined? params[:get_movements][:to]).nil?   ? "" : params[:get_movements][:to]) %>
@@ -24,7 +23,7 @@
 
   <button type="submit" class="btn btn-default">Submit</button>
 
-  <%= link_to "create movement", new_movement_path(:account_id => form), :class=>"btn btn btn-info col-sm-offset-1" %>
+  <%= link_to "create movement", new_movement_path(:account_id => form), :class=>"btn btn btn-info col-sm-offset-4" %>
 
     <script type="text/javascript">
         $(function () {
