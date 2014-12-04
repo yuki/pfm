@@ -1,9 +1,8 @@
-<p id="notice"><%= notice %></p>
+<h1><%= @mtype.name %></h1>
 
-<p>
-  <strong>Name:</strong>
-  <%= @mtype.name %>
-</p>
+<%= render :partial => 'movements/date_select', :locals => { :path => @mtype, :form => @mtype} %>
+<br><br>
 
-<%= link_to 'Edit', edit_mtype_path(@mtype) %> |
-<%= link_to 'Back', mtypes_path %>
+<%= render :partial => 'movements/mtable', :locals => { :movements => @movements } %>
+
+<%= render :partial => 'movements/loss_profits', :locals => { :movements => @movements } %>

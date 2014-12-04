@@ -17,10 +17,10 @@
     <tbody>
     <% movements.each do |movement| %>
       <tr title="<%= movement.description %>">
-        <td><%= movement.mtype.name %></td>
+        <td><%= link_to movement.mtype.name, mtype_path(movement.mtype) %></td>
         <td>
           <% if movement.name != "" %>
-            <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-comment" data-toggle="tooltip" data-placement="right" title="<%= movement.name %>" />
+            <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-comment" data-toggle="tooltip" data-placement="top" title="<%= movement.name %>" />
           <% end %>
         </td>
         <td><span class="<%= movement.amount > 0 ? "positive":"negative" %>"><%= print_amount(movement.amount,movement.account.currency)  %></span></td>

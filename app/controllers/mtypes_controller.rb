@@ -6,6 +6,20 @@ class MtypesController < ApplicationController
   end
 
   def show
+    from = DateTime.now.beginning_of_month
+    to = DateTime.now.end_of_month
+
+    if params[:get_movements]
+      if not params[:get_movements][:from].empty?
+        from = DateTime.parse(params[:get_movements][:from])
+      end
+
+      if not params[:get_movements][:to].empty?
+        to = DateTime.parse(params[:get_movements][:to])
+      end
+    end
+
+    @movements = @mtype.movements.where("mdate >= ? and mdate <= ?",from,to)
   end
 
   def new
