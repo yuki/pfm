@@ -9,7 +9,7 @@
       <th>Mdate</th>
       <th></th>
       <th></th>
-      <th><% if params[:controller] != 'movements' %>Account amount<% end %></th>
+      <th><% if params[:controller] != 'movements' and params[:controller] != 'mtypes' %>Account amount<% end %></th>
       <th></th>
       <th></th>
     </tr>
@@ -23,11 +23,14 @@
             <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-comment" data-toggle="tooltip" data-placement="top" title="<%= movement.name %>" />
           <% end %>
         </td>
-        <td><span class="<%= movement.amount > 0 ? "positive":"negative" %>"><%= print_amount(movement.amount,movement.account.currency)  %></span></td>
+        <td><%= print_amount(movement.amount,movement.account.currency)  %></td>
         <td><%= movement.mdate.to_date %></td>
         <td></td>
         <td></td>
-        <td><% if params[:controller] != 'movements' %><%= print_amount(movement.account_amount,movement.account.currency) %><% end %></td>
+        <td><% if params[:controller] != 'movements' and params[:controller] != 'mtypes' %>
+                <%= print_amount(movement.account_amount,movement.account.currency) %>
+            <% end %>
+        </td>
         <% status = "" %>
         <% status = "success" if movement.amount > 0 %>
         <% status = "info" if movement.is_transfer %>
