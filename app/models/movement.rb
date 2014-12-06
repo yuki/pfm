@@ -12,8 +12,11 @@ class Movement < ActiveRecord::Base
     a = movement.account
     if movement == movement.account.movements.last
       a.amount = a.amount - movement.amount
-    else
-      #must update all the movements from the one we destroy
+    elsif movement != movement.account.movements.first
+      #must update all the movements from the one we destroy except if it's the
+      #first one
+      #NOTE: this could be different, and we could change also the first, but
+      # I prefer this way :-p
       idx = a.movements.index(movement)
       a.movements[idx+1..-1].each do |m|
         m.account_amount = m.account_amount - movement.amount

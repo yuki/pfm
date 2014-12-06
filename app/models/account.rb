@@ -9,8 +9,11 @@ class Account < ActiveRecord::Base
     if a.movements.length > 1
       if movement == a.movements.last
         #we just update the last movement
-        movement.account_amount = a.amount + movement.amount
+        movement.account_amount = a.movements[-2].account_amount + movement.amount
         movement.save!
+        a.amount = movement.account_amount
+        a.save!
+        return
       elsif movement == a.movements.first
         #only update the first movement we have added
         movement.account_amount = a.movements.second.account_amount - a.movements.second.amount
@@ -24,6 +27,9 @@ class Account < ActiveRecord::Base
           m.account_amount = a.movements[i-1].account_amount + m.amount
           m.save!
         end
+        a.amount = a.movements.last.account_amount
+        a.save!
+        return
       end
     else
         movement.account_amount = a.amount + movement.amount

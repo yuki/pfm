@@ -45,6 +45,7 @@ class MovementsController < ApplicationController
   def update
     respond_to do |format|
       if @movement.update(movement_params)
+        @movement.account.consolidate(@movement)
         format.html { redirect_to account_path(@movement.account), notice: 'Movement was successfully updated.' }
       else
         format.html { render :edit }
