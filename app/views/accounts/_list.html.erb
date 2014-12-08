@@ -1,0 +1,27 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Amount</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% accounts.each do |account| %>
+      <tr>
+        <td><%= account.name %></td>
+        <td>
+          <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-comment" data-toggle="tooltip" data-placement="right" title="<%= account.description %>" />
+        </td>
+        <td><%= print_amount(account.amount,account.currency) %></td>
+        <td><%= draw_button('show', account) %>
+            <%= draw_button('create', new_movement_path(:account_id => account)) unless account.is_disabled %>
+            <%= draw_button('edit', edit_account_path(account)) %>
+            <%= draw_button('destroy', account) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
