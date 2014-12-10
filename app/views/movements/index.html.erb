@@ -1,9 +1,13 @@
 <h1>Listing movements</h1>
 
-<%= render :partial => 'movements/date_select', :locals => { :path => "/movements", :form => @movements[0]} %>
-<br><br>
+<% if @movements.length != 0 %>
+  <%= render :partial => 'movements/date_select', :locals => { :path => "/movements", :form => @movements[0]} %>
+  <br><br>
 
-<%= render :partial => 'mtable', :locals => { :movements => @movements } %>
+  <%= render :partial => 'mtable', :locals => { :movements => @movements } %>
 
-<%= render :partial => 'loss_profits', :locals => { :movements => @movements } %>
+  <%= render :partial => 'loss_profits', :locals => { :movements => @movements } %>
 
+<% else %>
+Create movements going to <%= link_to "Accounts",accounts_path %>
+<% end %>

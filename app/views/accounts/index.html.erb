@@ -9,9 +9,10 @@
   <%= render :partial => 'list', :locals => {:accounts => @accounts} %>
 
   <br>
-  <h2>Disabled accounts</h2>
-  <%= render :partial => 'list', :locals => {:accounts => @accounts_disabled} %>
-
+  <% if @accounts_disabled.length > 0 %>
+    <h2>Disabled accounts</h2>
+    <%= render :partial => 'list', :locals => {:accounts => @accounts_disabled} %>
+  <% end %>
 
 
 </div>

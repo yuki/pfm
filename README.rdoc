@@ -17,3 +17,10 @@ See Gemfile, and you probably want to use 'rvm' to make the installation easier:
   $ rake db:migrate
   $ rake db:seed
   $ rails s
+
+== Configure:
+The only configure option right now is the default currency that is in Euros (€).
+You can change this in the file config/initializers/money.rb , few examples:
+  config.default_currency = :eur
+  # config.default_currency = :usd
+  # config.default_currency = :gbp

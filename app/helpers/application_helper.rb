@@ -38,4 +38,11 @@ module ApplicationHelper
         m = Money.new(amount*100,currency)
         return humanized_money_with_symbol m
     end
+
+    def convert_amount(amount,currency)
+        m = Money.new(amount*100,currency)
+        m = m.exchange_to(Money.default_currency)
+        return  m
+    end
+
 end

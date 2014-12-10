@@ -29,6 +29,7 @@ gem 'spring',        group: :development
 # custom
 gem 'bootstrap-sass', '~> 3.3.0'
 gem 'money-rails', '~> 1.0.0'
+gem 'google_currency'
 gem 'byebug', group: :development
 gem 'momentjs-rails', '>= 2.8.1'
 gem 'bootstrap3-datetimepicker-rails', '~> 3.1.3'

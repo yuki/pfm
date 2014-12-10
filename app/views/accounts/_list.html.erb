@@ -9,13 +9,15 @@
   </thead>
 
   <tbody>
+    <% total = 0 %>
     <% accounts.each do |account| %>
+      <% total += convert_amount(account.amount,account.currency) %>
       <tr>
         <td><%= account.name %></td>
         <td>
           <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-comment" data-toggle="tooltip" data-placement="right" title="<%= account.description %>" />
         </td>
-        <td><%= print_amount(account.amount,account.currency) %></td>
+        <td><span data-toggle="tooltip" data-placement="right" title="<%= humanized_money_with_symbol convert_amount(account.amount,account.currency) %>"><%= print_amount(account.amount,account.currency) %></span></td>
         <td><%= draw_button('show', account) %>
             <%= draw_button('create', new_movement_path(:account_id => account)) unless account.is_disabled %>
             <%= draw_button('edit', edit_account_path(account)) %>
@@ -24,4 +26,15 @@
       </tr>
     <% end %>
   </tbody>
+  <% if total > 0 %>
+    <tfoot>
+      <tr>
+        <td>Total</td>
+        <td></td>
+        <td><%= humanized_money_with_symbol total %></td>
+        <td></td>
+      </tr>
+    </tfoot>
+  <% end %>
+
 </table>
