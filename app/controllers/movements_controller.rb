@@ -4,6 +4,7 @@ class MovementsController < ApplicationController
   def index
     from = DateTime.now.beginning_of_month
     to = DateTime.now.end_of_month
+    account_id = 0
 
     if params[:get_movements]
       if not params[:get_movements][:from].empty?
@@ -13,10 +14,17 @@ class MovementsController < ApplicationController
       if not params[:get_movements][:to].empty?
         to = DateTime.parse(params[:get_movements][:to])
       end
+
+      if not params[:get_movements][:account_id].empty?
+        account_id = params[:get_movements][:account_id]
+      end
     end
 
-    @movements = Movement.where("mdate >= ? and mdate <= ?",from,to).order('mdate ASC, created_at ASC')
-
+    if account_id != 0
+      @movements = Movement.where("mdate >= ? and mdate <= ? and account_id = ?",from,to,account_id)
+    else
+      @movements = Movement.where("mdate >= ? and mdate <= ?",from,to)
+    end
   end
 
   def show

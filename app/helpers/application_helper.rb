@@ -34,15 +34,49 @@ module ApplicationHelper
         return link_to text, path, :title =>title, :class=>class_type
     end
 
-    def print_amount(amount,currency)
-        m = Money.new(amount*100,currency)
-        return humanized_money_with_symbol m
+    # return money from amount
+    def return_money(amount,currency)
+      return Money.new(amount*100,currency)
     end
 
-    def convert_amount(amount,currency)
-        m = Money.new(amount*100,currency)
-        m = m.exchange_to(Money.default_currency)
-        return  m
+    # convert money to default currency
+    def convert_amount(m)
+      return  m.exchange_to(Money.default_currency)
+    end
+
+    def print_amount(total)
+      humanized_money_with_symbol total
+    end
+
+    def convert_ma(ma)
+      unless params[:controller] != 'movements' and params[:controller] != 'mtypes'
+        convert_amount(get_amount(ma))
+      else
+        get_amount(ma)
+      end
+    end
+
+    # print converted amount
+    def print_cma(ma)
+      humanized_money_with_symbol convert_amount(get_amount(ma))
+    end
+
+    def get_amount(ma,account_amount=0)
+      if ma.class.name == 'Account'
+        m = return_money(ma.amount,ma.currency)
+      else
+        if account_amount == 1
+          m = return_money(ma.account_amount,ma.account.currency)
+        else
+          m = return_money(ma.amount,ma.account.currency)
+        end
+      end
+      return m
+    end
+
+    # print movement.amount or account.amount
+    def print_ma(ma,account_amount=0)
+      humanized_money_with_symbol get_amount(ma,account_amount)
     end
 
 end

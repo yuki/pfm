@@ -15,27 +15,31 @@
     </tr>
     </thead>
     <tbody>
+    <% total = 0 %>
     <% movements.each do |movement| %>
+      <% total += convert_ma(movement) %>
       <tr title="<%= movement.description %>">
         <td><%= link_to movement.mtype.name, mtype_path(movement.mtype) %></td>
         <td>
           <% if movement.name != "" %>
-            <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-comment" data-toggle="tooltip" data-placement="top" title="<%= movement.name %>" />
+            <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-comment" data-toggle="tooltip" data-placement="top"
+                title="<%= movement.name + ' ' + movement.description %>" />
           <% end %>
         </td>
-        <td><%= print_amount(movement.amount,movement.account.currency)  %></td>
+        <td><span data-toggle="tooltip" data-placement="right" title="<%= print_cma(movement) %>"><%= print_ma(movement) %></span></td>
         <td><%= movement.mdate.to_date %></td>
         <td></td>
         <td></td>
-        <td><% if params[:controller] != 'movements' and params[:controller] != 'mtypes' %>
-                <%= print_amount(movement.account_amount,movement.account.currency) %>
+        <td>
+            <% if params[:controller] != 'movements' and params[:controller] != 'mtypes' %>
+                <%= print_ma(movement,1) %>
             <% end %>
         </td>
         <% status = "" %>
         <% status = "success" if movement.amount > 0 %>
         <% status = "info" if movement.is_transfer %>
         <td><%=draw_button("edit",edit_movement_path(movement),status) %></td>
-        <td><span class="destroy"><%= draw_button("destroy", movement)  %></span></td>
+        <td><%= draw_button("destroy", movement)  %></td>
       </tr>
     <% end %>
     </tbody>
@@ -43,8 +47,7 @@
     <tfoot>
       <th>Total</th>
       <th></th>
-      <% total = movements.find_all.sum(&:amount) %>
-      <th><span class="<%= total > 0 ? "positive":"negative" %>"><%= total  %></span></th>
+      <th><%= print_amount(total) %></th>
       <th></th>
       <th></th>
       <th></th>
