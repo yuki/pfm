@@ -15,7 +15,7 @@ class MovementsController < ApplicationController
       end
     end
 
-    @movements = Movement.where("mdate >= ? and mdate <= ?",from,to)
+    @movements = Movement.where("mdate >= ? and mdate <= ?",from,to).order('mdate ASC, created_at ASC')
 
   end
 
