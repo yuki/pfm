@@ -35,7 +35,7 @@ class Movement < ActiveRecord::Base
     end
   end
 
-  def consolidate
+  def consolidate(transferred_amount)
     movement = self
     if movement.is_transfer and movement.amount > 0
       #we get sure that the amount to transfer is negative in the origin
@@ -44,21 +44,25 @@ class Movement < ActiveRecord::Base
     movement.save!
     movement.account.consolidate(movement)
 
-    make_transfer(movement) if self.is_transfer
+    make_transfer(movement,transferred_amount) if self.is_transfer
   end
 
-  def make_transfer(movement)
+  def make_transfer(movement,transferred_amount)
     m = Movement.new()
     m.mtype_id = movement.mtype_id
     m.name = movement.name
     m.description = movement.description
-    m.amount = movement.amount.abs
     m.is_transfer = movement.is_transfer
     m.mdate = movement.mdate
 
     #the account_id is first saved in movement_id
     m.account = Account.find(movement.movement_id)
     m.movement_id = movement.id
+    if m.account != movement.account
+      m.amount = transferred_amount.to_f.abs
+    else
+      m.amount = movement.amount.abs
+    end
     m.save!
 
     m.account.consolidate(m)

@@ -72,18 +72,27 @@
   <div class="form-group">
     <%= f.label :is_transfer, :class=>"col-sm-2 control-label" %>
     <div class="col-sm-1">
-      <%= f.check_box :is_transfer, :class=>"form-control", :onchange => "$('div#movement_id').toggle()" %>
+      <%= f.check_box :is_transfer, :class=>"form-control", :onchange => "$('div#transfer').toggle()" %>
     </div>
   </div>
 
-  <div class="form-group" id="movement_id" style="display:none;">
-    <%= f.label :movement_id, :class=>"col-sm-2 control-label" %>
-    <div class="col-sm-2">
-      <%= select("movement", "movement_id",
-            Account.where("id != ?",params[:account_id]).order('lower(name)').collect {|p| [ p.name, p.id ] },
-                {:include_blank => 'Choose account'},{:class=>"form-control"})
-        %>
-    </div>
+  <div id="transfer" style="display:<%= @movement.is_transfer ? "" : "None" %>">
+      <div class="form-group" id="movement_id">
+        <%= f.label :movement_id, :class=>"col-sm-2 control-label" %>
+        <div class="col-sm-2">
+          <%= select("movement", "movement_id",
+                Account.where("id != ?",params[:account_id]).order('lower(name)').collect {|p| [ p.name, p.id ] },
+                    {:include_blank => 'Choose account'},{:class=>"form-control"})
+            %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= label :movement, :transferred_amount, :class=>"col-sm-2 control-label" %>
+        <div class="col-sm-2">
+          <input type="text" id="movement_transferred_amount" name="movement[transferred_amount]" class="form-control" value="<%= @movement.amount or 0.0 %>" />
+        </div>
+      </div>
   </div>
 
   <div class="form-group">
@@ -93,3 +102,11 @@
   </div>
 
 <% end %>
+
+<script>
+  $("#movement_amount").keyup(function() {
+    var value = $(this).val();
+    $("#movement_transferred_amount").val(value);
+  })
+  .keyup();
+</script>

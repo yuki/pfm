@@ -42,7 +42,7 @@ class MovementsController < ApplicationController
 
     respond_to do |format|
       if @movement.save
-        @movement.consolidate
+        @movement.consolidate(params[:movement][:transferred_amount])
         format.html { redirect_to account_path(@movement.account), notice: 'Movement was successfully created.' }
       else
         format.html { render :new }

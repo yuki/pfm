@@ -24,3 +24,7 @@ You can change this in the file config/initializers/money.rb , few examples:
   config.default_currency = :eur
   # config.default_currency = :usd
   # config.default_currency = :gbp
+
+
+== Disclaimer:
+This projects is unfinished and there are known bugs (I avoid them when using PFM :p
