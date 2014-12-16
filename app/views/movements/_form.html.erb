@@ -81,7 +81,7 @@
         <%= f.label :movement_id, :class=>"col-sm-2 control-label" %>
         <div class="col-sm-2">
           <%= select("movement", "movement_id",
-                Account.where("id != ?",params[:account_id]).order('lower(name)').collect {|p| [ p.name, p.id ] },
+                @accounts.collect {|p| [ p.name, p.id ] },
                     {:include_blank => 'Choose account'},{:class=>"form-control"})
             %>
         </div>
