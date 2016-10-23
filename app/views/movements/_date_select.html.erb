@@ -38,13 +38,13 @@
 
     <script type="text/javascript">
         $(function () {
-            $('#datetimepickerFrom').datetimepicker({pickTime: false, language: 'es'});
-            $('#datetimepickerTo').datetimepicker({pickTime: false, language: 'es'});
+            $('#datetimepickerFrom').datetimepicker();
+            $('#datetimepickerTo').datetimepicker();
             $("#datetimepickerFrom").on("dp.change",function (e) {
-               $('#datetimepickerTo').data("DateTimePicker").setMinDate(e.date);
+               $('#datetimepickerTo').data("DateTimePicker").minDate(e.date);
             });
             $("#datetimepickerTo").on("dp.change",function (e) {
-               $('#datetimepickerFrom').data("DateTimePicker").setMaxDate(e.date);
+               $('#datetimepickerFrom').data("DateTimePicker").maxDate(e.date);
             });
         });
     </script>
