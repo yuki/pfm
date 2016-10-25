@@ -17,7 +17,7 @@ class Movement < ActiveRecord::Base
       #first one
       #NOTE: this could be different, and we could change also the first, but
       # I prefer this way :-p
-      idx = a.movements.index(movement)
+      idx = a.movements.find_index(movement)
       a.movements[idx+1..-1].each do |m|
         m.account_amount = m.account_amount - movement.amount
         m.save!

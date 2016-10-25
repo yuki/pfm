@@ -40,6 +40,11 @@ class MovementsController < ApplicationController
   end
 
   def edit
+    if params[:account_id]
+      @accounts = Account.where("id != ?",params[:account_id]).order('lower(name)')
+    else
+      @accounts = Account.all.order('lower(name)')
+    end
   end
 
   def create
@@ -57,6 +62,11 @@ class MovementsController < ApplicationController
   end
 
   def update
+    if params[:account_id]
+      @accounts = Account.where("id != ?",params[:account_id]).order('lower(name)')
+    else
+      @accounts = Account.all.order('lower(name)')
+    end
     respond_to do |format|
       if @movement.update(movement_params)
         @movement.account.consolidate(@movement)

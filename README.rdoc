@@ -22,8 +22,11 @@ To use PFM you should do:
   $ rails s
 
 == Configure:
-The only configure option right now is the default currency that is in Euros (€).
-You can change this in the file config/initializers/money.rb , few examples:
+You should configure the application to use your locale. Change it in
+config/application.rb
+  # config.i18n.default_locale = :es
+
+To change the default currency change it in config/initializers/money.rb , few examples:
   config.default_currency = :eur
   # config.default_currency = :usd
   # config.default_currency = :gbp

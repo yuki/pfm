@@ -20,10 +20,10 @@ class Account < ActiveRecord::Base
         movement.save!
         return
       else
-        #must update all the movements since the last we have added
-        idx = a.movements.index(movement)
+        #must update all the movements from the last we have added
+        idx = a.movements.find_index(movement)
         a.movements[idx..-1].each do |m|
-          i = a.movements.index(m)
+          i = a.movements.find_index(m)
           m.account_amount = a.movements[i-1].account_amount + m.amount
           m.save!
         end
