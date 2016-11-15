@@ -14,12 +14,12 @@
   <tbody>
     <% @annual_status.each do |as| %>
       <tr>
-        <td><%= as[0].name %></td>
+        <td><%= link_to as[0].name, account_path(as[0]) %></td>
         <td>
           <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-comment" data-toggle="tooltip" data-placement="right" title="<%= as[0].description %>" />
         </td>
         <% (@first.year..@last).each do |year| %>
-          <td><%= as[1][year] %></td>
+          <td><%= as[1][year].nil? ? "" : print_amount(as[1][year])   %></td>
         <% end %>
       </tr>
     <% end %>
@@ -28,13 +28,15 @@
     <tr><td>Total</td>
       <td/>
       <% (@first.year..@last).each do |year| %>
-        <td><%= @total[year] %></td>
+        <td><%= print_amount(@total[year]) %></td>
       <% end %>
     </tr>
     <tr><td>Diff</td>
       <td/>
       <% (@first.year..@last).each do |year| %>
-        <td><%= @total[year-1].nil? ? @total[year] : @total[year]-@total[year-1] %></td>
+        <td><%= @total[year-1].nil? ?
+                print_amount(@total[year]) :
+                print_amount(@total[year]-@total[year-1]) %></td>
       <% end %>
     </tr>
   </tfoot>

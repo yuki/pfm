@@ -8,29 +8,33 @@
         <% (@first.year..@last).each do |year| %>
           <th><%= year %></th>
         <% end %>
+        <th>Total</th>
       </tr>
     </thead>
     <tbody>
         <tr>
           <td>Profit</td>
           <% (@first.year..@last).each do |year| %>
-            <td><%= @annual_profit[year] %></td>
+            <td><%= print_amount(@annual_profit[year]) %></td>
           <% end %>
+          <td><%= print_amount(@annual_profit[0])%></td>
         </tr>
         <tr>
           <td>Loss</td>
           <% (@first.year..@last).each do |year| %>
-            <td><%= @annual_loss[year] %></td>
+            <td><%= print_amount(@annual_loss[year]) %></td>
           <% end %>
+          <td><%= print_amount(@annual_loss[0]) %></td>
         </tr>
     </tbody>
 
     <tfoot>
       <tr><td>Total</td>
         <% (@first.year..@last).each do |year| %>
-          <td><%= @annual_profit[year]- @annual_loss[year] unless
+          <td><%= print_amount(@annual_profit[year]- @annual_loss[year]) unless
                     @annual_profit[year].nil? or @annual_loss[year].nil? %></td>
         <% end %>
+        <td>~<%= print_amount(@annual_profit[0]- @annual_loss[0]) %></td>
       </tr>
     </tfoot>
   </table>
