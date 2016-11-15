@@ -1,0 +1,48 @@
+<h1>Annual status</h1>
+
+<div class="col-md-12">
+  <table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th/>
+      <% (@first.year..@last).each do |year| %>
+        <th><%= year %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @annual_status.each do |as| %>
+      <tr>
+        <td><%= as[0].name %></td>
+        <td>
+          <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-comment" data-toggle="tooltip" data-placement="right" title="<%= as[0].description %>" />
+        </td>
+        <% (@first.year..@last).each do |year| %>
+          <td><%= as[1][year] %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr><td>Total</td>
+      <td/>
+      <% (@first.year..@last).each do |year| %>
+        <td><%= @total[year] %></td>
+      <% end %>
+    </tr>
+    <tr><td>Diff</td>
+      <td/>
+      <% (@first.year..@last).each do |year| %>
+        <td><%= @total[year-1].nil? ? @total[year] : @total[year]-@total[year-1] %></td>
+      <% end %>
+    </tr>
+  </tfoot>
+  </table>
+</div>
+
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>

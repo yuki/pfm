@@ -1,13 +1,13 @@
 <%= form_for(@movement, :html=>{:class=>"form-horizontal"}) do |f| %>
   <% if @movement.errors.any? %>
     <div id="error_explanation">
-      <div class="alert alert-danger"><%= pluralize(@movement.errors.count, "error") %> prohibited this movement from being saved:</div>
-
-      <ul>
-      <% @movement.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+      <div class="alert alert-danger"><%= pluralize(@movement.errors.count, "error") %> prohibited this movement from being saved:
+        <ul>
+        <% @movement.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 

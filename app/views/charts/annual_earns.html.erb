@@ -1,0 +1,37 @@
+<h1>Annual earns</h1>
+
+<div id="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th/>
+        <% (@first.year..@last).each do |year| %>
+          <th><%= year %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>Profit</td>
+          <% (@first.year..@last).each do |year| %>
+            <td><%= @annual_profit[year] %></td>
+          <% end %>
+        </tr>
+        <tr>
+          <td>Loss</td>
+          <% (@first.year..@last).each do |year| %>
+            <td><%= @annual_loss[year] %></td>
+          <% end %>
+        </tr>
+    </tbody>
+
+    <tfoot>
+      <tr><td>Total</td>
+        <% (@first.year..@last).each do |year| %>
+          <td><%= @annual_profit[year]- @annual_loss[year] unless
+                    @annual_profit[year].nil? or @annual_loss[year].nil? %></td>
+        <% end %>
+      </tr>
+    </tfoot>
+  </table>
+</div>
