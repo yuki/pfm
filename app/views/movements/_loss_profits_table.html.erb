@@ -7,7 +7,7 @@
     </tr>
   </thead>
   <tbody>
-    <% movements.group_by(&:mtype).each do |movement| %>
+    <% movements.group_by(&:mtype).sort_by{|m| m.first.name.downcase}.each do |movement| %>
       <tr>
         <td><%= movement[0].name %></td>
         <td><%= movement[1].sum(&:amount).to_s %></td>

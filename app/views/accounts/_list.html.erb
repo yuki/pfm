@@ -11,13 +11,13 @@
   <tbody>
     <% total = 0 %>
     <% accounts.each do |account| %>
-      <% total += convert_ma(account) %>
+      <% total += account.amount %>
       <tr>
         <td><%= account.name %></td>
         <td>
           <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-comment" data-toggle="tooltip" data-placement="right" title="<%= account.description %>" />
         </td>
-        <td><span data-toggle="tooltip" data-placement="right" title="<%= print_cma(account) %>"><%= print_ma(account) %></span></td>
+        <td><span data-toggle="tooltip" data-placement="right" title="<%#= print_cma(account) %>"><%= account.amount %> <%= account.currency %></span></td>
         <td><%= draw_button('show', account) %>
             <%= draw_button('create', new_movement_path(:account_id => account)) unless account.is_disabled %>
             <%= draw_button('edit', edit_account_path(account)) %>

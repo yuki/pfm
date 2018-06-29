@@ -2,8 +2,8 @@ class AccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit, :update, :destroy]
 
   def index
-    @accounts = Account.where("is_disabled == ?", false).order("lower(name)")
-    @accounts_disabled = Account.where("is_disabled == ?", true).order("lower(name)")
+    @accounts = Account.where("is_disabled == ?", false)
+    @accounts_disabled = Account.where("is_disabled == ?", true)
   end
 
   def show

@@ -41,7 +41,7 @@ end
 
 # custom
 gem 'bootstrap-sass', '>= 3.3.0'
-gem 'money-rails', '~> 1.7.0'
+gem 'money-rails', '~> 1.11.0'
 gem 'google_currency'
 gem 'momentjs-rails', '> 2.8.1'
 gem 'bootstrap3-datetimepicker-rails', '> 3.1.3'

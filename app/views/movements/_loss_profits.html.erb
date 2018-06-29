@@ -4,10 +4,10 @@
 <% chart_data_loss = [] %>
 <% chart_data_profit = [] %>
 
-<% movements_loss.group_by(&:mtype).each do |movement| %>
+<% movements_loss.group_by(&:mtype).sort_by{|m| m.first.name.downcase}.each do |movement| %>
     <% chart_data_loss += [{:name => movement[0].name, :data => [movement[1].sum(&:amount).to_f] }] %>
 <% end %>
-<% movements_profit.group_by(&:mtype).each do |movement| %>
+<% movements_profit.group_by(&:mtype).sort_by{|m| m.first.name.downcase}.each do |movement| %>
     <% chart_data_profit += [{:name => movement[0].name, :data => [movement[1].sum(&:amount).to_f] }] %>
 <% end %>
 
