@@ -12,34 +12,33 @@
 
 ActiveRecord::Schema.define(version: 20141204191311) do
 
-  create_table "accounts", force: :cascade do |t|
-    t.string   "name"
-    t.text     "description"
-    t.decimal  "amount"
-    t.string   "currency"
-    t.boolean  "is_disabled"
+# Could not dump table "accounts" because of following StandardError
+#   Unknown type 'string' for column 'currency'
+
+  create_table "currencies", force: :cascade do |t|
+    t.string "name", limit: 255
+    t.string "symbol", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "movements", force: :cascade do |t|
-    t.integer  "account_id"
-    t.integer  "mtype_id"
-    t.string   "name"
-    t.text     "description"
-    t.decimal  "amount",         default: "0.0"
+    t.integer "account_id"
+    t.integer "mtype_id"
+    t.string "name", limit: 255
+    t.text "description"
+    t.decimal "amount", default: "0.0"
     t.datetime "mdate"
-    t.decimal  "account_amount"
-    t.boolean  "is_transfer"
-    t.integer  "movement_id"
+    t.date "vdate"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["account_id"], name: "index_movements_on_account_id"
-    t.index ["mtype_id"], name: "index_movements_on_mtype_id"
+    t.decimal "account_amount"
+    t.boolean "is_transfer"
+    t.integer "movement_id"
   end
 
   create_table "mtypes", force: :cascade do |t|
-    t.string   "name"
+    t.string "name", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
