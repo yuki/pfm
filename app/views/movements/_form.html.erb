@@ -15,7 +15,7 @@
     <%= f.label :account_id, :class=>"col-sm-2 control-label"%>
     <div class="col-sm-3">
       <%= select("movement", "account_id",
-            Account.all.order('lower(name)').collect {|p| [ p.name, p.id ] },
+            @accounts.collect {|p| [ p.name, p.id ] },
                 {:include_blank => 'Choose account', :selected => params[:account_id] || @movement.account_id},{:class=>"form-control"})
         %>
     </div>
@@ -25,7 +25,7 @@
     <%= f.label :mtype_id, :class=>"col-sm-2 control-label" %>
     <div class="col-sm-3">
       <%= select("movement", "mtype_id",
-            Mtype.all.order('lower(name)').collect {|p| [ p.name, p.id ] },
+            Mtype.all.collect {|p| [ p.name, p.id ] },
                 {:include_blank => 'Choose movement type'},{:class=>"form-control"})
         %>
     </div>

@@ -1,5 +1,5 @@
 class Account < ActiveRecord::Base
-  #default_scope {order(name: :asc)}
+  default_scope {order('LOWER(name)')}
   has_many :movements, -> {order 'mdate ASC, created_at ASC'}, :dependent => :destroy
   validates_presence_of :name, :amount
   validates_numericality_of :amount

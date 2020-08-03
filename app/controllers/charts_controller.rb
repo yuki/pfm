@@ -3,7 +3,7 @@ class ChartsController < ApplicationController
   end
 
   def annual_status
-    accounts = Account.all.order("name asc")
+    accounts = Account.all
     @movements = Movement.all.order("mdate asc")
     @first = @movements.first.mdate
     @last = Time.now.year
@@ -29,7 +29,7 @@ class ChartsController < ApplicationController
   end
 
   def annual_earns
-    accounts = Account.all.order("name asc")
+    accounts = Account.all
     movements = Movement.all.order("mdate asc")
     @first = movements.first.mdate
     @last = Time.now.year

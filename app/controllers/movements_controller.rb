@@ -32,19 +32,11 @@ class MovementsController < ApplicationController
 
   def new
     @movement = Movement.new
-    if params[:account_id]
-      @accounts = Account.where("id != ?",params[:account_id]).order('lower(name)')
-    else
-      @accounts = Account.all.order('lower(name)')
-    end
+    @accounts = Account.all
   end
 
   def edit
-    if params[:account_id]
-      @accounts = Account.where("id != ?",params[:account_id]).order('lower(name)')
-    else
-      @accounts = Account.all.order('lower(name)')
-    end
+    @accounts = Account.where("id != ?",params[:account_id])
   end
 
   def create

@@ -2,7 +2,7 @@ class MtypesController < ApplicationController
   before_action :set_mtype, only: [:show, :edit, :update, :destroy]
 
   def index
-    @mtypes = Mtype.all.order("lower(name)")
+    @mtypes = Mtype.all
   end
 
   def show
