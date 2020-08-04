@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2', '= 5.2.4.3'
+gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use Puma as the app server
@@ -55,12 +55,12 @@ end
 
 # custom
 gem 'bootstrap-sass', '>= 3.3.0'
-gem 'money-rails', '~> 1.11.0'
+gem 'money-rails', '~> 1.13.0'
 gem 'google_currency'
 gem 'momentjs-rails', '> 2.8.1'
 gem 'bootstrap3-datetimepicker-rails', '> 3.1.3'
 gem 'highcharts-rails'
-gem 'rails-i18n', '~> 5.0.0'
+#gem 'rails-i18n', '~> 5.0.0'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

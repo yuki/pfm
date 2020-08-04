@@ -12,6 +12,8 @@ MoneyRails.configure do |config|
   #
   # Example:
    Money.default_bank = Money::Bank::GoogleCurrency.new
+   Money.rounding_mode = BigDecimal::ROUND_HALF_UP
+   Money.locale_backend = :i18n
 
   # Add exchange rates to current money bank object.
   # (The conversion rate refers to one direction only)
