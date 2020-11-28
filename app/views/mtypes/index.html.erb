@@ -15,6 +15,7 @@
           <td><%= draw_button('show', mtype) %>
               <%= draw_button('edit', edit_mtype_path(mtype)) %>
               <%= draw_button('destroy', mtype) %>
+              <%= draw_button('graph', movements_types_charts_path(mtype)) %>
           </td>
         </tr>
       <% end %>

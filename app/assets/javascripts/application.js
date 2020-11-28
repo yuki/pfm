@@ -18,6 +18,9 @@
 //= require moment/es
 //= require bootstrap-datetimepicker
 //= require highcharts
+//= require highcharts/highcharts-more
+//= require highcharts/modules/drilldown
+//= require highcharts/modules/exporting
 //= require_tree .
 
 
@@ -30,7 +33,7 @@ function column_graph (where, title, data_json) {
              defaultSeriesType: 'column'
           },
           title: {
-             text: title + ' per movement type'
+             text: title + ' '
           },
           xAxis: {
              categories: ['Moves types']
@@ -52,6 +55,56 @@ function column_graph (where, title, data_json) {
           series: data_json
        });
     });
+}
+
+function drilldown_column_graph (where, title, data_json, drilldown) {
+    var chart;
+    $(document).ready(function() {
+       chart = new Highcharts.Chart({
+          chart: {
+             renderTo: where,
+             defaultSeriesType: 'column'
+          },
+          title: {
+             text: title + ' '
+          },
+          accessibility: {
+              announceNewData: {
+                  enabled: true
+              }
+          },
+          xAxis: {
+             type: 'category'
+          },
+          yAxis: {
+              title: {
+                  text: 'Amount'
+              }
+          },
+          plotOptions: {
+            series: {
+              borderWidth: 0,
+              dataLabels: {
+                enabled: true,
+                format: '{point.y:.2f}'
+              }
+            }
+          },
+          tooltip: {
+             formatter: function() {
+                return ''+
+                    '<b>'+this.series.name +'</b>: '+ this.y +'';
+             }
+          },
+          credits: {
+             enabled: false
+          },
+          series: data_json ,
+          drilldown:  drilldown
+       });
+    });
+    console.log(data_json)
+    console.log(drilldown)
 }
 
 

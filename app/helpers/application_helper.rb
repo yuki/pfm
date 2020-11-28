@@ -30,6 +30,10 @@ module ApplicationHelper
             when "destroy"
                 class_type += "btn-danger glyphicon glyphicon-remove"
                 return link_to "", path, method: :delete, data: { confirm: 'Are you sure?' }, :title =>"Destroy", :class=>class_type
+            when "graph"
+                title = "Show graph"
+                class_type += "btn-default glyphicon glyphicon-stats"
+
         end
         return link_to text, path, :title =>title, :class=>class_type
     end

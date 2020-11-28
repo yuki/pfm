@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get 'index'
       get 'annual_earns'
       get 'annual_status'
+      get 'movements_types/:id', to: 'charts#movements_types', as: 'movements_types'
     end
   end
 

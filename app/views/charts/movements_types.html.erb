@@ -1,0 +1,7 @@
+<h1>Annual amount per movement type: <%= @mtype %></h1>
+
+<div id="graph" class="col-md-12"></div>
+
+<script>
+  drilldown_column_graph('graph','Annual amount per movement type: <%= @mtype %> ', <%= @chart_data.to_json.html_safe %>, <%= @drilldown.to_json.html_safe %> );
+</script>

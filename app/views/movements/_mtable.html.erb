@@ -3,6 +3,7 @@
   <table class="table table-striped">
     <thead>
     <tr>
+      <th></th>
       <th>Mtype</th>
       <th></th>
       <th>Amount</th>
@@ -19,6 +20,7 @@
     <% movements.each do |movement| %>
       <% total += convert_ma(movement) %>
       <tr title="<%= movement.description %>">
+        <td><%= draw_button('graph', movements_types_charts_path(movement.mtype)) %></td>
         <td><%= link_to movement.mtype.name, mtype_path(movement.mtype) %></td>
         <td>
           <% if movement.name != "" %>
@@ -45,6 +47,7 @@
     </tbody>
     </thead>
     <tfoot>
+      <th></th>
       <th>Total</th>
       <th></th>
       <th><%= print_amount(total) %></th>
