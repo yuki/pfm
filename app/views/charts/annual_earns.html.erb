@@ -34,7 +34,7 @@
           <td><%= print_amount(@annual_profit[year]- @annual_loss[year]) unless
                     @annual_profit[year].nil? or @annual_loss[year].nil? %></td>
         <% end %>
-        <td>~<%= print_amount(@annual_profit[0]- @annual_loss[0]) %></td>
+        <td>~<%= print_amount(@annual_profit[0] + @annual_loss[0]) %></td>
       </tr>
     </tfoot>
   </table>

@@ -87,6 +87,14 @@ function drilldown_column_graph (where, title, data_json, drilldown) {
               dataLabels: {
                 enabled: true,
                 format: '{point.y:.2f}'
+              },
+              cursor: 'pointer',
+              point: {
+                  // events: {
+                  //     click: function () {
+                  //         alert('Category: ' + this.category + ', value: ' + this.y);
+                  //     }
+                  // }
               }
             }
           },
@@ -103,8 +111,6 @@ function drilldown_column_graph (where, title, data_json, drilldown) {
           drilldown:  drilldown
        });
     });
-    console.log(data_json)
-    console.log(drilldown)
 }
 
 

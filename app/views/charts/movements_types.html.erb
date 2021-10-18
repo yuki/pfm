@@ -2,6 +2,29 @@
 
 <div id="graph" class="col-md-12"></div>
 
+<div id="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th/>
+        <% @chart_data[0][:data].each do |year| %>
+          <th><%= year[:name] %></th>
+        <% end %>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>Amount</td>
+          <% @chart_data[0][:data].each do |year| %>
+            <td><%= print_amount(year[:y]) %></td>
+          <% end %>
+          <td><%= print_amount(@total) %></td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
 <script>
   drilldown_column_graph('graph','Annual amount per movement type: <%= @mtype %> ', <%= @chart_data.to_json.html_safe %>, <%= @drilldown.to_json.html_safe %> );
 </script>
