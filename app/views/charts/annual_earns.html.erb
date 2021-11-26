@@ -29,6 +29,14 @@
     </tbody>
 
     <tfoot>
+      <tr><td>Percent</td>
+        <% (@first.year..@last).each do |year| %>
+          <td><%= 100-(@annual_loss[year]*100/@annual_profit[year]).round(2) unless
+                    @annual_profit[year].nil? or @annual_loss[year].nil? %>%</td>
+        <% end %>
+        <td>~<%= print_amount(@annual_profit[0] + @annual_loss[0]) %></td>
+      </tr>
+
       <tr><td>Total</td>
         <% (@first.year..@last).each do |year| %>
           <td><%= print_amount(@annual_profit[year]- @annual_loss[year]) unless
@@ -36,6 +44,7 @@
         <% end %>
         <td>~<%= print_amount(@annual_profit[0] + @annual_loss[0]) %></td>
       </tr>
+
     </tfoot>
   </table>
 
