@@ -32,7 +32,7 @@ class MovementsController < ApplicationController
 
   def new
     @movement = Movement.new
-    @accounts = Account.all
+    @accounts = Account.where("is_disabled == false")
   end
 
   def edit

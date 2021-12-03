@@ -10,11 +10,21 @@
 
   <br>
   <% if @accounts_disabled.length > 0 %>
-    <h2>Disabled accounts</h2>
-    <%= render :partial => 'list', :locals => {:accounts => @accounts_disabled} %>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+            <h3>Disabled accounts</h3>
+          </a>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            <%= render :partial => 'list', :locals => {:accounts => @accounts_disabled} %>
+          </div>
+        </div>
+      </div>
+    </div>
   <% end %>
-
-
 </div>
 
 <script>
