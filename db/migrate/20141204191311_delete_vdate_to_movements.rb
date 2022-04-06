@@ -1,4 +1,4 @@
-class DeleteVdateToMovements < ActiveRecord::Migration
+class DeleteVdateToMovements < ActiveRecord::Migration[4.2]
   def change
     remove_column :movements, :vdate, :datetime
 

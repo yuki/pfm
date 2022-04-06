@@ -1,4 +1,4 @@
-== Personal Finance Manager
+# Personal Finance Manager
 
 This is my personal finance manager (PFM). It works for me, and it's an upgrade
 of what I did few years ago (you can see the log of the project and the branch
@@ -8,7 +8,7 @@ It's made with Ruby on Rails. As I said, it has the functionality I need, so
 probably it's not for you. If you think you can improve it or make changes,
 fork it and make a pull request :D
 
-== Install:
+# Install
 If you  want to try it, make sure you have Ruby on Rails installed (tested with
 Ruby 2.3 and Rails 5). You probably want to use https://rvm.io/
 
@@ -21,16 +21,21 @@ To use PFM you should do:
   $ rake db:seed
   $ rails s
 
-== Configure:
+# Configure
 You should configure the application to use your locale. Change it in
 config/application.rb
-  # config.i18n.default_locale = :es
+
+```
+# config.i18n.default_locale = :es
+```
 
 To change the default currency change it in config/initializers/money.rb , few examples:
+```
   config.default_currency = :eur
   # config.default_currency = :usd
   # config.default_currency = :gbp
+```
 
 
-== Disclaimer:
+# Disclaimer
 This projects is unfinished and there are known bugs.

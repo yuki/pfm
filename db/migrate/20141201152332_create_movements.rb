@@ -1,4 +1,4 @@
-class CreateMovements < ActiveRecord::Migration
+class CreateMovements < ActiveRecord::Migration[4.2]
   def change
     create_table :movements do |t|
       t.references :account, index: true

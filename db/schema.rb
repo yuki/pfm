@@ -12,12 +12,12 @@
 
 ActiveRecord::Schema.define(version: 2020_08_04_000730) do
 
-# Could not dump table "accounts" because of following StandardError
-#   Unknown type 'string' for column 'currency'
-
-  create_table "currencies", force: :cascade do |t|
-    t.string "name", limit: 255
-    t.string "symbol", limit: 255
+  create_table "accounts", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.decimal "amount"
+    t.string "currency"
+    t.boolean "is_disabled", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -25,20 +25,21 @@ ActiveRecord::Schema.define(version: 2020_08_04_000730) do
   create_table "movements", force: :cascade do |t|
     t.integer "account_id"
     t.integer "mtype_id"
-    t.string "name", limit: 255
+    t.string "name"
     t.text "description"
     t.decimal "amount", default: "0.0"
     t.datetime "mdate"
-    t.date "vdate"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.decimal "account_amount"
     t.boolean "is_transfer"
     t.integer "movement_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["account_id"], name: "index_movements_on_account_id"
+    t.index ["mtype_id"], name: "index_movements_on_mtype_id"
   end
 
   create_table "mtypes", force: :cascade do |t|
-    t.string "name", limit: 255
+    t.string "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
