@@ -4,13 +4,13 @@ This is my personal finance manager (PFM). It works for me, and it's an upgrade
 of what I did few years ago (you can see the log of the project and the branch
 "old_version").
 
-It's made with Ruby on Rails and few gems. As I said, it has the functionality I need, so
+It's made with Ruby on Rails and few gems. As I said, it has the functionality I need, so 
 probably it's not for you. If you think you can improve it,
 fork it and make a pull request :D
 
 # Install
 If you  want to try it, make sure you have Ruby on Rails installed (tested with
-Ruby 3.1.1 and Rails 7.0.2). You probably want to use https://rvm.io/
+Ruby 3.3 and Rails 7.1). You probably want to use https://rvm.io/
 
 To use PFM you should do:
 ```

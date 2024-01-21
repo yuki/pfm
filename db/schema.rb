@@ -10,9 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_06_161530) do
-# Could not dump table "accounts" because of following StandardError
-#   Unknown type 'string' for column 'currency'
+ActiveRecord::Schema[7.1].define(version: 2022_04_06_161530) do
+  create_table "accounts", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.decimal "amount"
+    t.string "currency"
+    t.boolean "is_disabled", default: false
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -30,7 +37,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_06_161530) do
     t.string "content_type"
     t.text "metadata"
     t.string "service_name", null: false
-    t.integer "byte_size", null: false
+    t.bigint "byte_size", null: false
     t.string "checksum"
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
@@ -42,30 +49,24 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_06_161530) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "currencies", force: :cascade do |t|
-    t.string "name", limit: 255
-    t.string "symbol", limit: 255
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
-  end
-
   create_table "movements", force: :cascade do |t|
     t.integer "account_id"
     t.integer "mtype_id"
-    t.string "name", limit: 255
+    t.string "name"
     t.text "description"
     t.decimal "amount", default: "0.0"
     t.datetime "mdate", precision: nil
-    t.date "vdate"
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
     t.decimal "account_amount"
     t.boolean "is_transfer"
     t.integer "movement_id"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.index ["account_id"], name: "index_movements_on_account_id"
+    t.index ["mtype_id"], name: "index_movements_on_mtype_id"
   end
 
   create_table "mtypes", force: :cascade do |t|
-    t.string "name", limit: 255
+    t.string "name"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
   end
