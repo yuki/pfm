@@ -67,7 +67,6 @@ group :test do
 end
 
 # custom
-# gem 'bootstrap-sass', '>= 3.3.0'
 gem 'money-rails', '~> 1.13.0'
 gem 'google_currency'
 gem 'momentjs-rails', '> 2.8.1'

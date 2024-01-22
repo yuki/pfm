@@ -1,0 +1,23 @@
+<h1>Show <%= singular_table_name.capitalize %></h1>
+
+<%% if notice.present? %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%%= notice %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<%% end %>
+
+<div class="card p-4">
+  <ul class="list-group mb-2">
+    <% attributes.each do |attribute| %>
+      <li class="list-group-item">
+        <strong><%= attribute.human_name %>:</strong>
+        <%%= @<%= singular_table_name %>.<%= attribute.name %> %>
+      </li>
+    <% end %>
+  </ul>
+  <div>
+    <%%= link_to 'Back', <%= index_helper %>_path, class: 'btn btn-outline-primary mr-2' %>
+    <%%= link_to 'Edit', edit_<%= singular_table_name %>_path(@<%= singular_table_name %>), class: 'btn btn-outline-primary' %>
+  </div>
+</div>
