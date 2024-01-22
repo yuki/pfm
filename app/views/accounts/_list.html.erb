@@ -15,7 +15,7 @@
       <tr>
         <td><%= account.name %></td>
         <td>
-          <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-comment" data-toggle="tooltip" data-placement="right" title="<%= account.description %>" />
+          <button type="button" class="btn btn-default btn-xs bi-chat-left-fill" data-toggle="tooltip" data-placement="right" title="<%= account.description %>" />
         </td>
         <td><span data-toggle="tooltip" data-placement="right" title="<%#= print_cma(account) %>"><%= account.amount %> <%= account.currency %></span></td>
         <td><%= draw_button('show', account) %>

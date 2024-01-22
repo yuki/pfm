@@ -1,7 +1,7 @@
 module ApplicationHelper
     def draw_button(type,path,status="")
         title = ""
-        class_type = "btn btn-xs "
+        class_type = "btn btn-sm "
         text = ""
         case type
             when "back"
@@ -10,7 +10,7 @@ module ApplicationHelper
                 class_type += "btn-danger"
             when "show"
                 title = "Show"
-                class_type += "btn-success glyphicon glyphicon-search"
+                class_type += "btn-success bi-search"
             when "showt"
                 title = "Show"
                 text = "Show"
@@ -23,16 +23,16 @@ module ApplicationHelper
                   status = "btn-warning"
                 end
                 class_type += status
-                class_type += " glyphicon glyphicon-edit"
+                class_type += " bi-pencil-square"
             when "create"
                 title = "Create movement"
-                class_type += "btn-info glyphicon glyphicon-plus"
+                class_type += "btn-info bi-plus-lg"
             when "destroy"
-                class_type += "btn-danger glyphicon glyphicon-remove"
+                class_type += "btn-danger bi-trash3-fill"
                 return link_to "", path, method: :delete, data: { confirm: 'Are you sure?' }, :title =>"Destroy", :class=>class_type
             when "graph"
                 title = "Show graph"
-                class_type += "btn-default glyphicon glyphicon-stats"
+                class_type += "btn-default bi-bar-chart-line-fill"
 
         end
         return link_to text, path, :title =>title, :class=>class_type
