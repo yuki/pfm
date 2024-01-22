@@ -66,11 +66,14 @@ group :test do
   gem "selenium-webdriver"
 end
 
+# Use jquery as the JavaScript library
+gem 'jquery-rails'
+
 # custom
 gem 'money-rails', '~> 1.13.0'
-gem 'google_currency'
-gem 'momentjs-rails', '> 2.8.1'
-gem 'bootstrap3-datetimepicker-rails', '> 3.1.3'
+# gem 'google_currency'
+# gem 'momentjs-rails', '> 2.8.1'
+# gem 'bootstrap3-datetimepicker-rails', '> 3.1.3'
 gem 'highcharts-rails'
 gem 'groupdate'
 #gem 'rails-i18n', '~> 5.0.0'

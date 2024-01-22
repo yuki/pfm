@@ -1,5 +1,5 @@
 class MtypesController < ApplicationController
-  before_action :set_mtype, only: [:show, :edit, :update, :destroy]
+  before_action :set_mtype, only: %i[ show edit update destroy ]
 
   def index
     @mtypes = Mtype.all
@@ -14,15 +14,14 @@ class MtypesController < ApplicationController
       if not params[:get_movements][:from].empty?
         from = DateTime.parse(params[:get_movements][:from])
       end
-
       if not params[:get_movements][:to].empty?
         to = DateTime.parse(params[:get_movements][:to])
       end
-
       if not params[:get_movements][:account_id].empty?
         account_id = params[:get_movements][:account_id]
       end
     end
+
     if account_id != 0
       @movements = @mtype.movements.where("mdate >= ? and mdate <= ? and account_id = ?",from,to,account_id)
     else
@@ -42,9 +41,9 @@ class MtypesController < ApplicationController
 
     respond_to do |format|
       if @mtype.save
-        format.html { redirect_to mtypes_url, notice: 'Mtype was successfully created.' }
+        format.html { redirect_to mtypes_url, notice: "Mtype was successfully created." }
       else
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
   end
@@ -52,17 +51,18 @@ class MtypesController < ApplicationController
   def update
     respond_to do |format|
       if @mtype.update(mtype_params)
-        format.html { redirect_to mtypes_url, notice: 'Mtype was successfully updated.' }
+        format.html { redirect_to mtypes_url, notice: "Mtype was successfully updated." }
       else
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
       end
     end
   end
 
   def destroy
-    @mtype.destroy
+    @mtype.destroy!
+
     respond_to do |format|
-      format.html { redirect_to mtypes_url, notice: 'Mtype was successfully destroyed.' }
+      format.html { redirect_to mtypes_url, notice: "Mtype was successfully destroyed." }
     end
   end
 
@@ -72,7 +72,7 @@ class MtypesController < ApplicationController
       @mtype = Mtype.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # Only allow a list of trusted parameters through.
     def mtype_params
       params.require(:mtype).permit(:name)
     end

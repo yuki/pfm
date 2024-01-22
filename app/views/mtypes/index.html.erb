@@ -1,28 +1,33 @@
-<h1>Listing mtypes</h1>
-<div class="col-md-4 col-md-offset-3">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th></th>
-      </tr>
-    </thead>
+<% if notice.present? %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= notice %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
 
-    <tbody>
-      <% @mtypes.each do |mtype| %>
-        <tr>
-          <td><%= mtype.name %></td>
-          <td><%= draw_button('show', mtype) %>
-              <%= draw_button('edit', edit_mtype_path(mtype)) %>
-              <%= draw_button('destroy', mtype) %>
-              <%= draw_button('graph', movements_types_charts_path(mtype)) %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-  <br>
-
-  <%= link_to 'New Mtype', new_mtype_path, :class=>"btn btn-primary btn-sm" %>
+<div class="d-flex justify-content-between align-items-baseline">
+  <h1>Mtypes</h1>
+  <%= link_to "New mtype", new_mtype_path, class: 'btn btn-primary' %>
 </div>
+
+<table class="table table-hover table-striped align-middle">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @mtypes.each do |mtype| %>
+      <%= content_tag :tr, id: dom_id(mtype), class: dom_class(mtype) do %>
+        <td><%= link_to mtype.name,mtype_path(mtype) %></td>
+        <td>
+          <%= draw_button('show', mtype) %>
+          <%= draw_button('edit', edit_mtype_path(mtype)) %>
+          <%= draw_button('destroy', mtype) %>
+          <%= draw_button('graph', movements_types_charts_path(mtype)) %>
+        </td>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

@@ -7,32 +7,32 @@ module ApplicationHelper
             when "back"
                 title = "Back"
                 text = "Back"
-                class_type += "btn-danger"
+                class_type += "btn-outline-danger"
             when "show"
                 title = "Show"
-                class_type += "btn-success bi-search"
+                class_type += "btn-outline-success bi-search"
             when "showt"
                 title = "Show"
                 text = "Show"
-                class_type += "btn-success"
+                class_type += "btn-outline-success"
             when "edit"
                 title = "Edit"
                 if status != ""
-                  status = "btn-"+status
+                  status = "btn-outline-"+status
                 else
-                  status = "btn-warning"
+                  status = "btn-outline-warning"
                 end
                 class_type += status
                 class_type += " bi-pencil-square"
             when "create"
                 title = "Create movement"
-                class_type += "btn-info bi-plus-lg"
+                class_type += "btn-outline-info bi-plus-lg"
             when "destroy"
-                class_type += "btn-danger bi-trash3-fill"
+                class_type += "btn-outline-danger bi-trash3-fill"
                 return link_to "", path, method: :delete, data: { confirm: 'Are you sure?' }, :title =>"Destroy", :class=>class_type
             when "graph"
                 title = "Show graph"
-                class_type += "btn-default bi-bar-chart-line-fill"
+                class_type += "btn-outline-secondary bi-bar-chart-line-fill"
 
         end
         return link_to text, path, :title =>title, :class=>class_type
