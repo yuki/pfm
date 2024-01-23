@@ -1,8 +1,9 @@
 class Account < ActiveRecord::Base
   default_scope {order('LOWER(name)')}
   has_many :movements, -> {order 'mdate ASC, created_at ASC'}, :dependent => :destroy
-  validates_presence_of :name, :amount
-  validates_numericality_of :amount
+  validates :name, presence: true, uniqueness: true
+  validates :amount, presence: true, numericality: true
+  validates :currency, presence: true
 
 
   def consolidate(movement)

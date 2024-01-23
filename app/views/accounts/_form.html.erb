@@ -1,51 +1,55 @@
-<%= form_for(@account, :html=>{:class=>"form-horizontal"}) do |f| %>
-  <% if @account.errors.any? %>
-    <div id="error_explanation">
-      <div class="alert alert-danger" role="alert"><%= pluralize(@account.errors.count, "error") %> prohibited this account from being saved:
-        <ul>
-        <% @account.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-        </ul>
-      </div>
-    </div>
+<% if account.errors.any? %>
+  <% account.errors.full_messages.each do |message| %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <%= message %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
   <% end %>
+<% end %>
 
-  <div class="form-group">
-    <%= f.label :name, :class=>"col-sm-2 control-label" %>
-    <div class="col-sm-2">
-      <%= f.text_field :name, :class=>"form-control" %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :description, :class=>"col-sm-2 control-label" %>
-    <div class="col-sm-4">
-      <%= f.text_area :description, :class=>"form-control" %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :amount, :class=>"col-sm-2 control-label" %>
-    <div class="col-sm-2">
-      <%= f.text_field :amount, :class=>"form-control" %>
-      <%= select("account", "currency",
-              Money::Currency.table.collect{|m| ([m[1][:symbol]+" (#{m[1][:iso_code]})",m[1][:iso_code]] if m[1][:priority] <= 10)}.compact, {}, :class=> "form-control"
-          ) %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <div class="checkbox">
-        <label><%= f.check_box :is_disabled %> Disabled?</label>
+<%= form_with(model: account, local: true) do |form| -%>
+<div class="card">
+  <h5 class="card-header">Account</h5>
+  <ul class="list-group list-group-flush pb-3 mt-3">
+    <li class="list-group-item">
+      <div class="form-group">
+        <%= form.label :name, class: "fw-bold" %>
+        <%= form.text_field :name, placeholder: "Enter name", class: "form-control" %>
       </div>
-    </div>
+    </li>
+    <li class="list-group-item">
+      <div class="form-group">
+        <%= form.label :description, class: "fw-bold" %>
+        <%= form.text_area :description, placeholder: "Enter description", class: "form-control" %>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="form-group">
+        <%= form.label :amount, class: "fw-bold" %>
+        <%= form.text_field :amount, placeholder: "Enter amount", class: "form-control" %>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="form-group">
+        <%= form.label :currency, class: "fw-bold" %>
+        <%= select("account", "currency",
+          Money::Currency.table.collect{|m| ([m[1][:symbol]+" (#{m[1][:iso_code]})",m[1][:iso_code]] if m[1][:priority] <= 10)}.compact, {}, :class=> "form-select"
+        ) %>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="form-group form-check form-switch">
+        <%#= form.label :is_disabled, class: "fw-bold" %>
+        <%#= form.check_box :is_disabled, placeholder: "Enter is_disabled", class: "form-control" %>
+        <%= form.check_box :is_disabled, class: "form-check-input" %>
+        <label class="form-check-label" for="flexSwitchCheckDefault">Disabled?</label>
+      </div>
+    </li>
+  </ul>
+  <div class="card-footer">
+    <%= link_to "Cancel", accounts_path, class: 'btn btn-outline-secondary float-start' %>
+    <%= form.submit "Save", class: "btn btn-primary float-end" if account.persisted? %>
+    <%= form.submit "Create", class: "btn btn-primary float-end" if !account.persisted? %>
   </div>
-
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <%= f.submit :class=>"btn btn-info" %>
-    </div>
-  </div>
+</div>
 <% end %>

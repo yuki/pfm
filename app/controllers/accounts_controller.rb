@@ -1,9 +1,9 @@
 class AccountsController < ApplicationController
-  before_action :set_account, only: [:show, :edit, :update, :destroy]
+  before_action :set_account, only: %i[ show edit update destroy ]
 
   def index
-    @accounts = Account.where("is_disabled == ?", false)
-    @accounts_disabled = Account.where("is_disabled == ?", true)
+    @accounts = Account.where(is_disabled: false)
+    @accounts_disabled = Account.where(is_disabled: true)
   end
 
   def show
@@ -40,9 +40,9 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       if @account.save
-        format.html { redirect_to accounts_path, notice: 'Account was successfully created.' }
+        format.html { redirect_to accounts_path, notice: "Account was successfully created." }
       else
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
   end
@@ -50,17 +50,18 @@ class AccountsController < ApplicationController
   def update
     respond_to do |format|
       if @account.update(account_params)
-        format.html { redirect_to accounts_path, notice: 'Account was successfully updated.' }
+        format.html { redirect_to accounts_path, notice: "Account was successfully updated." }
       else
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
       end
     end
   end
 
   def destroy
-    @account.destroy
+    @account.destroy!
+
     respond_to do |format|
-      format.html { redirect_to accounts_url, notice: 'Account was successfully destroyed.' }
+      format.html { redirect_to accounts_url, notice: "Account was successfully destroyed." }
     end
   end
 
@@ -70,7 +71,7 @@ class AccountsController < ApplicationController
       @account = Account.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # Only allow a list of trusted parameters through.
     def account_params
       params.require(:account).permit(:name, :description, :amount, :currency, :is_disabled)
     end

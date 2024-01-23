@@ -1,19 +1,12 @@
-# encoding : utf-8
-
 MoneyRails.configure do |config|
-  require 'money'
-  require 'money/bank/google_currency'
-
   # To set the default currency
   #
-   config.default_currency = :eur
+  config.default_currency = :eur
 
   # Set default bank object
   #
   # Example:
-   Money.default_bank = Money::Bank::GoogleCurrency.new
-   Money.rounding_mode = BigDecimal::ROUND_HALF_UP
-   Money.locale_backend = :i18n
+  # config.default_bank = EuCentralBank.new
 
   # Add exchange rates to current money bank object.
   # (The conversion rate refers to one direction only)
@@ -37,7 +30,7 @@ MoneyRails.configure do |config|
   #                          null: false,          # other options will be treated as column options
   #                          default: 0
   #                        }
-  ##
+  #
   # config.currency_column = { prefix: '',
   #                            postfix: '_currency',
   #                            column_name: nil,
@@ -51,21 +44,39 @@ MoneyRails.configure do |config|
   #
   # Example:
   # config.register_currency = {
-  #   :priority            => 1,
-  #   :iso_code            => "EU4",
-  #   :name                => "Euro with subunit of 4 digits",
-  #   :symbol              => "€",
-  #   :symbol_first        => true,
-  #   :subunit             => "Subcent",
-  #   :subunit_to_unit     => 10000,
-  #   :thousands_separator => ".",
-  #   :decimal_mark        => ","
+  #   priority:            1,
+  #   iso_code:            "EU4",
+  #   name:                "Euro with subunit of 4 digits",
+  #   symbol:              "€",
+  #   symbol_first:        true,
+  #   subunit:             "Subcent",
+  #   subunit_to_unit:     10000,
+  #   thousands_separator: ".",
+  #   decimal_mark:        ","
   # }
 
-  # Set money formatted output globally.
-  # Default value is nil meaning "ignore this option".
-  # Options are nil, true, false.
+  # Specify a rounding mode
+  # Any one of:
   #
-  # config.no_cents_if_whole = nil
-  # config.symbol = nil
+  # BigDecimal::ROUND_UP,
+  # BigDecimal::ROUND_DOWN,
+  # BigDecimal::ROUND_HALF_UP,
+  # BigDecimal::ROUND_HALF_DOWN,
+  # BigDecimal::ROUND_HALF_EVEN,
+  # BigDecimal::ROUND_CEILING,
+  # BigDecimal::ROUND_FLOOR
+  #
+  # set to BigDecimal::ROUND_HALF_EVEN by default
+  #
+  config.rounding_mode = BigDecimal::ROUND_HALF_UP
+
+  # Set default money format globally.
+  # Default value is nil meaning "ignore this option".
+  # Example:
+  #
+  # config.default_format = {
+  #   no_cents_if_whole: nil,
+  #   symbol: nil,
+  #   sign_before_symbol: nil
+  # }
 end

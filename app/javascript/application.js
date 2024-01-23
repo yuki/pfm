@@ -14,7 +14,7 @@ import "jquery_ujs"
 
 (() => {
     'use strict'
-    
+
     const storedTheme = localStorage.getItem('theme')
     
     const getPreferredTheme = () => {
@@ -74,3 +74,8 @@ import "jquery_ujs"
         })
     })
 })()
+
+// tooltips
+// FIXME: hay un error en /accounts
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))

@@ -1,49 +1,48 @@
-require 'test_helper'
+require "test_helper"
 
-class AccountsControllerTest < ActionController::TestCase
+class AccountsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @account = accounts(:one)
   end
 
   test "should get index" do
-    get :index
+    get accounts_url
     assert_response :success
-    assert_not_nil assigns(:accounts)
   end
 
   test "should get new" do
-    get :new
+    get new_account_url
     assert_response :success
   end
 
   test "should create account" do
-    assert_difference('Account.count') do
-      post :create, account: { amount: @account.amount, currency: @account.currency, description: @account.description, is_disabled: @account.is_disabled, name: @account.name }
+    assert_difference("Account.count") do
+      post accounts_url, params: { account: { amount: @account.amount, currency: @account.currency, description: @account.description, is_disabled: @account.is_disabled, name: @account.name } }
     end
 
-    assert_redirected_to account_path(assigns(:account))
+    assert_redirected_to account_url(Account.last)
   end
 
   test "should show account" do
-    get :show, id: @account
+    get account_url(@account)
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @account
+    get edit_account_url(@account)
     assert_response :success
   end
 
   test "should update account" do
-    patch :update, id: @account, account: { amount: @account.amount, currency: @account.currency, description: @account.description, is_disabled: @account.is_disabled, name: @account.name }
-    assert_redirected_to account_path(assigns(:account))
+    patch account_url(@account), params: { account: { amount: @account.amount, currency: @account.currency, description: @account.description, is_disabled: @account.is_disabled, name: @account.name } }
+    assert_redirected_to account_url(@account)
   end
 
   test "should destroy account" do
-    assert_difference('Account.count', -1) do
-      delete :destroy, id: @account
+    assert_difference("Account.count", -1) do
+      delete account_url(@account)
     end
 
-    assert_redirected_to accounts_path
+    assert_redirected_to accounts_url
   end
 end
