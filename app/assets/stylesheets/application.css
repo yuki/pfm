@@ -41,3 +41,12 @@
   width: 1rem;
   padding-right: 0.5rem;
 }
+
+/* forms */
+
+.list-group-item:has(.field_with_errors) {
+  background-color: var(--bs-danger-bg-subtle);
+  color: var(--bs-danger-text-emphasis);
+  border-width: 2px;
+  border-color: var(--bs-danger-border-subtle);
+}

@@ -1,49 +1,63 @@
-<p id="notice"><%= notice %></p>
+<h1>Show Movement</h1>
 
-<p>
-  <strong>Account:</strong>
-  <%= @movement.account.name %>
-</p>
+<% if notice.present? %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= notice %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
 
-<p>
-  <strong>Mtype:</strong>
-  <%= @movement.mtype.name %>
-</p>
+<div class="card p-4">
+  <ul class="list-group mb-2">
+    
+      <li class="list-group-item">
+        <strong>Account:</strong>
+        <%= @movement.account.name %>
+      </li>
 
-<p>
-  <strong>Name:</strong>
-  <%= @movement.name %>
-</p>
+      <li class="list-group-item">
+        <strong>Mtype:</strong>
+        <%= @movement.mtype.name %>
+      </li>
 
-<p>
-  <strong>Description:</strong>
-  <%= @movement.description %>
-</p>
-
-<p>
-  <strong>Amount:</strong>
-  <%= @movement.amount %>
-</p>
-
-<p>
-  <strong>Mdate:</strong>
-  <%= @movement.mdate %>
-</p>
-
-<p>
-  <strong>Account amount:</strong>
-  <%= @movement.account_amount %>
-</p>
-
-<p>
-  <strong>Is transfer:</strong>
-  <%= @movement.is_transfer %>
-</p>
-
-<p>
-  <strong>Movement:</strong>
-  <%= @movement.movement_id %>
-</p>
-
-<%= link_to 'Edit', edit_movement_path(@movement) %> |
-<%= link_to 'Back', movements_path %>
+      <li class="list-group-item">
+        <strong>Name:</strong>
+        <%= @movement.name %>
+      </li>
+    
+      <li class="list-group-item">
+        <strong>Description:</strong>
+        <%= @movement.description %>
+      </li>
+    
+      <li class="list-group-item">
+        <strong>Amount:</strong>
+        <%= @movement.amount %>
+      </li>
+    
+      <li class="list-group-item">
+        <strong>Mdate:</strong>
+        <%= @movement.mdate %>
+      </li>
+    
+      <li class="list-group-item">
+        <strong>Account amount:</strong>
+        <%= @movement.account_amount %>
+      </li>
+    
+      <li class="list-group-item">
+        <strong>Is transfer:</strong>
+        <%= @movement.is_transfer %>
+      </li>
+    
+      <li class="list-group-item">
+        <strong>Movement:</strong>
+        <%= @movement.movement_id %>
+      </li>
+    
+  </ul>
+  <div>
+    <%= link_to 'Back', movements_path, class: 'btn btn-outline-primary mr-2' %>
+    <%= link_to 'Edit', edit_movement_path(@movement), class: 'btn btn-outline-primary' %>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 class MovementsController < ApplicationController
-  before_action :set_movement, only: [:show, :edit, :update, :destroy]
+  before_action :set_movement, only: %i[ show edit update destroy ]
 
   def index
     from = DateTime.now.beginning_of_month
@@ -33,22 +33,27 @@ class MovementsController < ApplicationController
   def new
     @movement = Movement.new
     @accounts = Account.where("is_disabled == false")
+    @mtypes = Mtype.all
   end
 
   def edit
-    @accounts = Account.where("id != ?",params[:account_id])
+    #@accounts = Account.where("is_disabled == false")
+    @accounts = Account.where("id = ?",@movement.account)
+    @mtypes = Mtype.all
   end
 
   def create
     @movement = Movement.new(movement_params)
-    @accounts = Account.where("id != ?",params[:movement][:account_id]).order('lower(name)')
+    #@accounts = Account.where("id != ?",params[:movement][:account_id]).order('lower(name)')
+    @accounts = Account.where("is_disabled == false")
+    @mtypes = Mtype.all
 
     respond_to do |format|
       if @movement.save
         @movement.consolidate(params[:movement][:transferred_amount])
-        format.html { redirect_to account_path(@movement.account), notice: 'Movement was successfully created.' }
+        format.html { redirect_to account_path(@movement.account), notice: "Movement was successfully created." }
       else
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
   end
@@ -59,20 +64,22 @@ class MovementsController < ApplicationController
     else
       @accounts = Account.all.order('lower(name)')
     end
+    @mtypes = Mtype.all
     respond_to do |format|
       if @movement.update(movement_params)
         @movement.account.consolidate(@movement)
-        format.html { redirect_to account_path(@movement.account), notice: 'Movement was successfully updated.' }
+        format.html { redirect_to account_path(@movement.account), notice: "Movement was successfully updated." }
       else
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
       end
     end
   end
 
   def destroy
-    @movement.destroy
+    @movement.destroy!
+
     respond_to do |format|
-      format.html { redirect_to account_path(@movement.account), notice: 'Movement was successfully destroyed.' }
+      format.html { redirect_to account_path(@movement.account), notice: "Movement was successfully destroyed." }
     end
   end
 
@@ -82,8 +89,8 @@ class MovementsController < ApplicationController
       @movement = Movement.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # Only allow a list of trusted parameters through.
     def movement_params
-      params.require(:movement).permit(:account_id, :mtype_id, :name, :description, :amount, :mdate, :account_amount, :is_transfer, :movement_id)
+      params.require(:movement).permit(:name, :description, :amount, :mdate, :account_amount, :is_transfer, :movement_id, :account_id, :mtype_id)
     end
 end
