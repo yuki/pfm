@@ -6,26 +6,23 @@ class MtypesController < ApplicationController
   end
 
   def show
-    from = DateTime.now.beginning_of_month
-    to = DateTime.now.end_of_month
-    account_id = 0
+    @from = DateTime.now.beginning_of_month
+    @to = DateTime.now.end_of_month
+    @accounts = Account.where(is_disabled: false)
+    @account_id = 0
 
-    if params[:get_movements]
-      if not params[:get_movements][:from].empty?
-        from = DateTime.parse(params[:get_movements][:from])
-      end
-      if not params[:get_movements][:to].empty?
-        to = DateTime.parse(params[:get_movements][:to])
-      end
-      if not params[:get_movements][:account_id].empty?
-        account_id = params[:get_movements][:account_id]
-      end
+    if not params[:from].nil? and not params[:from].empty?
+      @from = DateTime.parse(params[:from])
     end
 
-    if account_id != 0
-      @movements = @mtype.movements.where("mdate >= ? and mdate <= ? and account_id = ?",from,to,account_id)
+    if not params[:to].nil? and not params[:to].empty?
+      @to = DateTime.parse(params[:to])
+    end
+
+    if @account_id != 0
+      @movements = @mtype.movements.where("mdate >= ? and mdate <= ? and account_id = ?",@from,@to,@account_id)
     else
-      @movements = @mtype.movements.where("mdate >= ? and mdate <= ?",from,to)
+      @movements = @mtype.movements.where("mdate >= ? and mdate <= ?",@from,@to)
     end
   end
 

@@ -1,4 +1,5 @@
 class Movement < ActiveRecord::Base
+  default_scope {order(mdate: :asc)}
   belongs_to :account
   belongs_to :mtype
   validates :account_id, :mtype_id, :mdate, presence: true

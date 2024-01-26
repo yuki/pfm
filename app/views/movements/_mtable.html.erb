@@ -23,10 +23,10 @@
         <td><%= link_to movement.mtype.name, mtype_path(movement.mtype) %></td>
         <td>
           <% if movement.name != "" || movement.description != ""%>
-            <span class="btn btn-default btn-sm bi-chat-left-fill" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="<%= movement.name + ' ' + movement.description %>" title="<%= movement.name + ' ' + movement.description %>" />
+            <span class="bi-chat-left-fill me-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="<%= movement.name + ' ' + movement.description %>" title="<%= movement.name + ' ' + movement.description %>"></span>
           <% end %>
           <% if movement.is_transfer %>
-            <span class="btn btn-default btn-sm bi-chat-left-fill" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="<%= Movement.find(movement.movement_id).account.name %>" title="<%= Movement.find(movement.movement_id).account.name %>" />
+            <span class="bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="<%= Movement.find(movement.movement_id).account.name %>" title="<%= Movement.find(movement.movement_id).account.name %>"></span>
           <% end %>
         </td>
         <td><%= print_ma(movement) %></td>
