@@ -11,7 +11,7 @@
         <th>Total</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="table-group-divider">
         <tr>
           <td>Profit</td>
           <% (@first.year..@last).each do |year| %>
@@ -28,7 +28,7 @@
         </tr>
     </tbody>
 
-    <tfoot>
+    <tfoot class="table-group-divider">
       <tr><td>Percent</td>
         <% (@first.year..@last).each do |year| %>
           <td><%= 100-(@annual_loss[year]*100/@annual_profit[year]).round(2) unless

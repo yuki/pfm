@@ -1,23 +1,25 @@
-<h3><%= title %></h3>
-<table id="<%=title%>_table" class="table table-condensed table-striped">
-  <thead>
-    <tr>
-      <th>Movement type</th>
-      <th>Amount</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% movements.group_by(&:mtype).sort_by{|m| m.first.name.downcase}.each do |movement| %>
+<div class="col-6 col pt-3">
+  <h3><%= title %></h3>
+  <table id="<%=title%>_table" class="table table-striped">
+    <thead>
       <tr>
-        <td><%= movement[0].name %></td>
-        <td><%= movement[1].sum(&:amount).to_s %></td>
+        <th>Movement type</th>
+        <th>Amount</th>
       </tr>
-    <% end %>
-  </tbody>
-  <tfoot>
-    <tr>
-      <th>Total</th>
-      <th><%= total %></th>
-    </tr>
-  </tfoot>
-</table>
+    </thead>
+    <tbody class="table-group-divider">
+      <% movements.group_by(&:mtype).sort_by{|m| m.first.name.downcase}.each do |movement| %>
+        <tr>
+          <td><%= movement[0].name %></td>
+          <td><%= movement[1].sum(&:amount).to_s %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot  class="table-group-divider">
+      <tr>
+        <td>Total</td>
+        <td><%= total %></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

@@ -14,7 +14,7 @@
       <th></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="table-group-divider">
     <% total = 0 %>
     <% movements.each do |movement| %>
       <% total += convert_ma(movement) %>
@@ -46,7 +46,7 @@
       <% end %>
     <% end %>
   </tbody>
-  <tfoot>
+  <tfoot  class="table-group-divider">
     <th></th>
     <th>Total</th>
     <th></th>

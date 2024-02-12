@@ -17,7 +17,7 @@
       <th></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="table-group-divider">
     <% @mtypes.each do |mtype| %>
       <%= content_tag :tr, id: dom_id(mtype), class: dom_class(mtype) do %>
         <td><%= link_to mtype.name,mtype_path(mtype) %></td>

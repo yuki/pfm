@@ -19,7 +19,7 @@
       <th></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="table-group-divider">
     <%% @<%= plural_table_name%>.each do |<%= singular_table_name %>| %>
       <%%= content_tag :tr, id: dom_id(<%= singular_table_name %>), class: dom_class(<%= singular_table_name %>) do %>
         <% attributes.each do |attribute| %>

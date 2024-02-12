@@ -7,14 +7,14 @@
       <th></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="table-group-divider">
     <% total = 0 %>
     <% accounts.each do |account| %>
       <% total += account.amount %>
       <%= content_tag :tr, id: dom_id(account), class: dom_class(account) do %>
           <td><%= link_to account.name,account_path(account) %></td>
           <td>
-            <span class="btn btn-default btn-sm bi-chat-left-fill" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="<%= account.description %>" title="<%= account.description %>" />
+            <button class="btn btn-default btn-sm bi-chat-left-fill" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="<%= account.description %>" title="<%= account.description %>" ></button>
           </td>
           <td><%= print_amount(get_amount(account,account.amount)) %> <%= account.currency %></td>
           <td>
@@ -27,7 +27,7 @@
     <% end %>
   </tbody>
   <% if total > 0 %>
-    <tfoot>
+    <tfoot class="table-group-divider">
       <tr>
         <td>Total</td>
         <td></td>

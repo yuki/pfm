@@ -11,7 +11,7 @@
       <% end %>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="table-group-divider">
     <% @annual_status.each do |as| %>
       <tr>
         <td><%= link_to as[0].name, account_path(as[0]) %></td>
@@ -24,7 +24,7 @@
       </tr>
     <% end %>
   </tbody>
-  <tfoot>
+  <tfoot class="table-group-divider">
     <tr><td>Total</td>
       <td/>
       <% (@first.year..@last).each do |year| %>
