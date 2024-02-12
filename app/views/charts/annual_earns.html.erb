@@ -1,58 +1,42 @@
 <h1>Annual earns</h1>
 
-<div id="container">
-  <table class="table table-striped">
-    <thead>
+<div id="graph" class="py-3"></div>
+
+
+<table class="table table-striped align-middle text-center">
+  <thead>
       <tr>
-        <th/>
-        <% (@first.year..@last).each do |year| %>
-          <th><%= year %></th>
-        <% end %>
+        <th>Year</th>
+        <th>Profit</th>
+        <th>Loss</th>
+        <th>Percent</th>
         <th>Total</th>
       </tr>
-    </thead>
-    <tbody class="table-group-divider">
-        <tr>
-          <td>Profit</td>
-          <% (@first.year..@last).each do |year| %>
-            <td><%= print_amount(@annual_profit[year]) %></td>
-          <% end %>
-          <td><%= print_amount(@annual_profit[0])%></td>
-        </tr>
-        <tr>
-          <td>Loss</td>
-          <% (@first.year..@last).each do |year| %>
-            <td><%= print_amount(@annual_loss[year]) %></td>
-          <% end %>
-          <td><%= print_amount(@annual_loss[0]) %></td>
-        </tr>
-    </tbody>
-
-    <tfoot class="table-group-divider">
-      <tr><td>Percent</td>
-        <% (@first.year..@last).each do |year| %>
-          <td><%= 100-(@annual_loss[year]*100/@annual_profit[year]).round(2) unless
-                    @annual_profit[year].nil? or @annual_loss[year].nil? %>%</td>
-        <% end %>
-        <td>~<%= print_amount(@annual_profit[0] + @annual_loss[0]) %></td>
-      </tr>
-
-      <tr><td>Total</td>
-        <% (@first.year..@last).each do |year| %>
-          <td><%= print_amount(@annual_profit[year]- @annual_loss[year]) unless
+  </thead>
+  <tbody class="table-group-divider">
+    <% (@first.year..@last).each do |year| %>
+      <tr>
+        <td><%= year %></td>
+        <td><%= print_amount(@annual_profit[year]) %></td>
+        <td><%= print_amount(@annual_loss[year]) %></td>
+        <td><%= (100-(@annual_loss[year]*100/@annual_profit[year]).round(2)).to_s+"%" unless
                     @annual_profit[year].nil? or @annual_loss[year].nil? %></td>
-        <% end %>
-        <td>~<%= print_amount(@annual_profit[0] + @annual_loss[0]) %></td>
+        <td><%= print_amount(@annual_profit[year]- @annual_loss[year]) unless
+                    @annual_profit[year].nil? or @annual_loss[year].nil? %></td>
       </tr>
-
-    </tfoot>
-  </table>
-
-  <div id="graph" class="col-md-12"></div>
-
-</div>
-
+    <% end %>
+  </tbody>
+  <tfoot class="table-group-divider">
+    <tr>
+      <td>Total</td>
+      <td><%= print_amount(@annual_profit[0])%></td>
+      <td><%= print_amount(@annual_loss[0]) %></td>
+      <td><%= (100+(@annual_loss[0]*100/@annual_profit[0]).round(2)).to_s+"%" %></td>
+      <td>~<%= print_amount(@annual_profit[0] + @annual_loss[0]) %></td>
+    </tr>
+  </tfoot>
+</table>
 
 <script>
-  column_graph('graph','Annual earn per year', <%= @chart_data.to_json.html_safe %>);
+  //column_graph('graph','Annual earn per year', <%= @chart_data.to_json.html_safe %>);
 </script>
