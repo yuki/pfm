@@ -1,50 +1,51 @@
 <h1>Annual status</h1>
 
-<div class="col-md-12">
-  <table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th/>
-      <% (@first.year..@last).each do |year| %>
-        <th><%= year %></th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody class="table-group-divider">
-    <% @annual_status.each do |as| %>
-      <tr>
-        <td><%= link_to as[0].name, account_path(as[0]) %></td>
-        <td>
-          <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-comment" data-toggle="tooltip" data-placement="right" title="<%= as[0].description %>" />
-        </td>
-        <% (@first.year..@last).each do |year| %>
-          <td><%= as[1][year].nil? ? "" : print_amount(as[1][year])   %></td>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-  <tfoot class="table-group-divider">
-    <tr><td>Total</td>
-      <td/>
-      <% (@first.year..@last).each do |year| %>
-        <td><%= print_amount(@total[year]) %></td>
-      <% end %>
-    </tr>
-    <tr><td>Diff</td>
-      <td/>
-      <% (@first.year..@last).each do |year| %>
-        <td><%= @total[year-1].nil? ?
-                print_amount(@total[year]) :
-                print_amount(@total[year]-@total[year-1]) %></td>
-      <% end %>
-    </tr>
-  </tfoot>
-  </table>
-</div>
 
-<script>
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-  })
-</script>
+
+<div class="row">
+  <div class="col-10 overflow-auto">
+    <table class="table table-striped align-middle text-center">
+      <tfoot>
+          <tr>
+            <th></th>
+            <% @annual_status.each do |as| %>
+              <th><%= link_to as[0].name, account_path(as[0]) %></th>
+            <% end %>
+          </tr>
+      </tfoot>
+      <tbody class="table-group-divider">
+        <% (@first.year..@last).each do |year| %>
+          <tr>
+            <td><%= year %></td>
+            <% @annual_status.each do |as| %>
+              <td><%= print_amount(as[1][year]) %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-2">
+    <table class="table table-striped align-middle text-center">
+      <tbody class="table-group-divider">
+        <% (@first.year..@last).each do |year| %>
+          <tr>
+            <td><%= print_amount(@total[year]) %></td>
+            <td><%= @total[year-1].nil? ?
+                  print_amount(@total[year]) :
+                  print_amount(@total[year]-@total[year-1]) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Total</th>
+          <th>Diff</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+</div>
