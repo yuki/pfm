@@ -9,7 +9,7 @@
         <th>Year</th>
         <th>Profit</th>
         <th>Loss</th>
-        <th>Percent</th>
+        <th class="d-none d-md-table-cell">Percent</th>
         <th>Total</th>
       </tr>
   </thead>
@@ -19,7 +19,7 @@
         <td><%= year %></td>
         <td><%= print_amount(@annual_profit[year]) %></td>
         <td><%= print_amount(@annual_loss[year]) %></td>
-        <td><%= (100-(@annual_loss[year]*100/@annual_profit[year]).round(2)).to_s+"%" unless
+        <td class="d-none d-md-table-cell"><%= (100-(@annual_loss[year]*100/@annual_profit[year]).round(2)).to_s+"%" unless
                     @annual_profit[year].nil? or @annual_loss[year].nil? %></td>
         <td><%= print_amount(@annual_profit[year]- @annual_loss[year]) unless
                     @annual_profit[year].nil? or @annual_loss[year].nil? %></td>
@@ -31,7 +31,7 @@
       <td>Total</td>
       <td><%= print_amount(@annual_profit[0])%></td>
       <td><%= print_amount(@annual_loss[0]) %></td>
-      <td><%= (100+(@annual_loss[0]*100/@annual_profit[0]).round(2)).to_s+"%" %></td>
+      <td class="d-none d-md-table-cell"><%= (100+(@annual_loss[0]*100/@annual_profit[0]).round(2)).to_s+"%" %></td>
       <td>~<%= print_amount(@annual_profit[0] + @annual_loss[0]) %></td>
     </tr>
   </tfoot>

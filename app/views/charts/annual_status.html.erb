@@ -32,7 +32,7 @@
         <% (@first.year..@last).each do |year| %>
           <tr>
             <td><%= print_amount(@total[year]) %></td>
-            <td><%= @total[year-1].nil? ?
+            <td class="d-none d-md-table-cell"><%= @total[year-1].nil? ?
                   print_amount(@total[year]) :
                   print_amount(@total[year]-@total[year-1]) %>
             </td>
@@ -42,7 +42,7 @@
       <tfoot>
         <tr>
           <th>Total</th>
-          <th>Diff</th>
+          <th class="d-none d-md-table-cell">Diff</th>
         </tr>
       </tfoot>
     </table>

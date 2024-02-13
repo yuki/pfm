@@ -21,7 +21,7 @@
   </li>
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="stacked-tab" data-bs-toggle="tab" data-bs-target="#stacked" type="button" role="tab" aria-controls="stacked" aria-selected="false">Stacked Graphs</button>
-  </li>
+  </li> 
 </ul>
 
 <!-- Tab panes -->
@@ -30,6 +30,7 @@
     <div class="row">
         <%= render :partial => 'movements/loss_profits_table',
             :locals => { :movements => movements_loss, :title => "Loss", :total => movements_loss.sum(&:amount) } %>
+        <div class="col-2"></div>
         <%= render :partial => 'movements/loss_profits_table',
             :locals => { :movements => movements_profit, :title => "Profit", :total => movements_profit.sum(&:amount)  } %>
     </div>

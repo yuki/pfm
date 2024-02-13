@@ -2,14 +2,12 @@
 <table class="table table-hover table-striped align-middle">
   <thead>
     <tr>
-      <th></th>
+      <th class="d-none d-md-table-cell"></th> <!-- graph -->
       <th>Mtype</th>
-      <th></th>
+      <th class="d-none d-md-table-cell"></th> <!-- tooltip -->
       <th>Amount</th>
       <th>Mdate</th>
-      <th></th>
-      <th></th>
-      <th><% if params[:controller] != 'movements' and params[:controller] != 'mtypes' %>Account amount<% end %></th>
+      <th class="d-none d-md-table-cell"><% if params[:controller] != 'movements' and params[:controller] != 'mtypes' %>Account amount<% end %></th>
       <th></th>
       <th></th>
     </tr>
@@ -19,9 +17,9 @@
     <% movements.each do |movement| %>
       <% total += convert_ma(movement) %>
       <%= content_tag :tr, id: dom_id(movement), class: dom_class(movement) do %>
-        <td><%= draw_button('graph', movements_types_charts_path(movement.mtype)) %></td>
+        <td class="d-none d-md-table-cell"><%= draw_button('graph', movements_types_charts_path(movement.mtype)) %></td>
         <td><%= link_to movement.mtype.name, mtype_path(movement.mtype) %></td>
-        <td>
+        <td class="d-none d-md-table-cell"> <!-- tooltip -->
           <% if movement.name != "" || movement.description != ""%>
             <span class="bi-chat-left-fill me-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="<%= movement.name + ' ' + movement.description %>" title="<%= movement.name + ' ' + movement.description %>"></span>
           <% end %>
@@ -31,9 +29,7 @@
         </td>
         <td><%= print_ma(movement) %></td>
         <td><span data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="<%= movement.mdate %>"><%= movement.mdate.to_date %></span></td>
-        <td></td>
-        <td></td>
-        <td>
+        <td class="d-none d-md-table-cell">
             <% if params[:controller] != 'movements' and params[:controller] != 'mtypes' %>
                 <%= print_ma(movement,1) %>
             <% end %>
@@ -47,14 +43,12 @@
     <% end %>
   </tbody>
   <tfoot  class="table-group-divider">
-    <th></th>
+    <th class="d-none d-md-table-cell"></th>
     <th>Total</th>
-    <th></th>
+    <th class="d-none d-md-table-cell"></th>
     <th><%= print_amount(total) %></th>
     <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th class="d-none d-md-table-cell"></th>
     <th></th>
     <th></th>
   </tfoot>
