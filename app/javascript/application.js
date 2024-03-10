@@ -1,8 +1,9 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
-import "@hotwired/turbo-rails"
+// import "@hotwired/turbo-rails"
 import "controllers"
 import "jquery"
 import "jquery_ujs"
+import  "highcharts"
 
 /*!
 * Color mode toggler for Bootstrap's docs (https://getbootstrap.com/)
@@ -76,6 +77,131 @@ import "jquery_ujs"
 })()
 
 // tooltips
-// FIXME: hay un error en /accounts
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+
+export function column_graph (where, title, data_json) {
+    var chart;
+    $(document).ready(function() {
+       chart = new Highcharts.Chart({
+          chart: {
+             renderTo: where,
+             defaultSeriesType: 'column'
+          },
+          title: {
+             text: title + ' '
+          },
+          xAxis: {
+             categories: ['Moves types']
+          },
+          yAxis: {
+              title: {
+                  text: 'Amount'
+              }
+          },
+          tooltip: {
+             formatter: function() {
+                return ''+
+                    '<b>'+this.series.name +'</b>: '+ this.y +'';
+             }
+          },
+          credits: {
+             enabled: false
+          },
+          series: data_json
+       });
+    });
+}
+
+export function drilldown_column_graph (where, title, data_json, drilldown) {
+    var chart;
+    $(document).ready(function() {
+       chart = new Highcharts.Chart({
+          chart: {
+             renderTo: where,
+             defaultSeriesType: 'column'
+          },
+          title: {
+             text: title + ' '
+          },
+          accessibility: {
+              announceNewData: {
+                  enabled: true
+              }
+          },
+          xAxis: {
+             type: 'category'
+          },
+          yAxis: {
+              title: {
+                  text: 'Amount'
+              }
+          },
+          plotOptions: {
+            series: {
+              borderWidth: 0,
+              dataLabels: {
+                enabled: true,
+                format: '{point.y:.2f}'
+              },
+              cursor: 'pointer',
+              point: {
+                  // events: {
+                  //     click: function () {
+                  //         alert('Category: ' + this.category + ', value: ' + this.y);
+                  //     }
+                  // }
+              }
+            }
+          },
+          tooltip: {
+             formatter: function() {
+                return ''+
+                    '<b>'+this.series.name +'</b>: '+ this.y +'';
+             }
+          },
+          credits: {
+             enabled: false
+          },
+          series: data_json ,
+          drilldown:  drilldown
+       });
+    });
+}
+
+
+export function stack_graph (where,title,data_json) {
+    var char;
+    jQuery(document).ready(function() {
+        var chart = new Highcharts.Chart({
+            chart: {
+                renderTo: where,
+                defaultSeriesType: 'column'
+            },
+            title: {
+                text: 'Stacked ' + title + ' %'
+            },
+            xAxis: {
+                categories: ['Total Amount']
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                    return ''+
+                         this.series.name +': '+ this.y +' ('+ Math.round(this.percentage) +'%)';
+                }
+            },
+            plotOptions: {
+                column: {
+                    stacking: 'percent'
+                }
+            },
+            series: data_json
+        });
+    });
+}

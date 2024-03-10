@@ -37,6 +37,7 @@
   </tfoot>
 </table>
 
-<script>
-  //column_graph('graph','Annual earn per year', <%= @chart_data.to_json.html_safe %>);
+<script  type="module">
+  import {column_graph} from "application";
+  column_graph('graph','Annual earn per year', <%= @chart_data.to_json.html_safe %>);
 </script>

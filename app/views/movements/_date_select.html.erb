@@ -1,16 +1,16 @@
-<form class="pt-3 pb-3 d-flex justify-content-start align-items-baseline">
+<form class="pt-3 pb-3 row">
   <%= form_for form, :url => path, :method => :get  do |f| %>
-    <div class="col-3 me-3">
+    <div class="col-3">
       <label class="" for="from">From:</label>
       <input class="form-control" type="datetime-local" name="from" id="from" <%= @from ? "value=#{@from.strftime("%Y-%m-%dT%H:%M")}" : ''%> >
     </div>
-    <div class="col-3 me-3">
+    <div class="col-3 ">
       <label class="" for="to">To:</label>
       <input class="form-control" type="datetime-local" name="to" id="to" <%= @from ? "value=#{@to.strftime("%Y-%m-%dT%H:%M")}" : ''%> >
     </div>
 
     <% if params[:controller] != "accounts" %>
-      <div class="col-3  me-3">
+      <div class="col-3 ">
         <label class="" for="get_data"></label>
         <%= select("", "account_id",
           @accounts.collect {|p| [ p.name, p.id ] },{:include_blank => 'Choose account', :selected => @account_id},{:class=>"form-select", :id=>"account"})

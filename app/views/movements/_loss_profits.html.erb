@@ -17,37 +17,50 @@
     <button class="nav-link active" id="tables-tab" data-bs-toggle="tab" data-bs-target="#tables" type="button" role="tab" aria-controls="tables" aria-selected="true">Tables</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="columns-tab" data-bs-toggle="tab" data-bs-target="#columns" type="button" role="tab" aria-controls="columns" aria-selected="false">Column Graphs</button>
+    <button class="nav-link" id="columns-tab" data-bs-toggle="tab" data-bs-target="#columns" type="button" role="tab" aria-controls="columns" aria-selected="false">Graphs</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="stacked-tab" data-bs-toggle="tab" data-bs-target="#stacked" type="button" role="tab" aria-controls="stacked" aria-selected="false">Stacked Graphs</button>
+    <button class="nav-link" id="stacked-tab" data-bs-toggle="tab" data-bs-target="#stacked" type="button" role="tab" aria-controls="stacked" aria-selected="false">Stacked</button>
   </li> 
 </ul>
 
 <!-- Tab panes -->
 <div class="tab-content pb-5 container">
   <div class="tab-pane active container" id="tables" role="tabpanel" aria-labelledby="tables-tab" tabindex="0">
-    <div class="row">
-        <%= render :partial => 'movements/loss_profits_table',
-            :locals => { :movements => movements_loss, :title => "Loss", :total => movements_loss.sum(&:amount) } %>
-        <div class="col-2"></div>
-        <%= render :partial => 'movements/loss_profits_table',
-            :locals => { :movements => movements_profit, :title => "Profit", :total => movements_profit.sum(&:amount)  } %>
+    <div class="container text-center">
+      <div class="row">
+          <%= render :partial => 'movements/loss_profits_table',
+              :locals => { :movements => movements_loss, :title => "Loss", :total => movements_loss.sum(&:amount) } %>
+          <div class="col-xl-2"></div>
+          <%= render :partial => 'movements/loss_profits_table',
+              :locals => { :movements => movements_profit, :title => "Profit", :total => movements_profit.sum(&:amount)  } %>
+      </div>
     </div>
   </div>
 
   <div class="tab-pane" id="columns" role="tabpanel" aria-labelledby="columns-tab" tabindex="0">
-    <div id="column_loss" class="col-md-4"></div>
-    <div id="column_profit" class="col-md-4 col-md-offset-2"></div>
+    <div class="container text-center">
+      <div class="row">
+        <div id="column_loss" class="col col-xl-5 pt-3"></div>
+        <div class="col-xl-2"></div>
+        <div id="column_profit" class="col col-xl-5 pt-3"></div>
+      </div>
+    </div>
   </div>
 
   <div class="tab-pane" id="stacked" role="tabpanel" aria-labelledby="stacked-tab" tabindex="0">
-    <div id="stack_loss" class="col-md-4"></div>
-    <div id="stack_profit" class="col-md-4 col-md-offset-2"></div>
+    <div class="container text-center">
+      <div class="row pt-3">
+        <div id="stack_loss" class="col col-xl-5 pt-3"></div>
+        <div class="col-xl-2"></div>
+        <div id="stack_profit" class="col col-xl-5 pt-3"></div>
+      </div>
+    </div>
   </div>
 </div>
 
-<script>
+<script  type="module">
+  import {column_graph,stack_graph} from "application";
   column_graph('column_loss','Loss', <%= chart_data_loss.to_json.html_safe %>);
   column_graph('column_profit','Profit', <%= chart_data_profit.to_json.html_safe %>);
   stack_graph('stack_loss','Loss', <%= chart_data_loss.to_json.html_safe %>);

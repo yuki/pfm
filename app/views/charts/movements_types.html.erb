@@ -1,48 +1,49 @@
 <h1>Annual amount per movement type: <%= @mtype %></h1>
 
-<%# FIXME: make it better, more rails style%>
-<%= form_with(url: movements_types_charts_path, id: 8, :method => :get) do |form| %>
-    <div class="form-group">
-      <div class="col-sm-2">
+<div class="row  pt-3">
+  <div class="col-md-2">
+    <%# FIXME: make it better, more rails style%>
+    <%= form_with(url: movements_types_charts_path, id: 8, :method => :get) do |form| %>
+      <div class="form-group pb-3">
         <%= form.select("mtype_id",
               Mtype.all.collect {|p| [ p.name, p.id ] },
               {:include_blank => 'Choose mtype',
-               :selected => params[:id].nil? ? 0: params[:id]
+                :selected => params[:id].nil? ? 0: params[:id]
               },
-              {:class=>"form-control",:onchange => "window.location.href = this.options[this.selectedIndex].value;"}
+              {:class=>"form-select",:onchange => "window.location.href = this.options[this.selectedIndex].value;"}
             )
           %>
       </div>
-    </div>
-<% end %>
+    <% end %>
 
-<br/><br/><br/>
 
-<div id="graph" class="col-md-12"></div>
-
-<div id="container">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th/>
-        <% @chart_data[0][:data].each do |year| %>
-          <th><%= year[:name] %></th>
-        <% end %>
-        <th>Total</th>
-      </tr>
-    </thead>
-    <tbody class="table-group-divider">
+    <table class="table table-striped align-middle text-center col-2">
+      <thead>
         <tr>
-          <td>Amount</td>
-          <% @chart_data[0][:data].each do |year| %>
+          <th>Year</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <% @chart_data[0][:data].each do |year| %>
+          <tr>
+            <td><%= year[:name] %></td>
             <td><%= print_amount(year[:y]) %></td>
-          <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot class="table-group-divider">
+        <tr>
+          <td>Total</td>
           <td><%= print_amount(@total) %></td>
         </tr>
-    </tbody>
-  </table>
+      </tfoot>
+    </table>
+  </div>
+  <div id="graph" class="col-md-10"></div>
 </div>
 
-<script>
+<script  type="module">
+  import {drilldown_column_graph} from "application";
   drilldown_column_graph('graph','Annual amount per movement type: <%= @mtype %> ', <%= @chart_data.to_json.html_safe %>, <%= @drilldown.to_json.html_safe %> );
 </script>
