@@ -5,7 +5,8 @@ class ChartsController < ApplicationController
   def annual_status
     accounts = Account.all
     @movements = Movement.all.order("mdate asc")
-    @first = @movements.first.mdate
+
+    @first = @movements.first ?  @movements.first.mdate : Time.now.year
     @last = Time.now.year
     @annual_status = []
     @total={}
@@ -31,7 +32,7 @@ class ChartsController < ApplicationController
   def annual_earns
     accounts = Account.all
     movements = Movement.all.order("mdate asc")
-    @first = movements.first.mdate
+    @first = movements.first ?  movements.first.mdate : Time.now.year
     @last = Time.now.year
     @annual_profit={}
     @annual_profit[0]=0

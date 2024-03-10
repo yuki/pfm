@@ -1,6 +1,8 @@
 <h1>Annual status</h1>
 
-
+<% if @movements.count == 0 %>
+No movements
+<% else %>
 
 <div class="row">
   <div class="col-10 overflow-auto">
@@ -49,3 +51,5 @@
   </div>
 
 </div>
+
+<% end %>

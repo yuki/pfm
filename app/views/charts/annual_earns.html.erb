@@ -1,5 +1,9 @@
 <h1>Annual earns</h1>
 
+<% if @movements.count == 0 %>
+No movements
+<% else %>
+
 <div id="graph" class="py-3"></div>
 
 
@@ -41,3 +45,5 @@
   import {column_graph} from "application";
   column_graph('graph','Annual earn per year', <%= @chart_data.to_json.html_safe %>);
 </script>
+
+<% end %>

@@ -10,9 +10,10 @@
   <%= link_to "New movement", new_movement_path, class: 'btn btn-primary' %>
 </div>
 
-<%= render partial: 'movements/date_select', locals: { path: "/movements", form: @movements[0]} %>
-
 <% if @movements.length != 0 %>
+
+  <%= render partial: 'movements/date_select', locals: { path: "/movements", form: @movements[0]} %>
+
   <%= render partial: 'mtable', locals: {movements: @movements } %>
 
   <%# FIXME: modificar%>
