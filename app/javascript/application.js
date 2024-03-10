@@ -3,7 +3,7 @@
 import "controllers"
 import "jquery"
 import "jquery_ujs"
-import  "highcharts"
+import "highcharts"
 
 /*!
 * Color mode toggler for Bootstrap's docs (https://getbootstrap.com/)

@@ -8,4 +8,4 @@ pin_all_from "app/javascript/controllers", under: "controllers"
 
 pin "jquery", to: "jquery3.min.js", preload: true
 pin "jquery_ujs", to: "jquery_ujs.js", preload: true
-pin "highcharts" # @11.3.0
+pin "highcharts", to: "highcharts.js",  preload: true # @11.3.0
