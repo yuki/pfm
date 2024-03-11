@@ -1,17 +1,17 @@
 
 <form class="pt-3 pb-3 row">
   <%= form_for form, :url => path, :method => :get  do |f| %>
-    <div class="col-xl-3">
+    <div class="col-lg-2">
       <label class="" for="from">From:</label>
       <input class="form-control" type="datetime-local" name="from" id="from" <%= @from ? "value=#{@from.strftime("%Y-%m-%dT%H:%M")}" : ''%> >
     </div>
-    <div class="col-xl-3">
+    <div class="col-lg-2">
       <label class="" for="to">To:</label>
       <input class="form-control" type="datetime-local" name="to" id="to" <%= @from ? "value=#{@to.strftime("%Y-%m-%dT%H:%M")}" : ''%> >
     </div>
 
     <% if params[:controller] != "accounts" %>
-      <div class="col-xl-3 ">
+      <div class="col-lg-2">
         <label class="" for="get_data"></label>
         <%= select("", "account_id",
           @accounts.collect {|p| [ p.name, p.id ] },{:include_blank => 'Choose account', :selected => @account_id},{:class=>"form-select", :id=>"account"})
@@ -19,10 +19,18 @@
       </div>
     <% end %>
 
-    <div class="col-xl-2">
+    <div class="col-lg-1">
       <label class="" for="get_data"></label>
       <button id="get_data" type="submit" class="form-control btn btn-secondary">Submit</button>
     </div>
+
+    <% if params[:controller] == "accounts" %>
+      <div class="col-lg-2">
+        <label class="" for="get_data"></label>
+        <%= link_to "New movement", new_movement_path(:account_id => form), :class=>"form-control btn btn-primary" %>
+      </div>
+    <% end %>
+    
   <% end %>
 </form>
 
