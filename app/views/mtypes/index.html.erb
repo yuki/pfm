@@ -1,10 +1,3 @@
-<% if notice.present? %>
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <%= notice %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-<% end %>
-
 <div class="d-flex justify-content-between align-items-baseline">
   <h1>Mtypes</h1>
   <%= link_to "New mtype", new_mtype_path, class: 'btn btn-primary' %>
