@@ -33,18 +33,18 @@ No movements
       <tbody class="table-group-divider">
         <% (@first.year..@last).each do |year| %>
           <tr>
-            <td><%= print_amount(@total[year]) %></td>
             <td class="d-none d-md-table-cell"><%= @total[year-1].nil? ?
                   print_amount(@total[year]) :
                   print_amount(@total[year]-@total[year-1]) %>
             </td>
+            <td><%= print_amount(@total[year]) %></td>
           </tr>
         <% end %>
       </tbody>
       <tfoot>
         <tr>
-          <th>Total</th>
           <th class="d-none d-md-table-cell">Diff</th>
+          <th>Total</th>
         </tr>
       </tfoot>
     </table>
