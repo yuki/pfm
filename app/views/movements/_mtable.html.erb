@@ -2,15 +2,14 @@
 <table class="table table-hover table-striped align-middle"
         id="table"
         data-classes="table table-hover table-striped align-middle"
-        data-custom-sort="customSort"
         data-show-footer="true"
 >
   <thead>
     <tr>
       <th class="d-none d-md-table-cell"></th> <!-- graph -->
-      <th data-field="mtype" data-sortable="true">Mtype</th>
+      <th data-field="mtype">Mtype</th>
       <th class="d-none d-md-table-cell"></th> <!-- tooltip -->
-      <th data-field="amount" data-sortable="true">Amount</th>
+      <th data-field="amount" data-sortable="true" data-sorter="amountSort">Amount</th>
       <th data-field="mdate" data-sortable="true">Mdate</th>
       <th class="d-none d-md-table-cell"><% if params[:controller] != 'movements' and params[:controller] != 'mtypes' %>Account amount<% end %></th>
       <th></th>
@@ -74,18 +73,11 @@ window.onload = function() {
 
 
 // From example: https://examples.bootstrap-table.com/index.html#options/custom-sort.html
-function customSort(sortName, sortOrder, data) {
-  var order = sortOrder === 'desc' ? -1 : 1
-  data.sort(function (a, b) {
-    var aa = +((a[sortName] + '').replace(/[^\d\.\-]/g, ''))
-    var bb = +((b[sortName] + '').replace(/[^\d\.\-]/g, ''))
-    if (aa < bb) {
-      return order * -1
-    }
-    if (aa > bb) {
-      return order
-    }
-    return 0
-  })
+// and https://examples.bootstrap-table.com/index.html#column-options/natural-sorting.html
+
+function amountSort(a,b) {
+  var aa = a.replace(/[^\d\.\-]/g, '')
+  var bb = b.replace(/[^\d\.\-]/g, '')
+  return aa - bb
 }
 </script>
