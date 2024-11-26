@@ -1,15 +1,15 @@
 source "https://rubygems.org"
 
-ruby "3.3.0"
+ruby "3.3.6"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.1.3"
+gem "rails", "~> 8.0"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
 # Use sqlite3 as the database for Active Record
-gem "sqlite3", "~> 1.4"
+gem "sqlite3", "~> 2.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -68,15 +68,12 @@ end
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'rails-i18n','~> 8.0.0'
 
 # custom
 gem 'money-rails', '~> 1.13.0'
-# gem 'google_currency'
-# gem 'momentjs-rails', '> 2.8.1'
-# gem 'bootstrap3-datetimepicker-rails', '> 3.1.3'
 gem 'highcharts-rails'
 gem 'groupdate'
-#gem 'rails-i18n', '~> 5.0.0'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
