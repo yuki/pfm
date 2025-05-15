@@ -8,5 +8,5 @@ pin_all_from "app/javascript/controllers", under: "controllers"
 
 pin "jquery", to: "jquery3.min.js", preload: true
 pin "jquery_ujs", to: "jquery_ujs.js", preload: true
-pin "highcharts", to: "highcharts.js",  preload: true # @11.3.0
+pin_all_from "app/javascript/highcharts", to: "highcharts", preload: true
 pin "bootstrap-table", to: "https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.5/dist/bootstrap-table.min.js"

@@ -72,7 +72,6 @@ gem 'rails-i18n','~> 8.0.0'
 
 # custom
 gem 'money-rails', '~> 1.13.0'
-gem 'highcharts-rails'
 gem 'groupdate'
 
 # Use ActiveModel has_secure_password

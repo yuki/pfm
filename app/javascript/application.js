@@ -4,6 +4,8 @@ import "controllers"
 import "jquery"
 import "jquery_ujs"
 import "highcharts"
+import "accessibility"
+import "drilldown"
 import "bootstrap-table"
 
 /*!
@@ -88,7 +90,7 @@ export function column_graph (where, title, data_json) {
        chart = new Highcharts.Chart({
           chart: {
              renderTo: where,
-             defaultSeriesType: 'column'
+             type: 'column'
           },
           title: {
              text: title + ' '
@@ -121,7 +123,7 @@ export function drilldown_column_graph (where, title, data_json, drilldown) {
        chart = new Highcharts.Chart({
           chart: {
              renderTo: where,
-             defaultSeriesType: 'column'
+             type: 'column'
           },
           title: {
              text: title + ' '
@@ -173,12 +175,11 @@ export function drilldown_column_graph (where, title, data_json, drilldown) {
 
 
 export function stack_graph (where,title,data_json) {
-    var char;
     jQuery(document).ready(function() {
         var chart = new Highcharts.Chart({
             chart: {
                 renderTo: where,
-                defaultSeriesType: 'column'
+                type: 'column'
             },
             title: {
                 text: 'Stacked ' + title + ' %'
@@ -199,7 +200,11 @@ export function stack_graph (where,title,data_json) {
             },
             plotOptions: {
                 column: {
-                    stacking: 'percent'
+                    stacking: 'percent',
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.percentage:.0f}%'
+                    }
                 }
             },
             series: data_json

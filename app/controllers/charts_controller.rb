@@ -95,7 +95,14 @@ class ChartsController < ApplicationController
     end
 
     @chart_data = [{:name => "Movimientos", :colorByPoint => true, :data => @chart_data }]
-    @drilldown = { :series => drill }
+    @drilldown = {
+      :breadcrumbs => {
+            :position => {
+                :align => 'right'
+            }
+        },
+      :series => drill
+    }
 
     @total = movements.sum(:amount)
   end
