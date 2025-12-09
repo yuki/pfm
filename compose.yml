@@ -1,6 +1,6 @@
 services:
   pfm:
-    image: "ruby:3.3.6"
+    image: "ruby:3.4.7"
     ports:
       - "3000:3000"
     volumes:
